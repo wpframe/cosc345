@@ -45,7 +45,9 @@ Maybes:
 Constraints:
 - No multithreading
 - GUI must be simple to prevent it taking up too much of our time
-
+- Testing (GTest looks pretty good?)
+- CI/CD (unsure)
+- Documentation (Doxygen)
 
 ### Domain specific requirements
 Our domain: Finance
