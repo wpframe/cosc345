@@ -28,6 +28,11 @@ Maybes:
 - Real paper trading mode?
 - Start your own business?
 
+### Datasets:
+- [NASDAQ history](https://www.nasdaq.com/market-activity/quotes/historical)
+- [Stock news with senitment](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news)
+- [Possibly majors with salaries data](https://www.kaggle.com/code/cdelany7/exploration-of-college-salaries-by-major)
+- Housing data (not found yet)
 
 ### Functional requirements
 - Must compile with most C++ compilers
