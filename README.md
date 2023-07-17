@@ -12,6 +12,7 @@ A stock trading game in which you begin with a million US dollars. You must gene
 
 ### Things we need to decide on:
 Game name (Millionaire Simulator, Greed Simulator, etc)
+
 Features:
 - Stocks (NASDAQ only?)
 - Crypto
@@ -21,6 +22,7 @@ Features:
 - News headlines with impact on stocks
 - Education and jobs
 - Casino 
+
 Maybes:
 - Options trading?
 - Real paper trading mode?
