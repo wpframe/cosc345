@@ -15,7 +15,7 @@
 
 Our idea is a stock market simulator game. The objective of the game is to generate as much money as you can over the 100 years of your life. Everyone starts with a million US dollars and must use stocks, property, ETFs, precious metals, cryptocurrency, and more to generate income. Players can even get an education and a job in the game to earn extra income. High scores are stored in an online leaderboard.
 
-There are two modes that will be supported for our game; a real-world trading game which uses current stock market data in real time, and a simulated trading game in which historical data is accurate but future data is generated based on the historical data (stock prices and financial news). The future data is generated with a degree of randomness for every playthrough, and years can be skipped to keep the game fast and arcade-y.
+There are two modes that will be supported for our game; a real-world trading game which uses current stock market data in real time, and a simulated trading game in which historical data is accurate but future data is generated based on the historical data (stock prices and financial news). The future data is generated with a degree of randomness for every playthrough, and years can be skipped to keep the game fast and arcade-y. We will also add a casino, which will have blackjack, slots, and roulette. We will have to limit the amount a player can make from the casino to prevent the leaderboards just being filled with people who gambled all their money repeatedly.
 
 Some other features we would like to add are options trading and starting your own business, however these ideas would almost definitely take up too much time to implement. If we have leftover time at the end we will give these a go.
 
