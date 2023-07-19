@@ -36,10 +36,15 @@ Maybes:
 
 ### Similar products
 - MarketWatch Virtual Stock Exchange
+
 Requires a lot of personal information on signup and possibly a credit card linked as a Dow Jones account is required to play.
+
 - The Stock Market Game
+
 This game is focused solely on education and says only teachers should sign up.
+
 - Investopedia Simulator 
+
 This is the closest to what we want, however it has a more complex UI, and is slow-paced as they only have options to trade on the real day-to-day stock market data.
 
 ### Evidence of customer interest
