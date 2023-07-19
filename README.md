@@ -34,6 +34,17 @@ Maybes:
 - [Possibly majors with salaries data](https://www.kaggle.com/code/cdelany7/exploration-of-college-salaries-by-major)
 - Housing data (not found yet)
 
+### Similar products
+- MarketWatch Virtual Stock Exchange
+Requires a lot of personal information on signup and possibly a credit card linked as a Dow Jones account is required to play.
+- The Stock Market Game
+This game is focused solely on education and says only teachers should sign up.
+- Investopedia Simulator 
+This is the closest to what we want, however it has a more complex UI, and is slow-paced as they only have options to trade on the real day-to-day stock market data.
+
+### Evidence of customer interest
+There are a lot of business simulators and stock market simulator games, in which share the same objective as ours - make as much money as possible. We also believe the educational value of our stock market simulator could be useful to a larger customer base, teaching people to recognize how stock prices interact with financial news regarding companies.
+
 ### Functional requirements
 - Must compile with most C++ compilers
 - Fun
