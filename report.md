@@ -37,7 +37,6 @@ The most popular three similar products are "MarketWatch Virtual Stock Exchange"
 
 There are a lot of business simulators and stock market simulator games, in which share the same objective as ours - make as much money as possible. We also believe the educational value of our stock market simulator could be useful to a larger customer base, teaching people to recognize how stock prices interact with financial news regarding companies.
 
-![alphaPert](https://github.com/wpframe/cosc345/assets/128119898/d271f2e2-da02-4943-aa3b-e91ee72cc967)
 
 ## Functional requirements
 - Must compile with most C++ compilers
