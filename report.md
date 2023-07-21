@@ -9,7 +9,7 @@
 ### Vincent Lee
 
 ### Will Frame
-
+I'm Will, a third year Computer Science student minoring in Information Science. I've been interested in stocks for a few years now as some of my family work in the field, and I've played a few investment simulator games in the past. I also did COSC360 (the game design paper) which I think will be very useful for this project/idea. I think my main contributions to the project will be for programming, game design, data processing, and GUI design.
 
 ## Our idea
 
@@ -23,7 +23,7 @@ Some other features we would like to add are options trading and starting your o
 
 Our main dataset is NASDAQ's and the NYSE's historical stock data. The NASDAQ website (https://www.nasdaq.com/market-activity/quotes/historical) and the NYSE website (https://www.nyse.com/market-data/historical) both historical data for almost all of the stocks listed under the NASDAQ and NYSE.
 
-Another dataset will be US housing data (https://www.kaggle.com/datasets/paultimothymooney/zillow-house-price-data). This will be used to give the players an alternative investment to typical stocks. This dataset has rental pricing as well as housing pricing by number of rooms. Investment properties in the game will also generate rent once someone moves in.
+Another dataset we will use is a US housing data (https://www.kaggle.com/datasets/paultimothymooney/zillow-house-price-data). This will be used to give the players an alternative investment to typical stocks. This dataset has rental pricing as well as housing pricing by number of rooms. Investment properties in the game will also generate rent once someone moves in.
 
 Another dataset we will use is a stock news with sentiment dataset (https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news). This will be used to assist in generating news headlines for companies as well as their impact on company stocks.
 
