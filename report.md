@@ -8,6 +8,7 @@ Ben has studied finance and computer science at Otago. Meaning the knowledge att
 ### Shamen Kumar
 
 ### Vincent Lee
+With a background in Finance and Computer Science, Vincent's expertise will be helpful in designing realistic market scenarios and ensuring the accuracy of the game mechanics. Despite not having extensive experience in C++, he is eager to contribute in any way he can. He thrives in a team environment and will use his communication and management skills to ensure the group is on track with their project. Vincent's adaptable nature means he doesn't mind what task to do and is willing to take on any role needed to support the team's success. 
 
 ### Will Frame
 I'm Will, a third year Computer Science student minoring in Information Science. I've been interested in stocks for a few years now as some of my family work in the field, and I've played a few investment simulator games in the past. I also did COSC360 (the game design paper) which I think will be very useful for this project/idea. I think my main contributions to the project will be for programming, game design, data processing, and GUI design.
