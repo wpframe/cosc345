@@ -3,6 +3,7 @@
 ## Group Members:
 
 ### Ben Knox
+Ben has studied finance and computer science at Otago. Meaning the knowledge attained from his finance degree will help in the implementation of trading stocks. He is most comfortable coding in Python and Java but has some knowledge of C and C++. His experience in coding leans towards backend development however he is open to learning different concepts in the creation of UI as needed. He will provide help in generating backend functionality to parts of the game.
 
 ### Shamen Kumar
 
