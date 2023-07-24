@@ -10,4 +10,4 @@ Team members:
 
 To build simply run [src/build.sh](src/build.sh) with ``./build.sh``
 
-To open the application, run [build/MyApp] with ``./MyApp``
+To open the application, run [build/MyApp](build/MyApp) with ``./MyApp``
