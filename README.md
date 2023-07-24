@@ -8,6 +8,6 @@ Team members:
 
 [Our report](report.md)
 
-To build simply run [src/build.sh](src/build.sh) with ``./build.sh``
+To build simply run [build.sh](build.sh) with ``./build.sh``
 
 To open the application, run [build/MyApp](build/MyApp) with ``./MyApp``
