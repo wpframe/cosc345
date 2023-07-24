@@ -7,3 +7,7 @@ Team members:
 - Will Frame
 
 [Our report](report.md)
+
+To build simply run [src/build.sh](src/build.sh) with ``./build.sh``
+
+To open the application, run [build/MyApp] with ``./MyApp``
