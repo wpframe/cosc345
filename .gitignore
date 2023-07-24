@@ -1,3 +1,5 @@
+### .gitignore file for COSC345
+
 # Ignore build folder
 /build/
 # Ignore VSCode configuration file
