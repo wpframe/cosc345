@@ -68,7 +68,8 @@ The packaged application must be implemented in C++ as per the project requireme
 
 We decided on using Ultralight for our GUI rendering. Ultralight is a lightweight UI toolkit making use of HTML and CSS, which are familiar languages for our team.
 
-Constraints:
+#### Assignment requirements:
+
 - No multithreading
 
 As per the requirements we aren't allowed to use multithreading on the CPU.
