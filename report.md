@@ -11,7 +11,7 @@ Ben has studied finance and computer science at Otago. Meaning the knowledge att
 With a background in Finance and Computer Science, Vincent's expertise will be helpful in designing realistic market scenarios and ensuring the accuracy of the game mechanics. Despite not having extensive experience in C++, he is eager to contribute in any way he can. He thrives in a team environment and will use his communication and management skills to ensure the group is on track with their project. Vincent's adaptable nature means he doesn't mind what task to do and is willing to take on any role needed to support the team's success. 
 
 ### Will Frame
-I'm Will, a third year Computer Science student minoring in Information Science. I've been interested in stocks for a few years now as some of my family work in the field, and I've played a few investment simulator games in the past. I also did COSC360 (the game design paper) which I think will be very useful for this project/idea. I think my main contributions to the project will be for programming, game design, data processing, and GUI design.
+Will is a third year Computer Science student minoring in Information Science. He has been interested in stocks for a few years now as some of my family work in the field, and he has played a few investment simulator games in the past. He also did COSC360 (the game design paper) which could be very useful for this project/idea. Will will be mostly focused on programming, data processing, and game design.
 
 ## Our idea
 
@@ -40,23 +40,56 @@ There are a lot of business simulators and stock market simulator games, in whic
 
 ## Functional requirements
 - Must compile with most C++ compilers
+
+Our program should be built with standard and widely supported C++ libraries, so it will compile on as many compilers as possible (such as GCC and Clang).
+
 - Fun
+
+The game should be engaging and satisfying to progress in.
+
 - Intuitive UI
+
+The user interface should be easily understandable, so even someone with no knowledge of the stock market can pick it up with ease. The UI should not be cluttered and should display only the required information to the user.
+
 - Less than 2 second load time for each year of data
 
+The software and data processing/collection should be optimized enough to not obstruct or interrupt the fun.
 
 ## Non-functional requirements
-- Data is generated efficiently
 - Server uptime for the leaderboard
+
+The leaderboard should have high availability, being hosted on a reliable server.
+
 - C++ program
-- QT for GUI
-- Python for data processing, but we will use C++ to reprocess the data so every game is unique
+
+The packaged application must be implemented in C++ as per the project requirements
+
+- Ultralight for GUI
+
+We decided on using Ultralight for our GUI rendering. Ultralight is a lightweight UI toolkit making use of HTML and CSS, which are familiar languages for our team.
+
 Constraints:
 - No multithreading
+
+As per the requirements we aren't allowed to use multithreading on the CPU.
+
 - GUI must be simple to prevent it taking up too much of our time
+
+Using HTML and CSS should significantly reduce the amount of time required to build the GUI, however we still need to keep simplicity in mind as to not add to the amount of time required for development.
+
 - Testing (GTest looks pretty good?)
+
+We aren't entirely sure on what we will use for testing, however, GTest seemed to come up a lot when searching.
+
 - CI/CD (unsure)
+
+We will have to ask for clarification on what is required for CI/CD, we will probably set up GitHub Actions to test the build of the program on each push.
+
 - Documentation (Doxygen)
 
+As per the suggestion in the assignment requirements we will use Doxygen for documentation. 
+
 ### Domain specific requirements
+
 Our domain: Finance
+
