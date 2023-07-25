@@ -11,6 +11,7 @@
   body {
     /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
     font-family: 'Evil', sans-serif;
+    border: 10px solid #f0f0f0;
     overflow-x: hidden;
   }
   
@@ -31,6 +32,7 @@
 
   }
   
+ 
   
   .hero header .game-name h2 {
       display: block;
@@ -39,6 +41,8 @@
       text-decoration: none;
       color: #2BAE66;
       letter-spacing: 5px;
+      position: relative;
+      top: 11px;
       /* -webkit-text-fill-color: black;
       -webkit-text-stroke-color: white;
       -webkit-text-stroke-width: 1px; */
@@ -52,7 +56,7 @@
     }
     
   nav ul li {
-    margin: 10px 0; /* Add space between nav items */
+
     list-style: none;
     display:inline-block;
 
@@ -62,7 +66,7 @@
     color: #2BAE66;
     text-decoration: none;
     font-size: 18px;
-    margin-left: 70px;
+    margin-left: 60px;
     letter-spacing: 0.4px;
     border-bottom: 2px solid transparent;
     transition: 0.5s;
@@ -71,21 +75,5 @@
   nav ul li:not(:last-child) a:hover,
   nav ul li:not(:last-child) a:focus {
     border-bottom: 2px solid #2BAE66;
-  }
-  
-  nav ul li.help a {
-    margin: 20px;
-    background: transparent;
-    color: #2BAE66;
-    padding: 8px 15px;
-    border: 1px solid #2BAE66;
-    border-radius: 30px;
-  }
-  
-  nav ul li.help:hover a {
-    border: 1px solid #2BAE66;
-    color: white;
-    background: #2BAE66;
-    transition: 0.5s;
   }
   
