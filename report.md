@@ -11,7 +11,7 @@ Ben has studied finance and computer science at Otago. Meaning the knowledge att
 With a background in Finance and Computer Science, Vincent's expertise will be helpful in designing realistic market scenarios and ensuring the accuracy of the game mechanics. Despite not having extensive experience in C++, he is eager to contribute in any way he can. He thrives in a team environment and will use his communication and management skills to ensure the group is on track with their project. Vincent's adaptable nature means he doesn't mind what task to do and is willing to take on any role needed to support the team's success. 
 
 ### Will Frame
-Will is a third year Computer Science student minoring in Information Science. He has been interested in stocks for a few years now as some of my family work in the field, and he has played a few investment simulator games in the past. He also did COSC360 (the game design paper) which could be very useful for this project/idea. Will will be mostly focused on programming, data processing, and game design.
+Will is a third year Computer Science student minoring in Information Science. He has been interested in stocks for a few years now as some of his family work in the field, and he has played a few investment simulator games in the past. He also did COSC360 (the game design paper) which could be very useful for this project/idea. He is proficient in Python and Java, with little C and C++ experience. Will is going to be mostly focused on programming, data processing, and game design.
 
 ## Our idea
 
@@ -31,6 +31,8 @@ Another dataset we will use is a stock news with sentiment dataset (https://www.
 
 We may also use a majors with salaries dataset (https://www.kaggle.com/code/cdelany7/exploration-of-college-salaries-by-major) to calculate how much players earn depending on their chosen education and job.
 
+Our datasets go together because they can form a solid simulated investment economy. This opens the door for education and enjoyment by giving players the opportunity to see first hand how much they could earn if they owned a million dollars in cash.
+
 ## Similar products and evidence of customer interest
 
 The most popular three similar products are "MarketWatch Virtual Stock Exchange", "The Stock Market Game", and "Investopedia Simulator". "MarketWatch Virtual Stock Exchange" and "The Stock Market Game" have lengthy signup processes that collect a large amount of data. "Investopedia Simulator" is the product the closest to what we hope to achieve, with a simple UI for the features we plan to implement, as well as a very simple starting process. The downfall of "Investopedia Simulator" is that alike the other similar products, there is no simulated economy, so the pacing of the game is extremely slow.
@@ -39,30 +41,61 @@ There are a lot of business simulators and stock market simulator games, in whic
 
 
 ## Functional requirements
-- Must compile with most C++ compilers
 
-Our program should be built with standard and widely supported C++ libraries, so it will compile on as many compilers as possible (such as GCC and Clang).
+- Stock Market Trading
+
+Players must be able to buy and sell stocks to make profit.
+
+- Real Estate Trading
+
+Players must be able to buy, sell, and rent out properties in order to make profit.
+
+- Job and Education Simulation
+
+Players must be able to choose an education and job to make some extra money alongside their investments.
+
+- Updating Leaderboard
+
+Users with the highest growth should be added to the online leaderboard.
+
+- Economic Simulation with news headlines
+
+The game must simulate an economy with news headlines ingame that impact stock prices or different parts of the economy.
+
+- Portfolio Management
+
+Players must be able to manage their portfolio, being able to easily buy and sell stocks at any available quantity.
+
+- Real time data updating
+
+Players of the real world mode must be able to receive real updated stock data daily.
+
+
+## Non-functional requirements
 
 - Fun
 
-The game should be engaging and satisfying to progress in.
+The game must be engaging and satisfying to keep players interested.
 
 - Intuitive UI
 
-The user interface should be easily understandable, so even someone with no knowledge of the stock market can pick it up with ease. The UI should not be cluttered and should display only the required information to the user.
+The user interface must be easily understandable, allowing players with no knowledge of the stock market can pick it up with ease. The UI should not be cluttered and should display only the required information to the user.
 
 - Less than 2 second load time for each year of data
 
-The software and data processing/collection should be optimized enough to not obstruct or interrupt the fun.
-
-## Non-functional requirements
-- Server uptime for the leaderboard
-
-The leaderboard should have high availability, being hosted on a reliable server.
+The software and data processing/collection must be optimized enough to ensure smooth gameplay without interruptions.
 
 - C++ program
 
-The packaged application must be implemented in C++ as per the project requirements
+The packaged application must be implemented in C++ in accordance with the project requirements.
+
+- Must compile with most C++ compilers
+
+Our program must be built with standard and widely supported C++ libraries, so it will compile on as many compilers as possible (such as GCC and Clang).
+
+- Server uptime for the leaderboard
+
+The leaderboard should have high availability to provide consistent access to players. 
 
 - Ultralight for GUI
 
@@ -92,5 +125,23 @@ As per the suggestion in the assignment requirements we will use Doxygen for doc
 
 ### Domain specific requirements
 
-Our domain: Finance
+| Requirement | Description |
+| ----------- | ----------- |
+| Stock Market Data | The game should have access to real-time and predicted stock market data to simulate real-world trading. This includes data for stocks, ETFs, precious metals, and cryptocurrencies. |
+| Property and Asset Management | Players should be able to buy and sell properties as investments. The game should simulate the process of buying a property, including other costs and potential returns from renting the properties out if desired. |
+| In-Game Economy | The game should simulate a realistic economy, with fluctuations in market prices, interest rates, and news headlines that may have an impact on stock prices or the economy. |
 
+### Form Based Requirements
+
+| Functionality | Inputs | Outputs | Action |
+| ------------- | ------ | ------- | ------ |
+| Stock Market Trading | Stock symbol, number of shares, buy/sell order | Confirmation of successful transaction and updated portfolio | The system should update the user's portfolio and account balance based on the transaction |
+| Job and Education Simulation | Choice of education or job | Degree, job title and income | The system should update the user's income based on their education and job |
+| Leaderboard Update | Player scores | Updated leaderboard | The system should rank players based on their growth over the past month or year and update the leaderboard |
+| Economic Simulation | Real-world economic data | Simulated market prices, interest rates, etc. | The system should adjust the simulated economy based on real-world data |
+
+
+
+TODO: 
+
+IEEE / ANSI 830-1998
