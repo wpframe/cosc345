@@ -6,7 +6,8 @@ using namespace ultralight;
 class MyApp : public AppListener,
               public WindowListener,
               public LoadListener,
-              public ViewListener {
+              public ViewListener
+{
 public:
   MyApp();
 
@@ -19,29 +20,29 @@ public:
   virtual void OnUpdate() override;
 
   // This is called when the window is closing.
-  virtual void OnClose(ultralight::Window* window) override;
+  virtual void OnClose(ultralight::Window *window) override;
 
   // This is called whenever the window resizes.
-  virtual void OnResize(ultralight::Window* window, uint32_t width, uint32_t height) override;
+  virtual void OnResize(ultralight::Window *window, uint32_t width, uint32_t height) override;
 
   // This is called when the page finishes a load in one of its frames.
-  virtual void OnFinishLoading(ultralight::View* caller,
+  virtual void OnFinishLoading(ultralight::View *caller,
                                uint64_t frame_id,
                                bool is_main_frame,
-                               const String& url) override;
+                               const String &url) override;
 
   // This is called when the DOM has loaded in one of its frames.
-  virtual void OnDOMReady(ultralight::View* caller,
+  virtual void OnDOMReady(ultralight::View *caller,
                           uint64_t frame_id,
                           bool is_main_frame,
-                          const String& url) override;
+                          const String &url) override;
 
   // This is called when the page requests to change the Cursor.
-  virtual void OnChangeCursor(ultralight::View* caller,
-    Cursor cursor) override;
+  virtual void OnChangeCursor(ultralight::View *caller,
+                              Cursor cursor) override;
 
-  virtual void OnChangeTitle(ultralight::View* caller,
-    const String& title) override;
+  virtual void OnChangeTitle(ultralight::View *caller,
+                             const String &title) override;
 
 protected:
   RefPtr<App> app_;

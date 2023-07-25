@@ -1,0 +1,102 @@
+@font-face {
+    font-family: Evil;
+    src: url(fonts/EvilEmpire-4BBVK.ttf);
+  }
+  
+  body {
+    /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
+    font-family: 'Evil', sans-serif;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .main-width {
+    width: 1400px;
+    max-width: 95%;
+    margin: 0 auto;
+  }
+  
+  .hero {
+    height: 100%;
+    width: 100%;
+    min-height: 100vh;
+    /* background: radial-gradient(#f0b57a, 20%, #703709); */
+    background: #f0f0f0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center elements vertically */
+    align-items: center; /* Center elements horizontally */
+  }
+  
+  .hero header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center elements vertically */
+    align-items: center; /* Center elements horizontally */
+  }
+  
+  .hero header .game-name h2 {
+    display: block;
+    font-size:9vw;
+    transform: scale(.7, 1);
+    text-decoration: none;
+    color: #2BAE66;
+    letter-spacing: 5px;
+    /* -webkit-text-fill-color: black;
+    -webkit-text-stroke-color: white;
+    -webkit-text-stroke-width: 1px; */
+    margin-bottom: 20px; 
+  }
+  
+  nav {
+    display: flex;
+    flex-direction: column; /* Display nav items in a vertical list */
+    justify-content: center; /* Center nav items horizontally */
+    align-items: center; /* Center nav items vertically */
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  nav ul li {
+    margin: 10px 0; /* Add space between nav items */
+    display: flex;
+    justify-content: center; /* Center nav items horizontally */
+    align-items: center; /* Center nav items vertically */
+  }
+  
+  nav ul li a {
+    color: #2BAE66;
+    text-decoration: none;
+    font-size: 24px;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid transparent;
+    transition: 0.5s;
+  }
+  
+  nav ul li:not(:last-child) a:hover,
+  nav ul li:not(:last-child) a:focus {
+    border-bottom: 2px solid #2BAE66;
+  }
+  
+  nav ul li.help a {
+    margin: 20px;
+    background: transparent;
+    color: #2BAE66;
+    padding: 8px 15px;
+    border: 1px solid #2BAE66;
+    border-radius: 30px;
+  }
+  
+  nav ul li.help:hover a {
+    border: 1px solid #2BAE66;
+    color: white;
+    background: #2BAE66;
+    transition: 0.5s;
+  }
+  

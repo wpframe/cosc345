@@ -1,7 +1,7 @@
 #include "MyApp.h"
 
 #define WINDOW_WIDTH 1400
-#define WINDOW_HEIGHT 600
+#define WINDOW_HEIGHT 1000
 
 MyApp::MyApp()
 {
