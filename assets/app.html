@@ -1,13 +1,100 @@
 <html>
   <head>
-    <title>MyApp -- (edit this title in app.html)</title>
+    <title>MyApp -- (app.html)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <style>
+      @font-face {
+        font-family: Evil;
+        src: url(fonts/EvilEmpire-4BBVK.ttf);
+      }
     body {
-      font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif;
+      /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
+      font-family: 'Evil', sans-serif;
+      overflow-x: hidden;
+      padding: 0;
+      margin: 0;
     }
+    .main-width {
+      width: 1400px;
+      max-width: 95%;
+      margin: 0 auto;
+    }
+    .hero{
+      height: 100%;
+      width:100%;
+      min-height: 100vh;
+      background: radial-gradient(#f0b57a, 20%, #703709);
+      position: relative;
+    }
+    .hero header .game-name h2 a {
+      display: block;
+      font-size: 32px;
+      text-decoration: none;
+      color: white;
+    }
+    .hero header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav ul li {
+      list-style: none;
+      display: inline-block;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      margin-left: 80px;
+      font-size: 15px;
+      border-bottom: 2px solid transparent;
+      transition: .5s;
+    }
+    nav ul li:not(:last-child) a:hover, 
+    nav ul li:not(:last-child) a:focus {
+      border-bottom: 2px solid white;
+    }
+
+    nav ul li.help a {
+      background: transparent;
+      color: white;
+      padding: 8px 15px;
+      border: 1px solid whitesmoke;
+      border-radius: 30px;
+    }
+    nav ul li.help:hover a {
+      border: 1px solid white;
+      color: black;
+      background: white;
+      transition: 0.5s
+    }
+
     </style>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <section class = "hero">
+
+      <div class = "main-width">
+        <header>
+          <div class = "game-name">
+            <h2><a href = "#"> Millionaire Tycoon</a> </h2>
+          </div>
+          
+          <nav>
+            <ul>
+              <li class = "active"><a href = "#">Games</a></li>
+              <li><a href = "#">Infinte</a></li>
+              <li><a href = "#">100 Years</a></li>
+              <li><a href = "#">1 Million</a></li>
+              <li class = "help"><a href = "#"> How to Play</a></li>
+            </ul>
+          </nav>
+          
+          
+        </header>
+      </div> 
+    </section>
+
+
   </body>
 </html>
