@@ -1,5 +1,7 @@
 # COSC345 Assignment 1
 
+## Introduction
+
 ## Group Members:
 
 ### Ben Knox
@@ -13,7 +15,11 @@ With a background in Finance and Computer Science, Vincent's expertise will be h
 ### Will Frame
 Will is a third year Computer Science student minoring in Information Science. He has been interested in stocks for a few years now as some of his family work in the field, and he has played a few investment simulator games in the past. He also did COSC360 (the game design paper) which could be very useful for this project/idea. He is proficient in Python and Java, with little C and C++ experience. Will is going to be mostly focused on programming, data processing, and game design.
 
-## Our idea
+### Purpose of the Requirements Document
+
+The purpose of this document is to provide an in-depth description of the requirements for our game, as well as a plan for development. The document achieves this by presenting a clear view of requirements of the system. It will serve as a basis and/or outline for the software design, development, and management. 
+
+### Our idea/scope of our project
 
 Our idea is a stock market simulator game. The objective of the game is to generate as much money as you can over the 100 years of your life. Everyone starts with a million US dollars and must use stocks, property, ETFs, precious metals, cryptocurrency, and more to generate income. Players can even get an education and a job in the game to earn extra income. High scores are stored in an online leaderboard.
 
@@ -21,7 +27,7 @@ There are two modes that will be supported for our game; a real-world trading ga
 
 Some other features we would like to add are options trading and starting your own business, however these ideas would almost definitely take up too much time to implement. If we have leftover time at the end we will give these a go.
 
-## Datasets
+### Datasets
 
 Our main dataset is NASDAQ's and the NYSE's historical stock data. The NASDAQ website (https://www.nasdaq.com/market-activity/quotes/historical) and the NYSE website (https://www.nyse.com/market-data/historical) both historical data for almost all of the stocks listed under the NASDAQ and NYSE.
 
@@ -33,14 +39,15 @@ We may also use a majors with salaries dataset (https://www.kaggle.com/code/cdel
 
 Our datasets go together because they can form a solid simulated investment economy. This opens the door for education and enjoyment by giving players the opportunity to see first hand how much they could earn if they owned a million dollars in cash.
 
-## Similar products and evidence of customer interest
+### Scheduling
 
-The most popular three similar products are "MarketWatch Virtual Stock Exchange", "The Stock Market Game", and "Investopedia Simulator". "MarketWatch Virtual Stock Exchange" and "The Stock Market Game" have lengthy signup processes that collect a large amount of data. "Investopedia Simulator" is the product the closest to what we hope to achieve, with a simple UI for the features we plan to implement, as well as a very simple starting process. The downfall of "Investopedia Simulator" is that alike the other similar products, there is no simulated economy, so the pacing of the game is extremely slow.
+To ensure we meet our assignment timeframe, we devised a PERT chart outlining the schedule for each team member to complete a working alpha version on time. Once the alpha version is released, we will reevaluate our schedule and create another PERT chart to ensure the beta version is completed within the designated time frame.
 
-There are a lot of business simulators and stock market simulator games, in which share the same objective as ours - make as much money as possible. We also believe the educational value of our stock market simulator could be useful to a larger customer base, teaching people to recognize how stock prices interact with financial news regarding companies.
+![Pert chart](pert.png)
 
+## Requirements
 
-## Functional requirements
+### Functional requirements
 
 - Stock Market Trading
 
@@ -70,8 +77,7 @@ Players must be able to manage their portfolio, being able to easily buy and sel
 
 Players of the real world mode must be able to receive real updated stock data daily.
 
-
-## Non-functional requirements
+### Non-functional requirements
 
 - Fun
 
@@ -101,7 +107,7 @@ The leaderboard should have high availability to provide consistent access to pl
 
 We decided on using Ultralight for our GUI rendering. Ultralight is a lightweight UI toolkit making use of HTML and CSS, which are familiar languages for our team.
 
-#### Assignment requirements:
+### General constraints (as per the assignment):
 
 - No multithreading
 
@@ -123,13 +129,7 @@ We will have to ask for clarification on what is required for CI/CD, we will pro
 
 As per the suggestion in the assignment requirements we will use Doxygen for documentation. 
 
-### Domain specific requirements
-
-| Requirement | Description |
-| ----------- | ----------- |
-| Stock Market Data | The game should have access to real-time and predicted stock market data to simulate real-world trading. This includes data for stocks, ETFs, precious metals, and cryptocurrencies. |
-| Property and Asset Management | Players should be able to buy and sell properties as investments. The game should simulate the process of buying a property, including other costs and potential returns from renting the properties out if desired. |
-| In-Game Economy | The game should simulate a realistic economy, with fluctuations in market prices, interest rates, and news headlines that may have an impact on stock prices or the economy. |
+### Specific requirements
 
 ### Form Based Requirements
 
@@ -140,8 +140,16 @@ As per the suggestion in the assignment requirements we will use Doxygen for doc
 | Leaderboard Update | Player scores | Updated leaderboard | The system should rank players based on their growth over the past month or year and update the leaderboard |
 | Economic Simulation | Real-world economic data | Simulated market prices, interest rates, etc. | The system should adjust the simulated economy based on real-world data |
 
+### Domain specific requirements
 
+| Requirement | Description |
+| ----------- | ----------- |
+| Stock Market Data | The game should have access to real-time and predicted stock market data to simulate real-world trading. This includes data for stocks, ETFs, precious metals, and cryptocurrencies. |
+| Property and Asset Management | Players should be able to buy and sell properties as investments. The game should simulate the process of buying a property, including other costs and potential returns from renting the properties out if desired. |
+| In-Game Economy | The game should simulate a realistic economy, with fluctuations in market prices, interest rates, and news headlines that may have an impact on stock prices or the economy. |
 
-TODO: 
+## Similar products and evidence of customer interest
 
-IEEE / ANSI 830-1998
+The most popular three similar products are "MarketWatch Virtual Stock Exchange", "The Stock Market Game", and "Investopedia Simulator". "MarketWatch Virtual Stock Exchange" and "The Stock Market Game" have lengthy signup processes that collect a large amount of data. "Investopedia Simulator" is the product the closest to what we hope to achieve, with a simple UI for the features we plan to implement, as well as a very simple starting process. The downfall of "Investopedia Simulator" is that alike the other similar products, there is no simulated economy, so the pacing of the game is extremely slow.
+
+There are a lot of business simulators and stock market simulator games, in which share the same objective as ours - make as much money as possible. We also believe the educational value of our stock market simulator could be useful to a larger customer base, teaching people to recognize how stock prices interact with financial news regarding companies.
