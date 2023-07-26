@@ -72,8 +72,8 @@
     transition: 0.5s;
   }
   
-  nav ul li:not(:last-child) a:hover,
-  nav ul li:not(:last-child) a:focus {
+  nav ul li a:hover,
+  nav ul li a:focus {
     border-bottom: 2px solid #2BAE66;
   }
   
