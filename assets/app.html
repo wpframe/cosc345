@@ -5,11 +5,6 @@
     <meta name="viewport" content = "width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="home-page.css">
-    <script>
-      document.getElementById('Infinite').onclick = function button() {
-      alert("button was clicked")
-      };
-    </script>
   </head>
   <body>
     <section class = "hero">
@@ -22,11 +17,11 @@
           
           <nav>
             <ul>
-              <li class = "Infinite"><a href = "#">Infinte</a></li>
-              <li><a href = "#">100 Years</a></li>
-              <li><a href = "#">Millionaire Speedrun</a></li>
-              <li class = "active"><a href = "#">Leaderboards</a></li>
-              <li class = "help"><a href = "#"> How to Play</a></li>
+              <li><button id = "infinite">Infinite</button></li>
+              <li><button id = "100years">100 Years</button></li>
+              <li><button id = "speedrun">Millionaire Speedrun</button></li>
+              <li><button id = "leaderboard">Leaderboards</button></li>
+              <li class = "help"><button id = "help">How to Play</button></li>
             </ul>
           </nav>
           
@@ -34,7 +29,13 @@
         </header>
       </div> 
     </section>
+    <script>
 
+      document.getElementById('infinite').onclick = function button() {
+        document.getElementById("infinite").innerHTML = "NOT";
+        return true;
+      };
+    </script>
 
   </body>
 </html>

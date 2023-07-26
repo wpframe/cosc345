@@ -67,7 +67,8 @@
     align-items: center; /* Center nav items vertically */
   }
   
-  nav ul li a {
+  nav ul li button {
+    border: 0;
     color: #2BAE66;
     text-decoration: none;
     font-size: 24px;
@@ -76,12 +77,16 @@
     transition: 0.5s;
   }
   
-  nav ul li:not(:last-child) a:hover,
-  nav ul li:not(:last-child) a:focus {
+  button {
+    font-family: 'Evil', sans-serif;
+  }
+  
+  nav ul li:not(:last-child) button:hover,
+  nav ul li:not(:last-child) button:focus{
     border-bottom: 2px solid #2BAE66;
   }
   
-  nav ul li.help a {
+  nav ul li.help button {
     margin: 20px;
     background: transparent;
     color: #2BAE66;
@@ -90,7 +95,7 @@
     border-radius: 30px;
   }
   
-  nav ul li.help:hover a {
+  nav ul li.help:hover button {
     border: 1px solid #2BAE66;
     color: white;
     background: #2BAE66;
