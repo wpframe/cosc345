@@ -106,6 +106,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
                        bool is_main_frame,
                        const String &url)
 {
+
+  // overlay_->view()->EvaluateScript("button()");
   ///
   /// This is called when a frame's DOM has finished loading on the page.
   ///
