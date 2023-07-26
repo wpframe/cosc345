@@ -43,7 +43,7 @@ Our datasets go together because they can form a solid simulated investment econ
 
 ### Scheduling
 
-Being wary of our assignment timeframe, we created a pert chart to outline the scheduling of each team member.
+To ensure we meet our assignment timeframe, we devised a PERT chart outlining the schedule for each team member to complete a working alpha version on time. Once the alpha version is released, we will reevaluate our schedule and create another PERT chart to ensure the beta version is completed within the designated time frame.
 
 ![Pert chart](pert.png)
 
