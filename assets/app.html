@@ -1,41 +1,43 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>MyApp -- (app.html)</title>
-    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="home-page.css">
-  </head>
-  <body>
-    <section class = "hero">
 
-      <div class = "main-width">
-        <header>
-          <div class = "game-name">
-            <h2>Millionaire Tycoon </h2>
-          </div>
-          
-          <nav>
-            <ul>
-              <li><button id = "infinite">Infinite</button></li>
-              <li><button id = "100years">100 Years</button></li>
-              <li><button id = "speedrun">Millionaire Speedrun</button></li>
-              <li><button id = "leaderboard">Leaderboards</button></li>
-              <li class = "help"><button id = "help">How to Play</button></li>
-            </ul>
-          </nav>
-          
-          
-        </header>
-      </div> 
-    </section>
-    <script>
+<head>
+  <meta charset="utf-8">
+  <title>MyApp -- (app.html)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="home-page.css">
+</head>
 
-      document.getElementById('infinite').onclick = function button() {
-        document.getElementById("infinite").innerHTML = "NOT";
-        return true;
-      };
-    </script>
+<body>
+  <section class="hero">
+    <div class="main-width">
+      <header>
+        <div class="game-name">
+          <h2>Millionaire Tycoon </h2>
+        </div>
+        <nav>
+          <ul>
+            <li><button id="infinite" onclick="goToInfinite()">Infinite</button></li>
+            <li><button id="100years">100 Years</button></li>
+            <li><button id="speedrun">Millionaire Speedrun</button></li>
+            <li><button id="leaderboard">Leaderboards</button></li>
+            <li class="help"><button id="help">How to Play</button></li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+  </section>
 
-  </body>
+  <script>
+    function goToInfinite() {
+      // Change the button text
+      document.getElementById("infinite").innerHTML = "NOT";
+
+      // Redirect to "infinite.html"
+      window.location.href = "infinite.html";
+    }
+  </script>
+</body>
+
 </html>
