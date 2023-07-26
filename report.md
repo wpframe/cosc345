@@ -15,11 +15,9 @@ With a background in Finance and Computer Science, Vincent's expertise will be h
 ### Will Frame
 Will is a third year Computer Science student minoring in Information Science. He has been interested in stocks for a few years now as some of his family work in the field, and he has played a few investment simulator games in the past. He also did COSC360 (the game design paper) which could be very useful for this project/idea. He is proficient in Python and Java, with little C and C++ experience. Will is going to be mostly focused on programming, data processing, and game design.
 
-### Purpose of the Requirements Document (ChatGPTed)
+### Purpose of the Requirements Document
 
-The purpose of this document is to provide a comprehensive description of the requirements for our game. This document presents a clear and concise view of the functional, non-functional, and domain-specific requirements of the proposed system. 
-
-The document is meant to provide a common understanding between the stakeholders, which includes the development team, project managers, and end-users, about the features, constraints, and the expected behavior of the system. It will serve as a basis for the software design and development, project management, system validation and verification, and user manual documentation. It also acts as a contract between the client and the software developers specifying what the software product is required to do.
+The purpose of this document is to provide an in-depth description of the requirements for our game, as well as a plan for development. The document achieves this by presenting a clear view of requirements of the system. It will serve as a basis and/or outline for the software design, development, and management. 
 
 ### Our idea/scope of our project
 
