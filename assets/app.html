@@ -19,23 +19,104 @@
         <nav>
           <ul>
             <li><button id="infinite" onclick="goToInfinite()">Infinite</button></li>
-            <li><button id="100years">100 Years</button></li>
+            <li><button id="100years" onclick="goTo100Years()">100 Years</button></li>
             <li><button id="speedrun">Millionaire Speedrun</button></li>
             <li><button id="leaderboard">Leaderboards</button></li>
-            <li class="help"><button id="help">How to Play</button></li>
+            <li class="help"><button id="help" onclick="showHowToPlay()">How to Play</button></li>
           </ul>
         </nav>
       </header>
     </div>
   </section>
 
+  <!-- Custom Modal -->
+  <div class="modal" id="howToPlayModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p>
+        <strong>Welcome to Millionaire Tycoon - The Stock Market Simulator Game!</strong>
+        <br><br>
+        <strong>Objective:</strong> Your goal is to generate as much money as you can over the span of 100 years. You
+        start with a million US dollars, and your task is to invest wisely in stocks, properties, ETFs, precious metals,
+        and even cryptocurrencies to grow your wealth. Remember, high scores are recorded on the online leaderboard, so
+        aim to top the charts!
+        <br><br>
+        <strong>Getting Started:</strong>
+      <ul>
+        <li>Click on the "Infinite" button to begin your journey as a tycoon.</li>
+        <li>Explore the various investment opportunities available to you.</li>
+      </ul>
+      <br>
+      <strong>Investment Options:</strong>
+      <ul>
+        <li><strong>Stock Market Trading:</strong> Buy and sell stocks to make profits. Enter the stock symbol, number
+          of shares, and buy/sell order to execute transactions.</li>
+        <li><strong>Real Estate Trading:</strong> Buy, sell, and rent out properties for additional income. Keep an eye
+          on property prices and potential rental returns.</li>
+        <li><strong>Job and Education Simulation:</strong> Choose an education and job to boost your earnings alongside
+          your investments.</li>
+      </ul>
+      <br>
+      <strong>Economic Simulation:</strong>
+      <br>
+      The game simulates a realistic economy with news headlines impacting stock prices and the overall economy. Stay
+      updated with the latest financial news!
+      <br><br>
+      <strong>Managing Your Portfolio:</strong>
+      <br>
+      Use the "Portfolio Management" feature to easily buy and sell stocks at any available quantity.
+      <br><br>
+      <strong>Real-time Data:</strong>
+      <br>
+      Players in the real-world trading mode receive real-time stock data daily, so keep an eye on market trends.
+      <br><br>
+      <strong>Tips for Success:</strong>
+      <ul>
+        <li>Keep track of real-world stock market data and predictions.</li>
+        <li>Diversify your investments to minimize risks.</li>
+        <li>Stay informed with news headlines and their impact on company stocks.</li>
+        <li>Manage your portfolio wisely and adapt to market changes.</li>
+      </ul>
+      <br>
+      <strong>Have Fun & Learn:</strong>
+      <br>
+      The game is designed to be engaging and educational. Enjoy learning about the stock market while having fun
+      growing your wealth!
+      <br><br>
+      <strong>In-Game Help:</strong>
+      <br>
+      Need assistance? Check the in-game help or tutorial section for guidance and instructions.
+      <br><br>
+      <strong>Ready to become a Millionaire Tycoon?</strong> Click the "Infinite" button and let the journey begin! Good
+      luck!
+      </p>
+    </div>
+  </div>
+
   <script>
     function goToInfinite() {
       // Change the button text
-      document.getElementById("infinite").innerHTML = "NOT";
+      document.getElementById("infinite").innerHTML;
 
       // Redirect to "infinite.html"
       window.location.href = "infinite.html";
+    }
+    function goTo100Years() {
+      // Change the button text
+      document.getElementById("100years").innerHTML;
+
+      // Redirect to "infinite.html"
+      window.location.href = "100-years.html";
+    }
+
+    function showHowToPlay() {
+      // Show the custom modal with instructions
+      document.getElementById("howToPlayModal").style.display = "block";
+    }
+
+    function closeModal() {
+      // Close the custom modal
+      document.getElementById("howToPlayModal").style.display = "none";
     }
   </script>
 </body>
