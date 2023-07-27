@@ -8,6 +8,7 @@
 Ben has studied finance and computer science at Otago. Meaning the knowledge attained from his finance degree will help in the implementation of trading stocks. He is most comfortable coding in Python and Java but has some knowledge of C and C++. His experience in coding leans towards backend development however he is open to learning different concepts in the creation of UI as needed. He will provide help in generating backend functionality to parts of the game.
 
 ### Shamen Kumar
+In his third year of studying computer science, Shamen is eager to make valuable contributions through the programming skills he has developed in this time. Although his experience with C++ is limited, he is determined to enhance his skills in the language and leverage his current coding abilities to support the group's efforts in any way possible. With a collaborative approach, Shamen looks forward to both learning from fellow group members and actively contributing to the project's needs.
 
 ### Vincent Lee
 With a background in Finance and Computer Science, Vincent's expertise will be helpful in designing realistic market scenarios and ensuring the accuracy of the game mechanics. Despite not having extensive experience in C++, he is eager to contribute in any way he can. He thrives in a team environment and will use his communication and management skills to ensure the group is on track with their project. Vincent's adaptable nature means he doesn't mind what task to do and is willing to take on any role needed to support the team's success. 
