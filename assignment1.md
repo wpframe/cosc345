@@ -10,6 +10,10 @@ There are two modes that will be supported for our game; a real-world trading ga
 
 If we have extra time at the end, we would like to add options trading and starting your own business. We believe these would take up too much time if we try to implement them from the start.
 
+Here's an extremely simple mockup of our program:
+
+![Mockup](mockup.png)
+
 ## Group Members:
 
 ### Ben Knox
