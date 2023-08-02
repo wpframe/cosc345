@@ -6,7 +6,7 @@ Team members:
 - Vincent Lee
 - Will Frame
 
-[Our report](assignment1.md)
+[Our report](docs/assignment1.md)
 
 To build, simply run [build.sh](build.sh) with ``./build.sh`` with CMake installed.
 
