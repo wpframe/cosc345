@@ -85,3 +85,63 @@ nav ul li button:hover,
 nav ul li button:focus {
   border-bottom: 2px solid #2BAE66;
 }
+
+/* Container for both the background div and the graph */
+.container {
+  position: relative; /* Add relative positioning to the container */
+}
+
+/* Styles for the background div */
+.graphBox {
+  /* Set the width to 3/5 of the screen width minus 100px for spacing */
+  width: calc((3/5 * 100vw));
+  /* Set the height to 80% of the viewport height */
+  height: 60vh;
+  /* Set the right margin to 100px for spacing */
+  right: 30px;
+  /* Set the top margin to 100px */
+  margin-top: 30px;
+  /* Add some padding for the content inside the div */
+  padding: 20px;
+  /* Use absolute positioning to place the div against the right side */
+  position: absolute;
+  /* Set the background color */
+  background: #f0f0f0;
+  /* Add border-radius for rounded corners */
+  border-radius: 10px;
+}
+
+/* Styles for the graph */
+.graph {
+  /* Set the width to 1/2 of the screen width minus 100px for spacing */
+  width: calc((1/2 * 100vw));
+  /* Set the height to 250px (you can adjust this value as needed) */
+  height: 350px;
+  /* Set the top margin to 100px */
+  margin-top: 40px;
+  /* Add some padding for the content inside the graph */
+  padding: 0;
+  /* Use absolute positioning to place the graph against the right side */
+  position: absolute;
+  /* Add borders to the right and bottom for the graph appearance */
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  /* Set the right margin to 100px for spacing */
+  right: 100px;
+}
+
+
+#x1, #y1 {
+  position: absolute;
+  font-size: larger;
+  }
+#x1 {
+  bottom: -40px;
+  left: 330px;
+}
+#y1{
+  left: -60px;
+  bottom: 175px;
+  }
+
+  
