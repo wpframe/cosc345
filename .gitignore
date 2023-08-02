@@ -4,3 +4,5 @@
 /build/
 # Ignore VSCode configuration file
 .vscode
+# And Mac folder metadata file
+.DS_Store
