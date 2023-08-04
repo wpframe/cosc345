@@ -57,6 +57,10 @@
 
         <div id="totalPrice"></div>
 
+        <div id="commitTransaction">
+          <button onclick="commitTransaction()" id="buySell">Commit</button>
+        </div>
+
 
 
       </div>
@@ -108,6 +112,12 @@
         }
       }
     }
+
+    function showStockInfo(currentPrice, stocksAvailable){
+      document.getElementById("currentPrice").textContent = currentPrice;
+      document.getElementById("stocksAvailable").textContent = stocksAvailable;
+    }
+
     function switchBuySell() {
       var button = document.getElementById("buySell");
       if (button.innerHTML === "Buy") {

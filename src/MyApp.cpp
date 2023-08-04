@@ -107,7 +107,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
                        const String &url)
 {
 
-  // overlay_->view()->EvaluateScript("button()");
+  caller->EvaluateScript("showStockInfo('$1000000', '48964')");
   ///
   /// This is called when a frame's DOM has finished loading on the page.
   ///
