@@ -1,5 +1,8 @@
 # COSC345
 
+[![CMake](https://github.com/wpframe/cosc345/actions/workflows/cmake.yml/badge.svg)](https://github.com/wpframe/cosc345/actions/workflows/cmake.yml)
+
+
 Team members:
 - Ben Knox
 - Shamen Kumar
