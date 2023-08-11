@@ -2,9 +2,26 @@
 #include "stock.h"
 #include <iostream>
 #include <vector>
+#include <filesystem>
+#include <string>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
+
+std::string findPathFromApp()
+{
+  std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path();
+  std::string modifiedPath = currentPath;
+
+  size_t pos = modifiedPath.rfind("build");
+
+  if (pos != std::string::npos)
+  {
+    modifiedPath.erase(pos);
+  }
+
+  return modifiedPath;
+}
 
 MyApp::MyApp()
 {
@@ -111,7 +128,9 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 {
 
   caller->EvaluateScript("showStockInfo('$1000000', '48964')");
-  std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
+  std::string absPath = findPathFromApp();
+  std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
+  // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
   // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
   std::vector<Stock> stocks = Stock::readStocksFromCSV(filename);
   if (!stocks.empty())
