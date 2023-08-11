@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <unistd.h>
+// #include <unistd.h>    // NEED THIS FOR THE findPathFromApp METHOD BUT DOES NOT BUILD ON WINDOWS
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
@@ -11,12 +11,13 @@
 std::string findPathFromApp()
 {
 
-  char buffer[PATH_MAX]; // PATH_MAX is a macro representing the maximum path length
-  if (getcwd(buffer, sizeof(buffer)) == nullptr)
-  {
-    std::cout << "Could not find current directory: " << std::endl;
-    return "";
-  }
+  // char buffer[PATH_MAX]; // PATH_MAX is a macro representing the maximum path length
+  // if (getcwd(buffer, sizeof(buffer)) == nullptr)
+  // {
+  //   std::cout << "Could not find current directory: " << std::endl;
+  //   return "";
+  // }
+  std::string buffer = "/Users/admin/Desktop/cosc345/cosc345/build/MyApp.app/Contents/MacOS/MyApp";
 
   // std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path(); // NEED TO UPDATE COMPILER TO USE THIS
   std::string modifiedPath = buffer;
