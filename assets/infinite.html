@@ -31,18 +31,26 @@
       </header>
 
       <!-- buy/sell -->
-      <div class="left-container">
-        <div class="dropdown">
-          <button onclick="dropdown()" class="dropbtn">Choose Stock</button>
-          <div id="myDropdown" class="dropdown-content">
-            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-            <a href="#about">AAPL</a>
-            <a href="#base">AMZN</a>
-            <a href="#blog">GOOG</a>
-            <a href="#contact">AMGN</a>
-            <a href="#custom">MSFT</a>
-          </div>
+      <!-- <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+          <div class="dropdown-content">
+            <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+            <a href="#">Option 3</a>
+            
         </div>
+      </div> -->
+
+      <div class="dropdown">
+        <button class="dropbtn" onclick="toggleDropdown()">Dropdown</button>
+        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+        <div class="dropdown-content" id="dropdownContent">
+          <!-- Your dropdown options here -->
+          <a href="#">Option 1</a>
+            <a href="#">Option 2</a>
+        </div>
+      </div>
 
         <div id="buySellContainer">
           <button onclick="switchBuySell()" id="buySell">Buy</button>
@@ -85,65 +93,8 @@
 
     </div>
   </section>
-  <script>
-    function goToHome() {
-      // Change the button text
-      document.getElementById("home").innerHTML;
-
-      // Redirect to home
-      window.location.href = "app.html";
-    }
-    function dropdown() {
-      document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-    function filterFunction() {
-      var input, filter, ul, li, a, i;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      div = document.getElementById("myDropdown");
-      a = div.getElementsByTagName("a");
-      for (i = 0; i < a.length; i++) {
-        txtValue = a[i].textContent || a[i].innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          a[i].style.display = "";
-        } else {
-          a[i].style.display = "none";
-        }
-      }
-    }
-
-    function showStockInfo(currentPrice, stocksAvailable){
-      document.getElementById("currentPrice").textContent = currentPrice;
-      document.getElementById("stocksAvailable").textContent = stocksAvailable;
-    }
-
-    function switchBuySell() {
-      var button = document.getElementById("buySell");
-      if (button.innerHTML === "Buy") {
-        // Change the content to "Sell" if it's currently "Buy"
-        button.innerHTML = "Sell";
-      } else {
-        // Change the content to "Buy" if it's currently "Sell" or any other text
-        button.innerHTML = "Buy";
-      }
-    }
-    function updateTotalPrice() {
-      var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(1));
-      var quantity = parseInt(document.getElementById("quantity").value);
-
-      var totalPrice = currentPrice * quantity;
-      
-      if (isNaN(quantity)) {
-        document.getElementById("totalPrice").textContent = "Total Price: $0.00";
-        return;
-      }
-
-      document.getElementById("totalPrice").textContent = "Total Price: $" + totalPrice.toFixed(2);
-  }
-  // Add an event listener to the quantity input element
-  document.getElementById("quantity").addEventListener("input", updateTotalPrice);
-  </script>
+  
+  <script src="infinite.js"></script>
 
 </body>
 

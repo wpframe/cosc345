@@ -1,3 +1,5 @@
+
+
 @font-face {
   font-family: Evil;
   src: url(fonts/EvilEmpire-4BBVK.ttf);
@@ -173,6 +175,12 @@ nav ul li button:focus {
   padding: 14px 20px 12px 45px;
   border: none;
   border-bottom: 1px solid #ddd;
+
+  height: 50px; /* Adjust the height as needed */
+  
+  /* Set the input to stay at the top */
+  position: fixed; /* or position: fixed; */
+  z-index: 2; /* Make sure it's above the dropdown content */
 }
 
 /* The search field when it gets focus/clicked on */
@@ -192,6 +200,9 @@ nav ul li button:focus {
   min-width: 230px;
   border: 1px solid #ddd;
   z-index: 1;
+
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto;
 }
 
 /* Links inside the dropdown */

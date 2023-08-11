@@ -1,4 +1,6 @@
 #include "MyApp.h"
+#include "stock.h"
+#include <iostream>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
@@ -108,6 +110,22 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 {
 
   caller->EvaluateScript("showStockInfo('$1000000', '48964')");
+  std::string filename = "../../../../src/NASDAQ.csv"; // FOR MAC
+  // std::string filename = "src/NASDAQ.csv";  // FOR WINDOWS
+  std::vector<Stock> stocks = Stock::readStocksFromCSV(filename);
+  if (!stocks.empty())
+  {
+    for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
+    {
+      const Stock &stock = stocks[i];
+      ultralight::String symbol = stock.symbol.c_str();
+      caller->EvaluateScript("addStockDropdown('" + symbol + "', 'home')");
+    }
+  }
+  else
+  {
+    std::cout << "No stocks found in the CSV." << std::endl;
+  }
   ///
   /// This is called when a frame's DOM has finished loading on the page.
   ///
