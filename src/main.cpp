@@ -1,6 +1,7 @@
 #include "MyApp.h"
 
-int main() {
+int main()
+{
   MyApp app;
   app.Run();
 

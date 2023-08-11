@@ -6,50 +6,29 @@ function goToHome() {
     // Redirect to home
     window.location.href = "app.html";
 }
-// function filterFunction() {
-//     var input, filter, ul, li, a, i;
-//     input = document.getElementById("myInput");
-//     filter = input.value.toUpperCase();
-//     dropdownContent = document.getElementById("dropdownContent");
-//     a = dropdownContent.getElementsByTagName("a");
-//     for (i = 0; i < a.length; i++) {
-//         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-//             a[i].style.display = "";
-//         } else {
-//             a[i].style.display = "none";
-//         }
-//     }
-// }
-function filterDropdown() {
-    var input = document.getElementById("myInput");
-    var filter = input.value.toLowerCase();
-    var dropdownContent = document.getElementById("dropdownContent");
-    var dropdownOptions = dropdownContent.getElementsByTagName("a");
+function dropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
 
-    for (var i = 0; i < dropdownOptions.length; i++) {
-        var option = dropdownOptions[i];
-        if (option.textContent.toLowerCase().indexOf(filter) > -1) {
-            option.style.display = "";
+function filterFunction() {
+    var input, filter, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("myDropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
         } else {
-            option.style.display = "none";
+            a[i].style.display = "none";
         }
     }
 }
 
-// Function to toggle the dropdown visibility
-// Function to toggle the visibility of the dropdown options
-function toggleDropdown() {
-    var dropdownContent = document.getElementById("dropdownContent");
-    if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-    } else {
-        dropdownContent.style.display = "block";
-    }
-}
-
-// Close the dropdown options if the user clicks outside of it
 window.onclick = function (event) {
     var searchInput = document.getElementById("myInput");
+    var dropdownContent = document.getElementById("myDropdown");
 
     // Check if the clicked element is not the dropdown button or the search input
     if (!event.target.matches('.dropbtn') && event.target !== searchInput) {
@@ -63,8 +42,6 @@ window.onclick = function (event) {
         }
     }
 }
-
-
 
 function showStockInfo(currentPrice, stocksAvailable) {
     document.getElementById("currentPrice").textContent = currentPrice;
@@ -99,7 +76,7 @@ document.getElementById("quantity").addEventListener("input", updateTotalPrice);
 
 
 function addStockDropdown(linkText, linkHref) {
-    var dropdown = document.getElementById("dropdownContent");
+    var dropdown = document.getElementById("myDropdown");
     var newLink = document.createElement("a");
     newLink.href = linkHref;
     newLink.textContent = linkText;

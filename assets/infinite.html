@@ -31,26 +31,18 @@
       </header>
 
       <!-- buy/sell -->
-      <!-- <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
-          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-          <div class="dropdown-content">
-            <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-            <a href="#">Option 3</a>
-            
+      <div class="left-container">
+        <div class="dropdown">
+          <button onclick="dropdown()" class="dropbtn">Choose Stock</button>
+          <div id="myDropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+            <a href="#about">AAPL</a>
+            <a href="#base">AMZN</a>
+            <a href="#blog">GOOG</a>
+            <a href="#contact">AMGN</a>
+            <a href="#custom">MSFT</a>
+          </div>
         </div>
-      </div> -->
-
-      <div class="dropdown">
-        <button class="dropbtn" onclick="toggleDropdown()">Dropdown</button>
-        <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-        <div class="dropdown-content" id="dropdownContent">
-          <!-- Your dropdown options here -->
-          <a href="#">Option 1</a>
-            <a href="#">Option 2</a>
-        </div>
-      </div>
 
         <div id="buySellContainer">
           <button onclick="switchBuySell()" id="buySell">Buy</button>

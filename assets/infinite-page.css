@@ -1,5 +1,3 @@
-
-
 @font-face {
   font-family: Evil;
   src: url(fonts/EvilEmpire-4BBVK.ttf);
@@ -180,6 +178,7 @@ nav ul li button:focus {
   
   /* Set the input to stay at the top */
   position: fixed; /* or position: fixed; */
+  top: 130px;
   z-index: 2; /* Make sure it's above the dropdown content */
 }
 

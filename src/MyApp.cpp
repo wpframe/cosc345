@@ -1,6 +1,7 @@
 #include "MyApp.h"
 #include "stock.h"
 #include <iostream>
+#include <vector>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
