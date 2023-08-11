@@ -4,14 +4,23 @@
 #include <vector>
 #include <filesystem>
 #include <string>
+#include <unistd.h>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
 
 std::string findPathFromApp()
 {
-  std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path();
-  std::string modifiedPath = currentPath;
+
+  char buffer[PATH_MAX]; // PATH_MAX is a macro representing the maximum path length
+  if (getcwd(buffer, sizeof(buffer)) == nullptr)
+  {
+    std::cout << "Could not find current directory: " << std::endl;
+    return "";
+  }
+
+  // std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path(); // NEED TO UPDATE COMPILER TO USE THIS
+  std::string modifiedPath = buffer;
 
   size_t pos = modifiedPath.rfind("build");
 
