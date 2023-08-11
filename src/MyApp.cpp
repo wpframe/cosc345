@@ -111,8 +111,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 {
 
   caller->EvaluateScript("showStockInfo('$1000000', '48964')");
-  std::string filename = "../../../../src/NASDAQ.csv"; // FOR MAC
-  // std::string filename = "src/NASDAQ.csv";  // FOR WINDOWS
+  std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
+  // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
   std::vector<Stock> stocks = Stock::readStocksFromCSV(filename);
   if (!stocks.empty())
   {
@@ -120,7 +120,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     {
       const Stock &stock = stocks[i];
       ultralight::String symbol = stock.symbol.c_str();
-      caller->EvaluateScript("addStockDropdown('" + symbol + "', 'home')");
+      caller->EvaluateScript("addStockDropdown('" + symbol + "')");
     }
   }
   else

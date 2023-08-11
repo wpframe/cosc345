@@ -61,7 +61,6 @@ nav ul {
 }
 
 /* Styles for all buttons */
-button,
 nav ul li button {
   border: 0;
   background: transparent;
@@ -79,8 +78,6 @@ nav ul li:not(:last-child) {
   margin-right: 20px;
 }
 
-button:hover,
-button:focus,
 nav ul li button:hover,
 nav ul li button:focus {
   border-bottom: 2px solid #2BAE66;
@@ -158,15 +155,14 @@ nav ul li button:focus {
   cursor: pointer;
 }
 
-/* Dropdown button on hover & focus */
+/* Dropdown button on hover & focus
 .dropbtn:hover, .dropbtn:focus {
   background-color: #3e8e41;
-}
+} */
 
 /* The search field */
 #myInput {
   box-sizing: border-box;
-  background-image: url('searchicon.png');
   background-position: 14px 12px;
   background-repeat: no-repeat;
   font-size: 16px;
@@ -205,11 +201,13 @@ nav ul li button:focus {
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.dropdown-content button {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
+  border: none; /* Remove any border on the buttons */
+  background: none; /* Remove the background color */
 }
 
 /* Change color of dropdown links on hover */
@@ -226,5 +224,13 @@ nav ul li button:focus {
   position: absolute;
   top: 110px;
   left: 40px;
+}
+
+#buySellContainer button,
+#commitTransaction button {
+  border-radius: 20px;
+  border: 1px solid black;
+  margin: 4px;
+  padding: 4px;
 }
   

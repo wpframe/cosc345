@@ -33,14 +33,14 @@
       <!-- buy/sell -->
       <div class="left-container">
         <div class="dropdown">
-          <button onclick="dropdown()" class="dropbtn">Choose Stock</button>
+          <button onclick="toggleDropdown()" class="dropbtn">Choose Stock</button>
           <div id="myDropdown" class="dropdown-content">
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-            <a href="#about">AAPL</a>
-            <a href="#base">AMZN</a>
-            <a href="#blog">GOOG</a>
-            <a href="#contact">AMGN</a>
-            <a href="#custom">MSFT</a>
+            <button type="button" onclick="selectStock('AAPL')">AAPL</button>
+            <button type="button" onclick="selectStock('AMZN')">AMZN</button>
+            <button type="button" onclick="selectStock('GOOG')">GOOG</button>
+            <button type="button" onclick="selectStock('AMGN')">AMGN</button>
+            <button type="button" onclick="selectStock('MSFT')">MSFT</button>
           </div>
         </div>
 
