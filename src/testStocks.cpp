@@ -2,13 +2,15 @@
 #include "Stock.h"
 #include <iostream>
 
+// TEMPORARY TEST APP 
+
 testStocks::testStocks() {}
 
 void testStocks::run() {
     std::string filename = "data/nasdaq_screener_filtered.csv";  // Assuming the CSV file is named "stocks.csv"
     std::vector<Stock> stocks = parseCSV(filename);
 
-    for (const Stock& stock : stocks) {
+    for (Stock& stock : stocks) {
         std::cout << "Symbol: " << stock.symbol;
         std::cout << "\tName: " << stock.name;
         std::cout << "\tOutstanding: " << stock.outstanding;
@@ -17,7 +19,14 @@ void testStocks::run() {
         std::cout << "\tIndustry: " << stock.industry << std::endl;
 
         std::cout << "--------------------------" << std::endl;
+
+        stock.parseHistory();
+        const auto& history = stock.history;
+        for (const auto& entry : history) {
+            std::cout << "Date: " << entry.date << ", Close Price: " << entry.closePrice << std::endl;
+        }
     }
+
     
 }
 

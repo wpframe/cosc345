@@ -50,3 +50,31 @@ std::vector<Stock> parseCSV(const std::string& filename) {
     file.close();
     return stocks;
 }
+
+void Stock::parseHistory() {
+    std::string filename = "data/stocks/" + symbol + ".csv";
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        std::cerr << "Failed to open the history file: " << filename << std::endl;
+        return;
+    }
+
+    std::string line;
+    // Skip the header line
+    std::getline(file, line);
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        StockHistory entry;
+
+        std::getline(ss, entry.date, ',');
+        std::string closePriceStr;
+        std::getline(ss, closePriceStr, ',');
+        entry.closePrice = std::stod(closePriceStr);
+
+        history.push_back(entry);
+    }
+
+    file.close();
+}
