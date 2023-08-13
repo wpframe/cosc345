@@ -5,12 +5,10 @@
 #include <vector>
 #include "Stock.h"
 
-// ChatGPTed
-
 class Headline {
 public:
     std::string headline;
-    std::string multiplier;
+    double multiplier;
     std::string sector;
     std::string type;
 
@@ -20,8 +18,8 @@ public:
     static std::vector<Headline> rare_news;
     static std::vector<Headline> world_news;
 
-    Headline(const std::string& h, const std::string& m, const std::string& s, const std::string& t);
-    static std::string generateHeadline(const Stock& stock, unsigned int seed);
+    Headline(const std::string& h, const double& m, const std::string& s, const std::string& t);
+    static std::pair<std::string, double> generateHeadline(const Stock& stock, unsigned int seed);
     static std::vector<Headline> read_from_csv(const std::string& filename);
 };
 

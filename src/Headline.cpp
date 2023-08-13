@@ -12,7 +12,7 @@ std::vector<Headline> Headline::funny_news;
 std::vector<Headline> Headline::rare_news;
 std::vector<Headline> Headline::world_news;
 
-Headline::Headline(const std::string& h, const std::string& m, const std::string& s, const std::string& t)
+Headline::Headline(const std::string& h, const double& m, const std::string& s, const std::string& t)
     : headline(h), multiplier(m), sector(s), type(t) {}
     
 
@@ -41,7 +41,7 @@ std::vector<Headline> Headline::read_from_csv(const std::string& filename) {
         std::getline(ss, sector, ',');
         std::getline(ss, type, ',');
 
-        headlines.emplace_back(headline, multiplier, sector, type);
+        headlines.emplace_back(headline, std::stod(multiplier), sector, type);
     }
 
     file.close();
@@ -63,14 +63,13 @@ std::vector<Headline> Headline::read_from_csv(const std::string& filename) {
     return headlines;
 }
 
-std::string Headline::generateHeadline(const Stock& stock, unsigned int seed) {
+std::pair<std::string, double> Headline::generateHeadline(const Stock& stock, unsigned int seed) {
     srand(seed); // Seed the random number generator with the provided seed
 
     int financial_chance = rand() % 20;
     int rare_chance = rand() % 300;
     int funny_chance = rand() % 80;
     int tech_chance = (stock.sector == "Technology") ? rand() % 600 : 601; // If not tech, set it to an impossible value
-    
     
     std::vector<Headline>* selected_news = nullptr;
 
@@ -87,6 +86,7 @@ std::string Headline::generateHeadline(const Stock& stock, unsigned int seed) {
     if (selected_news && !selected_news->empty()) {
         int chosen_index = rand() % selected_news->size();
         std::string selected_headline = (*selected_news)[chosen_index].headline;
+        double selected_multiplier = (*selected_news)[chosen_index].multiplier;
 
         // Replace the placeholder with the stock's name
         size_t pos = selected_headline.find("[Stock]");
@@ -94,9 +94,8 @@ std::string Headline::generateHeadline(const Stock& stock, unsigned int seed) {
             selected_headline.replace(pos, 7, stock.name);
         }
         
-        return selected_headline;
+        return {selected_headline, selected_multiplier}; // Return both the headline and the multiplier
     } else {
-        
-        return "";
+        return {"", 1}; // Return empty strings if no headline is selected
     }
 }
