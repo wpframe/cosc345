@@ -2,8 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "stock.h"
+#include "Stock.h"
 
+// ChatGPTed
 
 std::vector<Headline> Headline::financial_news;
 std::vector<Headline> Headline::tech_news;
@@ -65,11 +66,12 @@ std::vector<Headline> Headline::read_from_csv(const std::string& filename) {
 std::string Headline::generateHeadline(const Stock& stock, unsigned int seed) {
     srand(seed); // Seed the random number generator with the provided seed
 
-    int financial_chance = rand() % 200;
-    int rare_chance = rand() % 3000;
-    int funny_chance = rand() % 800;
-    int tech_chance = (stock.sector == "Tech") ? rand() % 600 : 601; // If not tech, set it to an impossible value
-
+    int financial_chance = rand() % 20;
+    int rare_chance = rand() % 300;
+    int funny_chance = rand() % 80;
+    int tech_chance = (stock.sector == "Technology") ? rand() % 600 : 601; // If not tech, set it to an impossible value
+    
+    
     std::vector<Headline>* selected_news = nullptr;
 
     if (financial_chance == 0) {
@@ -81,7 +83,7 @@ std::string Headline::generateHeadline(const Stock& stock, unsigned int seed) {
     } else if (tech_chance == 0) {
         selected_news = &tech_news;
     }
-
+    
     if (selected_news && !selected_news->empty()) {
         int chosen_index = rand() % selected_news->size();
         std::string selected_headline = (*selected_news)[chosen_index].headline;
@@ -91,9 +93,10 @@ std::string Headline::generateHeadline(const Stock& stock, unsigned int seed) {
         if (pos != std::string::npos) {
             selected_headline.replace(pos, 7, stock.name);
         }
-
+        
         return selected_headline;
     } else {
+        
         return "";
     }
 }

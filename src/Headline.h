@@ -3,7 +3,9 @@
 
 #include <string>
 #include <vector>
-#include "stock.h"
+#include "Stock.h"
+
+// ChatGPTed
 
 class Headline {
 public:
@@ -19,7 +21,7 @@ public:
     static std::vector<Headline> world_news;
 
     Headline(const std::string& h, const std::string& m, const std::string& s, const std::string& t);
-    std::string Headline::generateHeadline(const Stock& stock, unsigned int seed);
+    static std::string generateHeadline(const Stock& stock, unsigned int seed);
     static std::vector<Headline> read_from_csv(const std::string& filename);
 };
 
