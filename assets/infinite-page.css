@@ -164,6 +164,7 @@ nav ul li button:focus {
   background-repeat: no-repeat;
   font-size: 16px;
   padding: 14px 20px 12px 45px;
+  width: 230px;
   border: none;
   border-bottom: 1px solid #ddd;
 
@@ -205,6 +206,7 @@ nav ul li button:focus {
   display: block;
   border: none; /* Remove any border on the buttons */
   background: none; /* Remove the background color */
+  cursor: pointer;
 }
 
 /* Change color of dropdown links on hover */
@@ -229,5 +231,6 @@ nav ul li button:focus {
   border: 1px solid black;
   margin: 4px;
   padding: 4px;
+  cursor: pointer;
 }
   

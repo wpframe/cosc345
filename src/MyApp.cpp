@@ -1,5 +1,5 @@
 #include "MyApp.h"
-#include "stock.h"
+#include "Stock.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -141,25 +141,23 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
   // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
   // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
-  std::vector<Stock> stocks = Stock::readStocksFromCSV(filename);
-  if (!stocks.empty())
-  {
-    for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
-    {
-      const Stock &stock = stocks[i];
-      ultralight::String symbol = stock.symbol.c_str();
-      caller->EvaluateScript("addStockDropdown('" + symbol + "')");
-    }
-  }
-  else
-  {
-    std::cout << "No stocks found in the CSV." << std::endl;
-  }
-  ///
-  /// This is called when a frame's DOM has finished loading on the page.
-  ///
-  /// This is the best time to setup any JavaScript bindings.
-  ///
+
+  // std::vector<Stock> stocks = Stock::parseCSV(filename);
+  // if (!stocks.empty())
+  // {
+  //   for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
+  //   {
+  //     const Stock &stock = stocks[i];
+  //     ultralight::String symbol = stock.symbol.c_str();
+  //     caller->EvaluateScript("addStockDropdown('" + symbol + "')");
+  //   }
+  // }
+  // else
+  // {
+  //   std::cout << "No stocks found in the CSV." << std::endl;
+  // }
+  //  This is called when a frame's DOM has finished loading on the page. /
+  //  This is the best time to setup any JavaScript bindings./
 }
 
 void MyApp::OnChangeCursor(ultralight::View *caller,

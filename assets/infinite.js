@@ -53,13 +53,13 @@ function filterFunction() {
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     div = document.getElementById("myDropdown");
-    a = div.getElementsByTagName("a");
-    for (i = 0; i < a.length; i++) {
-        txtValue = a[i].textContent || a[i].innerText;
+    button = div.getElementsByTagName("button");
+    for (i = 0; i < button.length; i++) {
+        txtValue = button[i].textContent || button[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            a[i].style.display = "";
+            button[i].style.display = "";
         } else {
-            a[i].style.display = "none";
+            button[i].style.display = "none";
         }
     }
 }
@@ -72,10 +72,8 @@ function toggleDropdown() {
     var dropdown = document.getElementById("myDropdown");
     var dropbtn = document.getElementById("dropbtn");
     dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-    dropbtn.style.display = (dropdown.style.display === "block") ? "block" : "none";
-
+    // dropbtn.style.display = (dropdown.style.display === "block") ? "none" : "block";
 }
-
 
 function addStockDropdown(ticker) {
     var dropdown = document.getElementById("myDropdown");
@@ -84,4 +82,9 @@ function addStockDropdown(ticker) {
     newButton.onclick = "selectStock('" + ticker + "')";
     newButton.textContent = ticker;
     dropdown.appendChild(newButton);
+}
+
+function selectStock(ticker) {
+    var dropbtn = document.getElementById("dropbtn");
+    dropbtn.textContent = ticker;
 }
