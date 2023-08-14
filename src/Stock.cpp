@@ -1,7 +1,10 @@
 #include "Stock.h"
+#include "Headline.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <ctime>
+#include <cstring>
 
 // ChatGPTed
 
@@ -77,4 +80,56 @@ void Stock::parseHistory() {
     }
 
     file.close();
+}
+
+std::string getNextDate(const std::string& date) {
+    struct tm tm;
+    memset(&tm, 0, sizeof(tm)); // Initialize the tm structure to zero
+
+    strptime(date.c_str(), "%Y-%m-%d", &tm);
+    tm.tm_mday += 7; // add 7 days for weekly data
+
+    mktime(&tm); // Normalize the tm structure
+
+    char buffer[11];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", &tm);
+    return std::string(buffer);
+}
+
+void Stock::predictNextX(int x) {
+    int n = history.size();
+    if (n < 2) {
+        std::cerr << "Not enough data to predict." << std::endl;
+        return;
+    }
+
+    // Simple linear regression
+    double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
+    for (int i = 0; i < n; i++) {
+        sumX += i;
+        sumY += history[i].closePrice;
+        sumXY += i * history[i].closePrice;
+        sumX2 += i * i;
+    }
+
+    double slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    double intercept = (sumY - slope * sumX) / n;
+
+    for (int i = 0; i < x; i++) {
+        std::string nextDate = getNextDate(history.back().date);
+        double predictedPrice = slope * (n + i) + intercept;
+
+        // Add randomness
+        double randomFactor = 1.0 + (std::rand() % 10 - 5) * 0.01; // Randomness between -5% to +5%
+        predictedPrice *= randomFactor;
+
+        // Generate headline and adjust price
+        auto headlineEvent = Headline::generateHeadline(*this, n + i);
+        predictedPrice *= headlineEvent.second;
+
+        // Ensure the price doesn't go negative
+        predictedPrice = std::max(predictedPrice, 0.01);
+
+        history.push_back({nextDate, predictedPrice});
+    }
 }

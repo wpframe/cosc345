@@ -1,5 +1,7 @@
 #include <string>
 #include <vector>
+#ifndef STOCK_H
+#define STOCK_H
 
 // ChatGPTed
 
@@ -19,6 +21,11 @@ public:
     std::string industry;
     std::vector<StockHistory> history;
     void parseHistory();
+    void predictNextX(int x);
+    
+    
 };
 
 std::vector<Stock> parseCSV(const std::string& filename);
+
+#endif // STOCK_H
