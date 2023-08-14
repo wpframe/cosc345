@@ -6,6 +6,7 @@ include(cmake/App.cmake)
 set(SOURCES "src/MyApp.h"
             "src/MyApp.cpp"
             "src/main.cpp"
-            "src/stock.cpp")
+            "src/Stock.cpp"
+            "src/Headline.cpp")
 
 add_app("${SOURCES}")
