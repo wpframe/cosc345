@@ -79,7 +79,9 @@ function addStockDropdown(ticker) {
     var dropdown = document.getElementById("myDropdown");
     var newButton = document.createElement("button");
     newButton.type = "button";
-    newButton.onclick = "selectStock('" + ticker + "')";
+    newButton.onclick = function () {
+        selectStock(ticker);
+    };
     newButton.textContent = ticker;
     dropdown.appendChild(newButton);
 }

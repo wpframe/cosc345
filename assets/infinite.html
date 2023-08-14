@@ -44,8 +44,16 @@
           </div>
         </div>
 
+
         <div id="buySellContainer">
-          <button onclick="switchBuySell()" id="buySell">Buy</button>
+          
+          <!-- INSTEAD OF buySellContainer -->
+          <label class="switch">
+            <input type="checkbox" checked onclick="switchBuySell()">
+            <span class="slider round"></span>
+          </label>
+          
+          <p id="buySell">Buy</p>
         </div>
 
         <div id="currentPrice">$21.15</div>
