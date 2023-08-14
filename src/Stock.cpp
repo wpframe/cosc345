@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <ctime>
-#include <cstring>
+#include <string>
 
 // ChatGPTed
 
@@ -83,10 +83,13 @@ void Stock::parseHistory() {
 }
 
 std::string getNextDate(const std::string& date) {
-    struct tm tm;
-    memset(&tm, 0, sizeof(tm)); // Initialize the tm structure to zero
+    struct tm tm = {};
+    sscanf(date.c_str(), "%d-%d-%d", &tm.tm_year, &tm.tm_mon, &tm.tm_mday);
 
-    strptime(date.c_str(), "%Y-%m-%d", &tm);
+    // Adjust for tm's year (years since 1900) and month (0-11) representation
+    tm.tm_year -= 1900;
+    tm.tm_mon -= 1;
+
     tm.tm_mday += 7; // add 7 days for weekly data
 
     mktime(&tm); // Normalize the tm structure
@@ -125,6 +128,10 @@ void Stock::predictNextX(int x) {
 
         // Generate headline and adjust price
         auto headlineEvent = Headline::generateHeadline(*this, n + i);
+        if (headlineEvent.first != ""){
+            std::cout << headlineEvent.first << std::endl;
+        }
+        
         predictedPrice *= headlineEvent.second;
 
         // Ensure the price doesn't go negative
