@@ -6,7 +6,7 @@
   <title>MyApp -- (app.html)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="home-page.css">
+  <link rel="stylesheet" href="homepage.css">
 </head>
 
 <body>
@@ -18,8 +18,6 @@
         </div>
         <nav>
           <ul>
-            <li><button onclick="OnButtonClick();">Click Me</button></li> 
-            <li><div id="result" ></div></li> 
             <li><button id="infinite" onclick="startTimer();goToInfinite()">Infinite</button></li>
             <li><button id="100years" onclick="goTo100Years()">100 Years</button></li>
             <li><button id="speedrun">Millionaire Speedrun</button></li>
@@ -95,41 +93,7 @@
     </div>
   </div>
 
-  <script>
-    function startTimer(){
-      document.getElementById("infinite").innerHTML;
-      
-      // Redirect to "infinite.html"
-      window.location.href = "infinite.html";
-
-    
-    }
-    function goToInfinite() {
-      // Change the button text
-      document.getElementById("infinite").innerHTML;
-      
-      // Redirect to "infinite.html"
-      window.location.href = "infinite.html";
-     
-    }
-    function goTo100Years() {
-      // Change the button text
-      document.getElementById("100years").innerHTML;
-
-      // Redirect to "infinite.html"
-      window.location.href = "100-years.html";
-    }
-
-    function showHowToPlay() {
-      // Show the custom modal with instructions
-      document.getElementById("howToPlayModal").style.display = "block";
-    }
-
-    function closeModal() {
-      // Close the custom modal
-      document.getElementById("howToPlayModal").style.display = "none";
-    }
-  </script>
+  <script src="homepage.js" ></script>
 </body>
 
 </html>

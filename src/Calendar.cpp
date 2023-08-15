@@ -49,7 +49,6 @@ void Calendar::update()
 
 void Calendar::startCounting()
 {
-    std::cout << "in start counting mehtod" << std::endl;
     countingStarted = true;
     countingPaused = false;
 }

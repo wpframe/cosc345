@@ -45,6 +45,9 @@ public:
   virtual void OnChangeTitle(ultralight::View *caller,
                              const String &title) override;
 
+private:
+  ultralight::View *view_;
+
 protected:
   RefPtr<App> app_;
   RefPtr<Window> window_;

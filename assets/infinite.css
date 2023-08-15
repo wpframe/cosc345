@@ -58,7 +58,8 @@ nav ul {
 }
 
 /* Styles for all buttons */
-nav ul li button {
+nav ul li button,
+#dateTime {
   border: 0;
   background: transparent;
   color: #2BAE66;
@@ -70,6 +71,11 @@ nav ul li button {
   font-family: 'Evil', sans-serif;
   border-radius: 0;
   /* Add the custom font */
+}
+
+#dateTime {
+  margin-left: 10px;
+  font-weight: 300;
 }
 
 nav ul li:not(:last-child) {

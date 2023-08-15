@@ -4,7 +4,7 @@ function goToHome() {
     document.getElementById("home").innerHTML;
 
     // Redirect to home
-    window.location.href = "app.html";
+    window.location.href = "homepage.html";
 }
 
 function showStockInfo(currentPrice, stocksAvailable) {
@@ -89,4 +89,9 @@ function addStockDropdown(ticker) {
 function selectStock(ticker) {
     var dropbtn = document.getElementById("dropbtn");
     dropbtn.textContent = ticker;
+}
+
+function showDate(newDate) {
+    var dateElement = document.getElementById("dateTime");
+    dateElement.innerHTML = newDate;
 }

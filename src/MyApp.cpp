@@ -4,34 +4,36 @@
 #include <iostream>
 #include <vector>
 #include <string>
-// #include <unistd.h>    // NEED THIS FOR THE findPathFromApp METHOD BUT DOES NOT BUILD ON WINDOWS
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
+Calendar calendar;
 
-std::string findPathFromApp()
-{
+// WILL NEED THIS FUNCTION BECAUSE PATH FROM APP TO CSV FILES IS DIFFERENT ON MACOS
 
-  // char buffer[PATH_MAX]; // PATH_MAX is a macro representing the maximum path length
-  // if (getcwd(buffer, sizeof(buffer)) == nullptr)
-  // {
-  //   std::cout << "Could not find current directory: " << std::endl;
-  //   return "";
-  // }
-  std::string buffer = "/Users/admin/Desktop/cosc345/cosc345/build/MyApp.app/Contents/MacOS/MyApp";
+// std::string findPathFromApp()
+// {
 
-  // std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path(); // NEED TO UPDATE COMPILER TO USE THIS
-  std::string modifiedPath = buffer;
+//   // char buffer[PATH_MAX]; // PATH_MAX is a macro representing the maximum path length
+//   // if (getcwd(buffer, sizeof(buffer)) == nullptr)
+//   // {
+//   //   std::cout << "Could not find current directory: " << std::endl;
+//   //   return "";
+//   // }
+//   std::string buffer = "/Users/admin/Desktop/cosc345/cosc345/build/MyApp.app/Contents/MacOS/MyApp";
 
-  size_t pos = modifiedPath.rfind("build");
+//   // std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path(); // NEED TO UPDATE COMPILER TO USE THIS
+//   std::string modifiedPath = buffer;
 
-  if (pos != std::string::npos)
-  {
-    modifiedPath.erase(pos);
-  }
+//   size_t pos = modifiedPath.rfind("build");
 
-  return modifiedPath;
-}
+//   if (pos != std::string::npos)
+//   {
+//     modifiedPath.erase(pos);
+//   }
+
+//   return modifiedPath;
+// }
 
 MyApp::MyApp()
 {
@@ -61,7 +63,7 @@ MyApp::MyApp()
   ///
   /// Load a page into our overlay's View
   ///
-  overlay_->view()->LoadURL("file:///app.html");
+  overlay_->view()->LoadURL("file:///homepage.html");
 
   ///
   /// Register our MyApp instance as an AppListener so we can handle the
@@ -97,19 +99,17 @@ void MyApp::Run()
   app_->Run();
 }
 
-Calendar calendar;
 void MyApp::OnUpdate()
 {
+  // OnUpdate is called constantly by the app so anything that needs to be updated on the page goes in here
   if (!calendar.isCounting())
   {
     return;
   }
 
   calendar.update();
-  // std::cout << "Year: " << calendar.getYear() << std::endl;
-  // std::cout << "Month: " << calendar.getMonth() << std::endl;
-  // std::cout << "Day: " << calendar.getDay() << std::endl;
-  std::cout << "Date:  " << calendar.getDate() << std::endl;
+  ultralight::String date = calendar.getDate().c_str();
+  view_->EvaluateScript("showDate('" + date + "')"); // view_ is an instance of View so can be called upon as you would 'caller'
 }
 
 void MyApp::OnClose(ultralight::Window *window)
@@ -141,8 +141,6 @@ JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
                       JSObjectRef thisObject, size_t argumentCount,
                       const JSValueRef arguments[], JSValueRef *exception)
 {
-
-  std::cout << "HELLO WORLD FROM goToInfinite CLICK FUNCTION" << std::endl;
   calendar.startCounting();
   return JSValueMakeNull(ctx);
 }
@@ -152,10 +150,12 @@ void MyApp::OnDOMReady(ultralight::View *caller,
                        bool is_main_frame,
                        const String &url)
 {
+  view_ = caller; // creating a new instance of View with the contents of caller, for use in other functions
+
   //  This is called when a frame's DOM has finished loading on the page. /
   //  This is the best time to setup any JavaScript bindings./
 
-  /* C++ SIDE OF A JAVASCRIPT FUNCTION, all C++ additions are in the function JSValueRef OnButtonClick **/
+  /* Below is the C++ side of a javascript function, all C++ additions are in the function JSValueRef startTimer() **/
 
   // Acquire the JS execution context for the current page.
   auto scoped_context = caller->LockJSContext();
@@ -163,21 +163,18 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSContextRef ctx = (*scoped_context);
   // Create a JavaScript String containing the name of our callback.
   JSStringRef name = JSStringCreateWithUTF8CString("startTimer");
-  // Create a garbage-collected JavaScript function that is bound to our
-  // native C callback 'startTimer()'.
-  JSObjectRef func = JSObjectMakeFunctionWithCallback(ctx, name,
-                                                      startTimer);
+  // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
+  JSObjectRef func = JSObjectMakeFunctionWithCallback(ctx, name, startTimer);
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
-  // Store our function in the page's global JavaScript object so that it
-  // accessible from the page as 'startTimer()'.
+  // Store our function in the page's global JavaScript object so that it accessible from the page as 'startTimer()'.
   JSObjectSetProperty(ctx, globalObj, name, func, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(name);
 
   /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
-  caller->EvaluateScript("showStockInfo('$1000000', '48964')");
-  // std::string absPath = findPathFromApp();
+  caller->EvaluateScript("showStockInfo('$1000000', '48964')"); // will be changed so that once a stock is selected, their current price is displayed
+
   // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
   std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
   // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS

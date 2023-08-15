@@ -18,7 +18,6 @@ public:
 
     void startCounting();
     void pauseCounting();
-    // void playCounting();
     void reset();
     bool isCounting() const;
 
