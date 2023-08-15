@@ -1,5 +1,6 @@
 #include "MyApp.h"
 #include "Stock.h"
+#include "Calendar.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -96,8 +97,19 @@ void MyApp::Run()
   app_->Run();
 }
 
+Calendar calendar;
 void MyApp::OnUpdate()
 {
+
+  // double deltaTime = 0.2; // Simulated time interval
+  // calendar.update(deltaTime);
+  calendar.update();
+
+  // Currently just prints date
+  std::cout << "Year: " << calendar.getYear() << std::endl;
+  std::cout << "Month: " << calendar.getMonth() << std::endl;
+  std::cout << "Day: " << calendar.getDay() << std::endl;
+
   ///
   /// This is called repeatedly from the application's update loop.
   ///
