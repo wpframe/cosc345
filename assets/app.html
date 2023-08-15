@@ -18,7 +18,9 @@
         </div>
         <nav>
           <ul>
-            <li><button id="infinite" onclick="goToInfinite()">Infinite</button></li>
+            <li><button onclick="OnButtonClick();">Click Me</button></li> 
+            <li><div id="result" ></div></li> 
+            <li><button id="infinite" onclick="startTimer();goToInfinite()">Infinite</button></li>
             <li><button id="100years" onclick="goTo100Years()">100 Years</button></li>
             <li><button id="speedrun">Millionaire Speedrun</button></li>
             <li><button id="leaderboard">Leaderboards</button></li>
@@ -94,12 +96,21 @@
   </div>
 
   <script>
+    function startTimer(){
+      document.getElementById("infinite").innerHTML;
+      
+      // Redirect to "infinite.html"
+      window.location.href = "infinite.html";
+
+    
+    }
     function goToInfinite() {
       // Change the button text
       document.getElementById("infinite").innerHTML;
-
+      
       // Redirect to "infinite.html"
       window.location.href = "infinite.html";
+     
     }
     function goTo100Years() {
       // Change the button text

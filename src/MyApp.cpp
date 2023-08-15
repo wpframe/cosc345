@@ -100,21 +100,16 @@ void MyApp::Run()
 Calendar calendar;
 void MyApp::OnUpdate()
 {
+  if (!calendar.isCounting())
+  {
+    return;
+  }
 
-  // double deltaTime = 0.2; // Simulated time interval
-  // calendar.update(deltaTime);
   calendar.update();
-
-  // Currently just prints date
-  std::cout << "Year: " << calendar.getYear() << std::endl;
-  std::cout << "Month: " << calendar.getMonth() << std::endl;
-  std::cout << "Day: " << calendar.getDay() << std::endl;
-
-  ///
-  /// This is called repeatedly from the application's update loop.
-  ///
-  /// You should update any app logic here.
-  ///
+  // std::cout << "Year: " << calendar.getYear() << std::endl;
+  // std::cout << "Month: " << calendar.getMonth() << std::endl;
+  // std::cout << "Day: " << calendar.getDay() << std::endl;
+  std::cout << "Date:  " << calendar.getDate() << std::endl;
 }
 
 void MyApp::OnClose(ultralight::Window *window)
@@ -142,18 +137,50 @@ void MyApp::OnFinishLoading(ultralight::View *caller,
   ///
 }
 
+JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
+                      JSObjectRef thisObject, size_t argumentCount,
+                      const JSValueRef arguments[], JSValueRef *exception)
+{
+
+  std::cout << "HELLO WORLD FROM goToInfinite CLICK FUNCTION" << std::endl;
+  calendar.startCounting();
+  return JSValueMakeNull(ctx);
+}
+
 void MyApp::OnDOMReady(ultralight::View *caller,
                        uint64_t frame_id,
                        bool is_main_frame,
                        const String &url)
 {
+  //  This is called when a frame's DOM has finished loading on the page. /
+  //  This is the best time to setup any JavaScript bindings./
 
+  /* C++ SIDE OF A JAVASCRIPT FUNCTION, all C++ additions are in the function JSValueRef OnButtonClick **/
+
+  // Acquire the JS execution context for the current page.
+  auto scoped_context = caller->LockJSContext();
+  // Typecast to the underlying JSContextRef.
+  JSContextRef ctx = (*scoped_context);
+  // Create a JavaScript String containing the name of our callback.
+  JSStringRef name = JSStringCreateWithUTF8CString("startTimer");
+  // Create a garbage-collected JavaScript function that is bound to our
+  // native C callback 'startTimer()'.
+  JSObjectRef func = JSObjectMakeFunctionWithCallback(ctx, name,
+                                                      startTimer);
+  // Get the global JavaScript object (aka 'window')
+  JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
+  // Store our function in the page's global JavaScript object so that it
+  // accessible from the page as 'startTimer()'.
+  JSObjectSetProperty(ctx, globalObj, name, func, 0, 0);
+  // Release the JavaScript String we created earlier.
+  JSStringRelease(name);
+
+  /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
   caller->EvaluateScript("showStockInfo('$1000000', '48964')");
   // std::string absPath = findPathFromApp();
   // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
   std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
   // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
-
   std::vector<Stock> stocks = parseCSV(filename);
   if (!stocks.empty())
   {
@@ -166,10 +193,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   }
   else
   {
-    std::cout << "No stocks found in the CSV." << std::endl;
+    std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
   }
-  //  This is called when a frame's DOM has finished loading on the page. /
-  //  This is the best time to setup any JavaScript bindings./
 }
 
 void MyApp::OnChangeCursor(ultralight::View *caller,

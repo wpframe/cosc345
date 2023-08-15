@@ -1,20 +1,30 @@
 #ifndef CALENDAR_H
 #define CALENDAR_H
 
+#include <string>
 #include <chrono>
 
 class Calendar
 {
 public:
-    Calendar(); // Constructor
+    Calendar();
 
     void update();
     int getYear() const;
     int getMonth() const;
     int getDay() const;
     bool isLeapYear(int year) const;
+    std::string getDate() const;
+
+    void startCounting();
+    void pauseCounting();
+    // void playCounting();
+    void reset();
+    bool isCounting() const;
 
 private:
+    bool countingStarted = false;
+    bool countingPaused = false;
     double dayDuration; // Duration of a day in seconds
     double timePassed = 0.0;
     int day = 1;
@@ -28,30 +38,3 @@ private:
 };
 
 #endif // CALENDAR_H
-
-/* WORKING BUT IS NOT ACCURATE USING DELTA TIME **/
-
-// #ifndef CALENDAR_H
-// #define CALENDAR_H
-// #include <iostream>
-
-// class Calendar
-// {
-// public:
-//     Calendar();
-
-//     void update(double deltaTime);
-
-//     int getYear() const;
-//     int getMonth() const;
-//     int getDay() const;
-
-// private:
-//     int year;
-//     int month;
-//     int day;
-//     double dayDuration;
-//     double timePassed = 0.0;
-// };
-
-// #endif // GAME_CALENDAR_H
