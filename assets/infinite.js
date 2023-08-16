@@ -17,9 +17,11 @@ function switchBuySell() {
     if (button.innerHTML === "Buy") {
         // Change the content to "Sell" if it's currently "Buy"
         button.innerHTML = "Sell";
+        // send this information to c++ 
     } else {
         // Change the content to "Buy" if it's currently "Sell" or any other text
         button.innerHTML = "Buy";
+        // send this information to c++ 
     }
 }
 function updateTotalPrice() {
@@ -72,7 +74,7 @@ function toggleDropdown() {
     var dropdown = document.getElementById("myDropdown");
     var dropbtn = document.getElementById("dropbtn");
     dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
-    // dropbtn.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    dropbtn.style.display = (dropdown.style.display === "none") ? "none" : "block";
 }
 
 function addStockDropdown(ticker) {
@@ -95,3 +97,23 @@ function showDate(newDate) {
     var dateElement = document.getElementById("dateTime");
     dateElement.innerHTML = newDate;
 }
+
+
+var playPauseButton = document.getElementById("playPauseButton");
+var iconElement = playPauseButton.querySelector("i");
+var isPlaying = true;
+
+playPauseButton.addEventListener("click", function switchPlayPause() {
+    if (isPlaying) {
+        // Change to play icon
+        iconElement.className = "fas fa-play";
+        isPlaying = false;
+        console.log("timer should be stopped");
+        stopTimer();
+    } else {
+        // Change to pause icon
+        iconElement.className = "fas fa-pause";
+        isPlaying = true;
+        startTimer();
+    }
+});

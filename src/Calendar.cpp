@@ -12,21 +12,29 @@ bool Calendar::isLeapYear(int year) const
 
 void Calendar::update()
 {
-    if (!countingStarted || countingPaused)
+    if (!countingStarted)
     {
-        return; // Do nothing if counting hasn't started or is paused
+        return; // Do nothing if counting hasn't started
     }
 
+    // Calculating elapsed time since timer started
     auto currentTime = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsedTime = currentTime - lastUpdateTime;
+
     lastUpdateTime = currentTime;
 
-    timePassed += elapsedTime.count() * timeMultiplier;
+    // Only increment timePassed if counting is not paused
+    if (!countingPaused)
+    {
+        timePassed += elapsedTime.count() * timeMultiplier;
+    }
 
+    // Calculating daysPassed based on how much time has passed since counting started
     int daysPassed = static_cast<int>(timePassed / dayDuration);
     day += daysPassed;
     timePassed -= daysPassed * dayDuration;
 
+    // Calendar formatting
     while (day > daysInMonth[month - 1])
     {
         if (month == 2 && isLeapYear(year))
@@ -49,17 +57,33 @@ void Calendar::update()
 
 void Calendar::startCounting()
 {
+    // set boolean
     countingStarted = true;
-    countingPaused = false;
+
+    // if starting from a paused state, subtract the amount of time paused for
+    if (countingPaused)
+    {
+        countingPaused = false;
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsedTime = currentTime - pauseStartTime;
+        timePassed -= elapsedTime.count() * timeMultiplier;
+    }
 }
 
 void Calendar::pauseCounting()
 {
-    countingPaused = true;
+    if (countingStarted && !countingPaused)
+    {
+        countingPaused = true;
+        // Set pauseStartTime for use when the time is started again,
+        // so that the amount of time paused for can be subtracted
+        pauseStartTime = std::chrono::high_resolution_clock::now();
+    }
 }
 
 void Calendar::reset()
 {
+    // Reset the calendar to the initial date
     countingStarted = false;
     countingPaused = false;
     year = 2020;
@@ -70,6 +94,7 @@ void Calendar::reset()
 
 bool Calendar::isCounting() const
 {
+    // Method which returns whether calendar is currently counting
     return countingStarted && !countingPaused;
 }
 

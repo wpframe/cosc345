@@ -20,7 +20,23 @@
             <li><button id="home" onclick="goToHome()">Home</button></li>
             <li><button id="portfolio" onclick="goToPortfolio()">Portfolio</a></li>
             <li><button id="recenttrades" onclick="goToRecentTrades()">Recent Trades</a></li>
+              
+            <button id="playPauseButton" onclick="switchPlayPause()">
+              <i class="fa-solid fa-pause style="color: #2bae66;"></i>
+            </button>
+
             <p id="dateTime"></p>
+
+            <button onclick="fastForwardDropdown" id="ffDropdownBtn">
+              <i class="fa-solid fa-forward" style="color: #2bae66;"></i>
+            </button>
+            <div id="ffDropdown" class="ff-dropdown-content">
+              <button type="button" onclick="forwardWeek()">One week</button>
+              <button type="button" onclick="forwardMonth()">One month</button>
+              <button type="button" onclick="forwardYear()">One year</button>
+              <button type="button" onclick="forwardDecade()">One Decade</button>
+            </div>
+        
           </ul>
         </nav>
             
@@ -96,6 +112,7 @@
   </section>
   
   <script src="infinite.js"></script>
+  <script src="https://kit.fontawesome.com/0fff93c7e8.js" crossorigin="anonymous"></script>
 
 </body>
 

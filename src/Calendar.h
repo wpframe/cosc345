@@ -34,6 +34,8 @@ private:
 
     std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdateTime =
         std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<std::chrono::high_resolution_clock> pauseStartTime =
+        std::chrono::high_resolution_clock::now();
 };
 
 #endif // CALENDAR_H

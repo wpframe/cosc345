@@ -57,6 +57,10 @@ nav ul {
   display: flex;
 }
 
+button {
+  cursor: pointer;
+}
+
 /* Styles for all buttons */
 nav ul li button,
 #dateTime {
@@ -316,4 +320,17 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+
+#playPauseButton,
+#ffDropdownBtn {
+  background: none;
+  border-radius: 0;
+  border: none;
+  font-size: 20px;
+  margin: 5px;
+  margin-top: 0px;
+  padding-right: 15px;
+  color: #2BAE66;
 }

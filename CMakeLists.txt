@@ -9,6 +9,8 @@ set(SOURCES "src/MyApp.h"
             "src/main.cpp"
             "src/Stock.cpp"
             "src/Headline.cpp"
-            "src/Calendar.cpp")
+            "src/Calendar.cpp"
+            
+            )
 
 add_app("${SOURCES}")

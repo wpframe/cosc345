@@ -101,7 +101,9 @@ void MyApp::Run()
 
 void MyApp::OnUpdate()
 {
-  // OnUpdate is called constantly by the app so anything that needs to be updated on the page goes in here
+  ///
+  /// OnUpdate is called constantly by the app so anything that needs to be updated on the page goes in here
+  ///
   if (!calendar.isCounting())
   {
     return;
@@ -141,7 +143,21 @@ JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
                       JSObjectRef thisObject, size_t argumentCount,
                       const JSValueRef arguments[], JSValueRef *exception)
 {
+  ///
+  /// startTimer is a javascript function, when called will perform the following c++ operations
+  ///
   calendar.startCounting();
+  return JSValueMakeNull(ctx);
+}
+
+JSValueRef stopTimer(JSContextRef ctx, JSObjectRef function,
+                     JSObjectRef thisObject, size_t argumentCount,
+                     const JSValueRef arguments[], JSValueRef *exception)
+{
+  ///
+  /// stopTimer is a javascript function, when called will perform the following c++ operations
+  ///
+  calendar.pauseCounting();
   return JSValueMakeNull(ctx);
 }
 
@@ -162,15 +178,19 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   // Typecast to the underlying JSContextRef.
   JSContextRef ctx = (*scoped_context);
   // Create a JavaScript String containing the name of our callback.
-  JSStringRef name = JSStringCreateWithUTF8CString("startTimer");
+  JSStringRef startTimerRef = JSStringCreateWithUTF8CString("startTimer");
+  JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
-  JSObjectRef func = JSObjectMakeFunctionWithCallback(ctx, name, startTimer);
+  JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
+  JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
   // Store our function in the page's global JavaScript object so that it accessible from the page as 'startTimer()'.
-  JSObjectSetProperty(ctx, globalObj, name, func, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, startTimerRef, startTimerFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
   // Release the JavaScript String we created earlier.
-  JSStringRelease(name);
+  JSStringRelease(startTimerRef);
+  JSStringRelease(stopTimerRef);
 
   /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
   caller->EvaluateScript("showStockInfo('$1000000', '48964')"); // will be changed so that once a stock is selected, their current price is displayed
