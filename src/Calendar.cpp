@@ -92,6 +92,38 @@ void Calendar::reset()
     timePassed = 0.0;
 }
 
+void Calendar::skipTime(int weeks, int months, int years)
+{
+    if (weeks == 0 && months == 0 && years == 0)
+        return; // No skipping needed
+
+    // Calculate the total number of days to skip
+    int totalDays = weeks * 7 + months * 30 + years * 365;
+
+    // Calculate the new date
+    day += totalDays;
+
+    // Adjust month and year based on the new day
+    while (day > daysInMonth[month - 1])
+    {
+        if (month == 2 && isLeapYear(year))
+        {
+            day -= daysInMonth[month - 1] + 1;
+        }
+        else
+        {
+            day -= daysInMonth[month - 1];
+        }
+
+        month++;
+        if (month > 12)
+        {
+            year++;
+            month = 1;
+        }
+    }
+}
+
 bool Calendar::isCounting() const
 {
     // Method which returns whether calendar is currently counting

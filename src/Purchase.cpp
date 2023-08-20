@@ -1,7 +1,9 @@
 #include "Purchase.h"
+#include "Portfolio.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <vector>
 
 Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp, float currentPrice)
     : stock(s), quantity(q), purchasePrice(purchasePrice), purchaseTimestamp(timestamp), currentPrice(currentPrice) {}

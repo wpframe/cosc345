@@ -160,6 +160,46 @@ JSValueRef stopTimer(JSContextRef ctx, JSObjectRef function,
   calendar.pauseCounting();
   return JSValueMakeNull(ctx);
 }
+JSValueRef forwardWeek(JSContextRef ctx, JSObjectRef function,
+                       JSObjectRef thisObject, size_t argumentCount,
+                       const JSValueRef arguments[], JSValueRef *exception)
+{
+  ///
+  /// stopTimer is a javascript function, when called will perform the following c++ operations
+  ///
+  calendar.skipTime(1, 0, 0);
+  return JSValueMakeNull(ctx);
+}
+JSValueRef forwardMonth(JSContextRef ctx, JSObjectRef function,
+                        JSObjectRef thisObject, size_t argumentCount,
+                        const JSValueRef arguments[], JSValueRef *exception)
+{
+  ///
+  /// stopTimer is a javascript function, when called will perform the following c++ operations
+  ///
+  calendar.skipTime(0, 1, 0);
+  return JSValueMakeNull(ctx);
+}
+JSValueRef forwardYear(JSContextRef ctx, JSObjectRef function,
+                       JSObjectRef thisObject, size_t argumentCount,
+                       const JSValueRef arguments[], JSValueRef *exception)
+{
+  ///
+  /// stopTimer is a javascript function, when called will perform the following c++ operations
+  ///
+  calendar.skipTime(0, 0, 1);
+  return JSValueMakeNull(ctx);
+}
+JSValueRef forwardDecade(JSContextRef ctx, JSObjectRef function,
+                         JSObjectRef thisObject, size_t argumentCount,
+                         const JSValueRef arguments[], JSValueRef *exception)
+{
+  ///
+  /// stopTimer is a javascript function, when called will perform the following c++ operations
+  ///
+  calendar.skipTime(0, 0, 10);
+  return JSValueMakeNull(ctx);
+}
 
 void MyApp::OnDOMReady(ultralight::View *caller,
                        uint64_t frame_id,
@@ -180,17 +220,34 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   // Create a JavaScript String containing the name of our callback.
   JSStringRef startTimerRef = JSStringCreateWithUTF8CString("startTimer");
   JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
+  JSStringRef forwardWeekRef = JSStringCreateWithUTF8CString("forwardWeek");
+  JSStringRef forwardMonthRef = JSStringCreateWithUTF8CString("forwardMonth");
+  JSStringRef forwardYearRef = JSStringCreateWithUTF8CString("forwardYear");
+  JSStringRef forwardDecadeRef = JSStringCreateWithUTF8CString("forwardDecade");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
+  JSObjectRef forwardWeekFunc = JSObjectMakeFunctionWithCallback(ctx, forwardWeekRef, forwardWeek);
+  JSObjectRef forwardMonthFunc = JSObjectMakeFunctionWithCallback(ctx, forwardMonthRef, forwardMonth);
+  JSObjectRef forwardYearFunc = JSObjectMakeFunctionWithCallback(ctx, forwardYearRef, forwardYear);
+  JSObjectRef forwardDecadeFunc = JSObjectMakeFunctionWithCallback(ctx, forwardDecadeRef, forwardDecade);
+
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
   // Store our function in the page's global JavaScript object so that it accessible from the page as 'startTimer()'.
   JSObjectSetProperty(ctx, globalObj, startTimerRef, startTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, forwardWeekRef, forwardWeekFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, forwardMonthRef, forwardMonthFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, forwardYearRef, forwardYearFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, forwardDecadeRef, forwardDecadeFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(startTimerRef);
   JSStringRelease(stopTimerRef);
+  JSStringRelease(forwardWeekRef);
+  JSStringRelease(forwardMonthRef);
+  JSStringRelease(forwardYearRef);
+  JSStringRelease(forwardDecadeRef);
 
   /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
   caller->EvaluateScript("showStockInfo('$1000000', '48964')"); // will be changed so that once a stock is selected, their current price is displayed

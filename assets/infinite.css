@@ -80,6 +80,7 @@ nav ul li button,
 #dateTime {
   margin-left: 10px;
   font-weight: 300;
+  min-width: 110px;
 }
 
 nav ul li:not(:last-child) {
@@ -226,6 +227,45 @@ nav ul li button:focus {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
 
+
+.ff-dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+#ffDropbtn {
+  z-index: 100; /* Set a higher z-index for the dropdown button */
+}
+
+.ff-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: transparent;
+  min-width: 160px;
+  z-index: 1;
+  top: 0px; /* Adjust this value as needed to align the dropdown */
+  left: 0;
+  margin-left:10px;
+}
+.ff-dropdown-content{
+  padding:6px 20px;
+}
+.ff-dropdown-content button{
+  border: none;
+  border-radius: 0;
+  background-color: #caeebf;
+  font-family: 'Evil', sans-serif;
+  color: #2BAE66;
+  margin: 0 10px;
+}
+
+.ff-dropdown-container:hover .ff-dropdown-content {
+  display: flex;
+}
+
+
+/* Left container or buy/sell box  */
+
 .left-container {
   background-color: #f0f0f0;
   width: 25%; /* Adjust the width as needed */
@@ -324,13 +364,13 @@ input:checked + .slider:before {
 
 
 #playPauseButton,
-#ffDropdownBtn {
+#ffDropbtn {
   background: none;
   border-radius: 0;
   border: none;
   font-size: 20px;
   margin: 5px;
-  margin-top: 0px;
+  /* margin-top: 0px; */
   padding-right: 15px;
   color: #2BAE66;
 }

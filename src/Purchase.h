@@ -13,6 +13,7 @@ private:
 public:
     Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp, float currentPrice);
 
+    void makePurchase(const Stock &s, int q, float purchasePrice);
     void setStock(const Stock &s);
     void setQuantity(int q);
     void setPurchasePrice(float price);

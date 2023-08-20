@@ -27,15 +27,29 @@
 
             <p id="dateTime"></p>
 
-            <button onclick="fastForwardDropdown" id="ffDropdownBtn">
-              <i class="fa-solid fa-forward" style="color: #2bae66;"></i>
-            </button>
-            <div id="ffDropdown" class="ff-dropdown-content">
-              <button type="button" onclick="forwardWeek()">One week</button>
-              <button type="button" onclick="forwardMonth()">One month</button>
-              <button type="button" onclick="forwardYear()">One year</button>
-              <button type="button" onclick="forwardDecade()">One Decade</button>
+            <!-- <div class="ff-dropdown-container">
+              <button onclick="fastForwardDropdown()" id="ffDropbtn">
+                <i class="fa-solid fa-forward" style="color: #2bae66;"></i>
+              </button>
+              <div id="ff-dropdown-content" class="ff-dropdown-content">
+                <button type="button" onclick="forwardWeek()">week</button>
+                <button type="button" onclick="forwardMonth()">month</button>
+                <button type="button" onclick="forwardYear()">year</button>
+                <button type="button" onclick="forwardDecade()">decade</button>
+              </div>
+            </div> -->
+            <div class="ff-dropdown-container">
+              <button onclick="fastForwardDropdown()" id="ffDropbtn">
+                <i class="fa-solid fa-forward" style="color: #2bae66;"></i>
+              </button>
+              <div id="ff-dropdown-content" class="ff-dropdown-content">
+                <button type="button" onclick="forwardWeek()">week</button>
+                <button type="button" onclick="forwardMonth()">month</button>
+                <button type="button" onclick="forwardYear()">year</button>
+                <button type="button" onclick="forwardDecade()">decade</button>
+              </div>
             </div>
+            
         
           </ul>
         </nav>

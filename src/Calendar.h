@@ -19,6 +19,7 @@ public:
     void startCounting();
     void pauseCounting();
     void reset();
+    void skipTime(int weeks, int months, int years);
     bool isCounting() const;
 
 private:
