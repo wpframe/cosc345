@@ -1,5 +1,6 @@
 #include "Portfolio.h"
 #include <iostream>
+#include "Calendar.h"
 
 void Portfolio::addPurchase(Purchase purchase)
 {
@@ -21,19 +22,25 @@ void Portfolio::addPurchase(Purchase purchase)
         std::cout << "first: " << firstPurchasePrice << std::endl;
 
         std::cout << "second: " << updatedPurchasePrice << std::endl;
+
+        // IS NOT SETING TOTAL COST CORRECTLY AT THE MOMENT, NEED TO IMPLEMENT SETTOTAL() WILL BE EEASY
         float totalCost = existingPurchase->calculateTotalCost() + purchase.calculateTotalCost();
 
         float byHandTotal = firstPurchasePrice + updatedPurchasePrice;
         std::cout << "tptalCost: " << byHandTotal << std::endl;
-        float price = (existingPurchase->getPurchasePrice() + purchase.getPurchasePrice()) / count;
         existingPurchase->setPurchasePrice(byHandTotal / newQuant);
-        std::cout << "Price: " << price << std::endl;
     }
     else
     {
 
         purchases.push_back(purchase);
     }
+}
+
+void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, float currentPrice)
+{
+    Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate(), currentPrice);
+    portfolio.addPurchase(purchase);
 }
 
 void Portfolio::printPortfolio() const

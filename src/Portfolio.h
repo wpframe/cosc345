@@ -3,6 +3,7 @@
 
 #include "Purchase.h"
 #include <vector>
+#include "Calendar.h"
 
 class Portfolio
 {
@@ -16,6 +17,7 @@ public:
     void printPortfolio() const;
     Purchase *getPurchase(const std::string &stockSymbol);
     const std::vector<Purchase> getPurchases() const;
+    void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, float currentPrice);
 };
 
 #endif // PORTFOLIO_H

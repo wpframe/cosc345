@@ -230,6 +230,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
 
   std::vector<Stock> stocks = parseCSV(filename);
+  std::vector<Purchase> purchases;
   if (!stocks.empty())
   {
     for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
@@ -246,13 +247,11 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
   }
 
-  Purchase purchase(stocks[0], 150, 72.0, calendar.getDate(), 170.0);
-  Purchase purchase2(stocks[0], 240, 79.0, calendar.getDate(), 170.0);
-  Purchase purchase3(stocks[0], 100, 70.0, calendar.getDate(), 170.0);
+  Stock selectedStock = stocks[10];
 
-  portfolio.addPurchase(purchase);
-  portfolio.addPurchase(purchase2);
-  portfolio.addPurchase(purchase3);
+  portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 150, 72.0, calendar, 170.0);
+  portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 170.0);
+  portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 170.0);
 
   portfolio.printPortfolio();
 }
