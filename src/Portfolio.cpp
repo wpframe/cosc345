@@ -37,9 +37,9 @@ void Portfolio::addPurchase(Purchase purchase)
     }
 }
 
-void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, float currentPrice)
+void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar)
 {
-    Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate(), currentPrice);
+    Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
     portfolio.addPurchase(purchase);
 }
 
@@ -68,4 +68,44 @@ Purchase *Portfolio::getPurchase(const std::string &stockSymbol)
 const std::vector<Purchase> Portfolio::getPurchases() const
 {
     return purchases;
+}
+
+void Portfolio::summarizePortfolio(int time) const
+{
+    float totalInvestment = 0.0;
+    float currentValue = 0.0;
+
+    std::cout << "Portfolio Summary:" << std::endl;
+    for (const Purchase &purchase : purchases)
+    {
+        float purchaseValue = purchase.getQuantity() * purchase.getPurchasePrice();
+        totalInvestment += purchaseValue;
+
+        float currentPrice = purchase.getStock().history[time].closePrice;
+
+        float currentPurchaseValue = purchase.getQuantity() * currentPrice;
+        currentValue += currentPurchaseValue;
+
+        std::cout << "Stock Symbol: " << purchase.getStockSymbol() << std::endl;
+        std::cout << "Average Purchase Price: " << purchase.getPurchasePrice() << std::endl;
+        std::cout << "Current Price: " << currentPrice << std::endl;
+        std::cout << "Quantity: " << purchase.getQuantity() << std::endl;
+        std::cout << "Purchase Value: " << purchaseValue << std::endl;
+        std::cout << "Current Value: " << currentPurchaseValue << std::endl;
+
+        // Calculate and display profit/loss percentage
+        float profitLoss = currentPurchaseValue - purchaseValue;
+        float profitLossPercentage = (profitLoss / purchaseValue) * 100.0;
+        std::cout << "Profit/Loss: " << profitLossPercentage << "%" << std::endl;
+
+        std::cout << "--------------------------" << std::endl;
+    }
+
+    float totalProfitLoss = currentValue - totalInvestment;
+    float totalProfitLossPercentage = (totalProfitLoss / totalInvestment) * 100.0;
+
+    std::cout << "Total Investment: " << totalInvestment << std::endl;
+    std::cout << "Current Portfolio Value: " << currentValue << std::endl;
+    std::cout << "Total Profit/Loss: " << totalProfitLoss << std::endl;
+    std::cout << "Total Profit/Loss Percentage: " << totalProfitLossPercentage << "%" << std::endl;
 }

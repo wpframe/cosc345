@@ -11,9 +11,9 @@ private:
     std::string purchaseTimestamp;
 
 public:
-    Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp, float currentPrice);
+    Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp);
 
-    void makePurchase(const Stock &s, int q, float purchasePrice);
+    // void makePurchase(const Stock &s, int q, float purchasePrice);
     void setStock(const Stock &s);
     void setQuantity(int q);
     void setPurchasePrice(float price);
@@ -23,12 +23,12 @@ public:
     std::string getTimeStamp() const;
     std::string getStockSymbol() const;
     Stock getStock() const;
-    int getQuantity();
+    int getQuantity() const;
 
-    float getPurchasePrice();
+    float getPurchasePrice() const;
 
-    float calculateProfit() const;
-    float calculateProfitPercentage() const;
+    // float calculateProfit() const;
+    // float calculateProfitPercentage() const;
     float calculateTotalCost() const;
     void printPurchaseDetails() const;
 };

@@ -11,6 +11,7 @@
 #define WINDOW_HEIGHT 1000
 Calendar calendar;
 Portfolio portfolio;
+int TIMECOUNT;
 
 // WILL NEED THIS FUNCTION BECAUSE PATH FROM APP TO CSV FILES IS DIFFERENT ON MAC OS
 
@@ -122,7 +123,7 @@ void MyApp::OnUpdate()
   {
     return;
   }
-
+  TIMECOUNT = calendar.getWeeks();
   calendar.update();
   ultralight::String date = calendar.getDate().c_str();
   view_->EvaluateScript("showDate('" + date + "')"); // view_ is an instance of View so can be called upon as you would 'caller'
@@ -226,14 +227,19 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
 
     std::vector<Purchase> purchases;
 
-    Stock stock = Stock::findStockBySymbol(symbol, stocks);
-    Stock selectedStock = stocks[10];
+    Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
+    // Stock selectedStock = stocks[10];
 
-    portfolio.addPurchaseToPortfolio(portfolio, stock, 150, 72.0, calendar, 170.0);
+    selectedStock.parseHistory();
+    selectedStock.predictNextX(5200);
+    const auto &history = selectedStock.history;
+    portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+
+    // portfolio.addPurchaseToPortfolio(portfolio, stock, 150, 72.0, calendar, 170.0);
     // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 180.0);
     // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 190.0);
-
-    portfolio.printPortfolio();
+    portfolio.summarizePortfolio(TIMECOUNT);
+    // portfolio.printPortfolio();
   }
   return JSValueMakeNull(ctx);
 }

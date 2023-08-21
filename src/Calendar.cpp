@@ -198,3 +198,16 @@ std::string Calendar::getDate() const
     std::string date = strDay + "/" + strMonth + "/" + strYear;
     return date;
 }
+
+int Calendar::getWeeks() const
+{
+    int totalDays = day + daysInMonth[month - 1] * (month - 1);
+
+    if (month > 2 && isLeapYear(year))
+    {
+        totalDays++; // Add an extra day for leap years after February
+    }
+
+    int totalWeeks = totalDays / 7;
+    return totalWeeks;
+}

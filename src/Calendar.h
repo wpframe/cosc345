@@ -15,6 +15,7 @@ public:
     int getDay() const;
     bool isLeapYear(int year) const;
     std::string getDate() const;
+    int getWeeks() const;
 
     void startCounting();
     void pauseCounting();

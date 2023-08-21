@@ -6,15 +6,17 @@
 #include <iostream>
 #include <vector>
 
-Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp, float currentPrice)
-    : stock(s), quantity(q), purchasePrice(purchasePrice), purchaseTimestamp(timestamp), currentPrice(currentPrice) {}
+Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp)
+    : stock(s), quantity(q), purchasePrice(purchasePrice), purchaseTimestamp(timestamp)
+{
+}
 
-int Purchase::getQuantity()
+int Purchase::getQuantity() const
 {
     return quantity;
 }
 
-float Purchase::getPurchasePrice()
+float Purchase::getPurchasePrice() const
 {
     return purchasePrice;
 }
@@ -48,23 +50,23 @@ void Purchase::setTimestamp(const std::string &timestamp)
     purchaseTimestamp = timestamp;
 }
 
-float Purchase::calculateProfit() const
-{
-    return quantity * (currentPrice - purchasePrice);
-}
+// float Purchase::calculateProfit() const
+// {
+//     return quantity * (currentPrice - purchasePrice);
+// }
 
-float Purchase::calculateProfitPercentage() const
-{
-    float profit = quantity * (currentPrice - purchasePrice);
-    float initialInvestment = quantity * purchasePrice;
+// float Purchase::calculateProfitPercentage() const
+// {
+//     float profit = quantity * (currentPrice - purchasePrice);
+//     float initialInvestment = quantity * purchasePrice;
 
-    if (initialInvestment == 0)
-    {
-        return 0.0f;
-    }
+//     if (initialInvestment == 0)
+//     {
+//         return 0.0f;
+//     }
 
-    return (profit / initialInvestment) * 100.0f;
-}
+//     return (profit / initialInvestment) * 100.0f;
+// }
 
 float Purchase::calculateTotalCost() const
 {
@@ -78,9 +80,8 @@ void Purchase::printPurchaseDetails() const
     std::cout << "Average Purchase Price: $" << purchasePrice << std::endl;
     std::cout << "Total Cost: $" << calculateTotalCost() << std::endl;
     std::cout << "Purchase Timestamp: " << purchaseTimestamp << std::endl;
-    std::cout << "Current Price: $" << currentPrice << std::endl;
-    std::cout << "Total Profit: $" << calculateProfit() << std::endl;
-    std::cout << "Total Profit Percentage: " << calculateProfitPercentage() << "%" << std::endl;
+    // std::cout << "Total Profit: $" << calculateProfit() << std::endl;
+    // std::cout << "Total Profit Percentage: " << calculateProfitPercentage() << "%" << std::endl;
 }
 
 /** CHANGE THE RETURN FOR THIS FUNCTION */
