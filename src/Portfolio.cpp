@@ -37,7 +37,7 @@ void Portfolio::addPurchase(Purchase purchase)
     }
 }
 
-void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, float currentPrice)
+void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, float currentPrice)
 {
     Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate(), currentPrice);
     portfolio.addPurchase(purchase);
