@@ -124,16 +124,19 @@ std::string getNextDate(const std::string &date)
     return std::string(buffer);
 }
 
-void Stock::predictNextX(int x) {
+void Stock::predictNextX(int x)
+{
     int n = history.size();
-    if (n < 2) {
+    if (n < 2)
+    {
         std::cerr << "Not enough data to predict." << std::endl;
         return;
     }
 
     // Simple linear regression
     double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++)
+    {
         sumX += i;
         sumY += history[i].closePrice;
         sumXY += i * history[i].closePrice;
@@ -143,7 +146,8 @@ void Stock::predictNextX(int x) {
     double slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     double intercept = (sumY - slope * sumX) / n;
 
-    for (int i = 0; i < x; i++) {
+    for (int i = 0; i < x; i++)
+    {
         std::string nextDate = getNextDate(history.back().date);
         double predictedPrice = slope * (n + i) + intercept;
 
@@ -160,4 +164,17 @@ void Stock::predictNextX(int x) {
 
         history.push_back({nextDate, predictedPrice});
     }
+}
+
+Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks)
+{
+    for (const Stock &stock : stocks)
+    {
+        if (stock.symbol == symbol)
+        {
+            return stock;
+        }
+    }
+    // Return a default Stock or throw an exception if not found
+    return Stock("", "", 0, 0, "", "");
 }

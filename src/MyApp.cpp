@@ -94,9 +94,12 @@ MyApp::MyApp()
   overlay_->view()->set_view_listener(this);
 
   /* read in the stocks csv only once, when the app is run */
-  // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
-  std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
-  // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
+
+  // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
+  // std::string filename = "../../../../src/data/nasdaq_screener_filtered.csv"; // FOR MAC
+
+  // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR WINDOWS
+  std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
 
   stocks = parseCSV(filename);
 }
@@ -150,6 +153,18 @@ void MyApp::OnFinishLoading(ultralight::View *caller,
   ///
 }
 
+std::string JSStringToStdString(JSStringRef jsString)
+{
+  size_t maxBufferSize = JSStringGetMaximumUTF8CStringSize(jsString);
+  char *utf8Buffer = new char[maxBufferSize];
+
+  JSStringGetUTF8CString(jsString, utf8Buffer, maxBufferSize);
+  std::string result(utf8Buffer);
+
+  delete[] utf8Buffer;
+  return result;
+}
+
 JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
                       JSObjectRef thisObject, size_t argumentCount,
                       const JSValueRef arguments[], JSValueRef *exception)
@@ -187,6 +202,42 @@ JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
+                          JSObjectRef thisObject, size_t argumentCount,
+                          const JSValueRef arguments[], JSValueRef *exception)
+{
+  if (argumentCount >= 3)
+  {
+    JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    JSStringRef jsBuyOrSell = JSValueToStringCopy(ctx, arguments[1], nullptr);
+    int quantity = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
+
+    // Convert JSStringRef to C++ std::string
+    std::string symbol = JSStringToStdString(jsSymbol);
+    std::string buyOrSell = JSStringToStdString(jsBuyOrSell);
+
+    // Release JSStringRef
+    JSStringRelease(jsSymbol);
+    JSStringRelease(jsBuyOrSell);
+
+    std::cout << "Variables in the commitPurchase method:  symbol: " << symbol << "  buyOrSell: " << buyOrSell << "  quantity: " << quantity << std::endl;
+
+    // Purchase purchase(stock, quantity, 150.0, calendar.getDate(), 160.0);
+
+    std::vector<Purchase> purchases;
+
+    Stock stock = Stock::findStockBySymbol(symbol, stocks);
+    Stock selectedStock = stocks[10];
+
+    portfolio.addPurchaseToPortfolio(portfolio, stock, 150, 72.0, calendar, 170.0);
+    // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 180.0);
+    // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 190.0);
+
+    portfolio.printPortfolio();
+  }
+  return JSValueMakeNull(ctx);
+}
+
 void MyApp::OnDOMReady(ultralight::View *caller,
                        uint64_t frame_id,
                        bool is_main_frame,
@@ -206,10 +257,12 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef startTimerRef = JSStringCreateWithUTF8CString("startTimer");
   JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
   JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
+  JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
+  JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -217,20 +270,23 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, startTimerRef, startTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, fastForwardRef, fastForwardFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(startTimerRef);
   JSStringRelease(stopTimerRef);
   JSStringRelease(fastForwardRef);
+  JSStringRelease(commitPurchaseRef);
 
   /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
   caller->EvaluateScript("showStockInfo('$1000000', '48964')"); // will be changed so that once a stock is selected, their current price is displayed
 
   // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
   // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
-  std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
+  // std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
 
-  std::vector<Stock> stocks = parseCSV(filename);
-  std::vector<Purchase> purchases;
+  // WE ARE NOW READING IN THE STOCKS VECTOR AT LINE 100 SO THE VECTOR ONLY NEEDS TO BE POPULATED ONCE
+  // std::vector<Stock> stocks = parseCSV(filename);
+
   if (!stocks.empty())
   {
     for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
@@ -247,13 +303,14 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
   }
 
-  Stock selectedStock = stocks[10];
+  // std::vector<Purchase> purchases;
+  // Stock selectedStock = stocks[10];
 
-  portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 150, 72.0, calendar, 170.0);
-  portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 170.0);
-  portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 170.0);
+  // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 150, 72.0, calendar, 170.0);
+  // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 170.0);
+  // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 170.0);
 
-  portfolio.printPortfolio();
+  // portfolio.printPortfolio();
 }
 
 void MyApp::OnChangeCursor(ultralight::View *caller,

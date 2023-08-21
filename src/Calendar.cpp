@@ -4,7 +4,7 @@
 #include <string>
 
 /*!
-    @file Calendar.cpp
+    @file
     @brief Class which Creates an in-game timer based on elapsed real time.
     @author Ben Knox
 */

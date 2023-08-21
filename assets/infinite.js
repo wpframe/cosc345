@@ -117,3 +117,15 @@ playPauseButton.addEventListener("click", function switchPlayPause() {
         startTimer();
     }
 });
+
+
+function commitPurchaseJS() {
+    var symbol = document.getElementById('dropbtn').textContent;
+    var buyOrSell = document.getElementById('buySell').innerText;
+    var quantity = document.getElementById('quantity').value;
+
+    commitPurchase(symbol, buyOrSell, quantity)
+}
+function commitPurchase() {
+
+}
