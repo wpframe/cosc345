@@ -4,11 +4,13 @@
 #include "Purchase.h"
 #include <iostream>
 #include <vector>
+#include "Portfolio.h"
 #include <string>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
 Calendar calendar;
+Portfolio portfolio;
 
 // WILL NEED THIS FUNCTION BECAUSE PATH FROM APP TO CSV FILES IS DIFFERENT ON MAC OS
 
@@ -225,14 +227,16 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
   // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
   // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
-  // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
+  std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
 
-  // std::vector<Stock> stocks = parseCSV(filename);
+  std::vector<Stock> stocks = parseCSV(filename);
   if (!stocks.empty())
   {
     for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
     {
       const Stock &stock = stocks[i];
+      stocks[i].parseHistory();
+      stocks[i].predictNextX(5200);
       ultralight::String symbol = stock.symbol.c_str();
       caller->EvaluateScript("addStockDropdown('" + symbol + "')");
     }
@@ -242,8 +246,15 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
   }
 
-  Purchase purchase(stocks[0], 10, 160.0, calendar.getDate(), 170.0);
-  purchase.printPurchaseDetails();
+  Purchase purchase(stocks[0], 150, 72.0, calendar.getDate(), 170.0);
+  Purchase purchase2(stocks[0], 240, 79.0, calendar.getDate(), 170.0);
+  Purchase purchase3(stocks[0], 100, 70.0, calendar.getDate(), 170.0);
+
+  portfolio.addPurchase(purchase);
+  portfolio.addPurchase(purchase2);
+  portfolio.addPurchase(purchase3);
+
+  portfolio.printPortfolio();
 }
 
 void MyApp::OnChangeCursor(ultralight::View *caller,

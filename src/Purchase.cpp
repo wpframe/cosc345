@@ -14,6 +14,11 @@ int Purchase::getQuantity()
     return quantity;
 }
 
+float Purchase::getPurchasePrice()
+{
+    return purchasePrice;
+}
+
 void Purchase::setStock(const Stock &s)
 {
     stock = s;
@@ -30,7 +35,7 @@ std::string Purchase::getTimeStamp() const
 }
 void Purchase::setPurchasePrice(float price)
 {
-    // purchasePrice = stock.getPriceAtDate(getTimeStamp());
+    purchasePrice = price;
 }
 
 void Purchase::setCurrentPrice(float price)
@@ -68,9 +73,9 @@ float Purchase::calculateTotalCost() const
 
 void Purchase::printPurchaseDetails() const
 {
-    // std::cout << "Stock: " << stock.getName() << " (" << stock.getSymbol() << ")" << std::endl;
+    std::cout << "Stock: " << stock.getName() << " (" << stock.getSymbol() << ")" << std::endl;
     std::cout << "Quantity: " << quantity << std::endl;
-    std::cout << "Purchase Price: $" << purchasePrice << std::endl;
+    std::cout << "Average Purchase Price: $" << purchasePrice << std::endl;
     std::cout << "Total Cost: $" << calculateTotalCost() << std::endl;
     std::cout << "Purchase Timestamp: " << purchaseTimestamp << std::endl;
     std::cout << "Current Price: $" << currentPrice << std::endl;
@@ -81,8 +86,8 @@ void Purchase::printPurchaseDetails() const
 /** CHANGE THE RETURN FOR THIS FUNCTION */
 std::string Purchase::getStockSymbol() const
 {
-    // return stock.getSymbol();
-    return "aplle";
+    return stock.getSymbol();
+    // return "aplle";
 }
 
 Stock Purchase::getStock() const

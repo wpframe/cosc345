@@ -25,6 +25,8 @@ public:
     Stock getStock() const;
     int getQuantity();
 
+    float getPurchasePrice();
+
     float calculateProfit() const;
     float calculateProfitPercentage() const;
     float calculateTotalCost() const;
