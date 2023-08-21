@@ -1,6 +1,7 @@
 #include "MyApp.h"
 #include "Stock.h"
 #include "Calendar.h"
+#include "Purchase.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -9,7 +10,7 @@
 #define WINDOW_HEIGHT 1000
 Calendar calendar;
 
-// WILL NEED THIS FUNCTION BECAUSE PATH FROM APP TO CSV FILES IS DIFFERENT ON MACOS
+// WILL NEED THIS FUNCTION BECAUSE PATH FROM APP TO CSV FILES IS DIFFERENT ON MAC OS
 
 // std::string findPathFromApp()
 // {
@@ -34,6 +35,7 @@ Calendar calendar;
 
 //   return modifiedPath;
 // }
+std::vector<Stock> stocks;
 
 MyApp::MyApp()
 {
@@ -88,6 +90,13 @@ MyApp::MyApp()
   /// View's OnChangeCursor and OnChangeTitle events below.
   ///
   overlay_->view()->set_view_listener(this);
+
+  /* read in the stocks csv only once, when the app is run */
+  // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
+  std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
+  // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
+
+  stocks = parseCSV(filename);
 }
 
 MyApp::~MyApp()
@@ -160,44 +169,19 @@ JSValueRef stopTimer(JSContextRef ctx, JSObjectRef function,
   calendar.pauseCounting();
   return JSValueMakeNull(ctx);
 }
-JSValueRef forwardWeek(JSContextRef ctx, JSObjectRef function,
+
+JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
                        JSObjectRef thisObject, size_t argumentCount,
                        const JSValueRef arguments[], JSValueRef *exception)
 {
-  ///
-  /// stopTimer is a javascript function, when called will perform the following c++ operations
-  ///
-  calendar.skipTime(1, 0, 0);
-  return JSValueMakeNull(ctx);
-}
-JSValueRef forwardMonth(JSContextRef ctx, JSObjectRef function,
-                        JSObjectRef thisObject, size_t argumentCount,
-                        const JSValueRef arguments[], JSValueRef *exception)
-{
-  ///
-  /// stopTimer is a javascript function, when called will perform the following c++ operations
-  ///
-  calendar.skipTime(0, 1, 0);
-  return JSValueMakeNull(ctx);
-}
-JSValueRef forwardYear(JSContextRef ctx, JSObjectRef function,
-                       JSObjectRef thisObject, size_t argumentCount,
-                       const JSValueRef arguments[], JSValueRef *exception)
-{
-  ///
-  /// stopTimer is a javascript function, when called will perform the following c++ operations
-  ///
-  calendar.skipTime(0, 0, 1);
-  return JSValueMakeNull(ctx);
-}
-JSValueRef forwardDecade(JSContextRef ctx, JSObjectRef function,
-                         JSObjectRef thisObject, size_t argumentCount,
-                         const JSValueRef arguments[], JSValueRef *exception)
-{
-  ///
-  /// stopTimer is a javascript function, when called will perform the following c++ operations
-  ///
-  calendar.skipTime(0, 0, 10);
+  if (argumentCount >= 3)
+  {
+    int years = static_cast<int>(JSValueToNumber(ctx, arguments[0], nullptr));
+    int months = static_cast<int>(JSValueToNumber(ctx, arguments[1], nullptr));
+    int days = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
+
+    calendar.skipTime(years, months, days);
+  }
   return JSValueMakeNull(ctx);
 }
 
@@ -210,8 +194,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
   //  This is called when a frame's DOM has finished loading on the page. /
   //  This is the best time to setup any JavaScript bindings./
-
-  /* Below is the C++ side of a javascript function, all C++ additions are in the function JSValueRef startTimer() **/
+  //  This method will be called every time the UI shows a different html page.
 
   // Acquire the JS execution context for the current page.
   auto scoped_context = caller->LockJSContext();
@@ -220,42 +203,31 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   // Create a JavaScript String containing the name of our callback.
   JSStringRef startTimerRef = JSStringCreateWithUTF8CString("startTimer");
   JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
-  JSStringRef forwardWeekRef = JSStringCreateWithUTF8CString("forwardWeek");
-  JSStringRef forwardMonthRef = JSStringCreateWithUTF8CString("forwardMonth");
-  JSStringRef forwardYearRef = JSStringCreateWithUTF8CString("forwardYear");
-  JSStringRef forwardDecadeRef = JSStringCreateWithUTF8CString("forwardDecade");
+  JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
-  JSObjectRef forwardWeekFunc = JSObjectMakeFunctionWithCallback(ctx, forwardWeekRef, forwardWeek);
-  JSObjectRef forwardMonthFunc = JSObjectMakeFunctionWithCallback(ctx, forwardMonthRef, forwardMonth);
-  JSObjectRef forwardYearFunc = JSObjectMakeFunctionWithCallback(ctx, forwardYearRef, forwardYear);
-  JSObjectRef forwardDecadeFunc = JSObjectMakeFunctionWithCallback(ctx, forwardDecadeRef, forwardDecade);
+  JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
   // Store our function in the page's global JavaScript object so that it accessible from the page as 'startTimer()'.
   JSObjectSetProperty(ctx, globalObj, startTimerRef, startTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
-  JSObjectSetProperty(ctx, globalObj, forwardWeekRef, forwardWeekFunc, 0, 0);
-  JSObjectSetProperty(ctx, globalObj, forwardMonthRef, forwardMonthFunc, 0, 0);
-  JSObjectSetProperty(ctx, globalObj, forwardYearRef, forwardYearFunc, 0, 0);
-  JSObjectSetProperty(ctx, globalObj, forwardDecadeRef, forwardDecadeFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, fastForwardRef, fastForwardFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(startTimerRef);
   JSStringRelease(stopTimerRef);
-  JSStringRelease(forwardWeekRef);
-  JSStringRelease(forwardMonthRef);
-  JSStringRelease(forwardYearRef);
-  JSStringRelease(forwardDecadeRef);
+  JSStringRelease(fastForwardRef);
 
   /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
   caller->EvaluateScript("showStockInfo('$1000000', '48964')"); // will be changed so that once a stock is selected, their current price is displayed
 
   // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
-  std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
+  // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
   // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv";  // FOR WINDOWS
-  std::vector<Stock> stocks = parseCSV(filename);
+
+  // std::vector<Stock> stocks = parseCSV(filename);
   if (!stocks.empty())
   {
     for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
@@ -269,6 +241,9 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   {
     std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
   }
+
+  Purchase purchase(stocks[0], 10, 160.0, calendar.getDate(), 170.0);
+  purchase.printPurchaseDetails();
 }
 
 void MyApp::OnChangeCursor(ultralight::View *caller,

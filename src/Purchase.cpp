@@ -1,5 +1,6 @@
 #include "Purchase.h"
 #include "Portfolio.h"
+#include "Stock.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -77,9 +78,11 @@ void Purchase::printPurchaseDetails() const
     std::cout << "Total Profit Percentage: " << calculateProfitPercentage() << "%" << std::endl;
 }
 
+/** CHANGE THE RETURN FOR THIS FUNCTION */
 std::string Purchase::getStockSymbol() const
 {
     // return stock.getSymbol();
+    return "aplle";
 }
 
 Stock Purchase::getStock() const
