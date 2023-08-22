@@ -1,0 +1,181 @@
+\doxysection{Calendar Class Reference}
+\hypertarget{classCalendar}{}\label{classCalendar}\index{Calendar@{Calendar}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classCalendar_a84e90a9fb16f36718ffcc7ef4026cbbe}{update}} ()
+\begin{DoxyCompactList}\small\item\em Method which increments the number days everytime it is called based on the time passed. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classCalendar_a6cb3a275a60e4c54f1d5d878e80919cd}{get\+Year}} () const
+\begin{DoxyCompactList}\small\item\em Getter method which gets the current in-\/game year. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classCalendar_ad4076a37ece7a61abba3879bcd3f21e3}{get\+Month}} () const
+\begin{DoxyCompactList}\small\item\em Getter method which gets the current in-\/game month. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classCalendar_a30efdb474fca5f6101aa28b5f8d82639}{get\+Day}} () const
+\begin{DoxyCompactList}\small\item\em Getter method which gets the current in-\/game day of the month. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCalendar_a3734ab8b42b81f46610506b776329b82}{is\+Leap\+Year}} (int year) const
+\begin{DoxyCompactList}\small\item\em Method to check whether a year is a leap year. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classCalendar_acb1f582d771b2a1dc3a5211d6655c30e}{get\+Date}} () const
+\begin{DoxyCompactList}\small\item\em Getter method which gets the current in-\/game date. \end{DoxyCompactList}\item 
+\Hypertarget{classCalendar_af670e9926f82db1998cd976bdc6beef0}\label{classCalendar_af670e9926f82db1998cd976bdc6beef0} 
+int {\bfseries get\+Weeks} () const
+\item 
+void \mbox{\hyperlink{classCalendar_acaed61f0d0ebb3cab0b5db7643e7b5c4}{start\+Counting}} ()
+\begin{DoxyCompactList}\small\item\em Method starts the in-\/game calendar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCalendar_ac65777963991ed6594f7e952fb973a55}{pause\+Counting}} ()
+\begin{DoxyCompactList}\small\item\em Method pauses the in-\/game calendar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCalendar_a6aa2f8179fe170da34253909e0ff37f9}{reset}} ()
+\begin{DoxyCompactList}\small\item\em Method resets the in-\/game calendar. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classCalendar_a8df9c82136e879e56ae8f9de84e186c5}{skip\+Time}} (int weeks, int months, int years)
+\begin{DoxyCompactList}\small\item\em Method to fast forward the calendar by any number of weeks, months, or years. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classCalendar_a69ef795291cf2384e08247cb673ab187}{is\+Counting}} () const
+\begin{DoxyCompactList}\small\item\em Getter method to find out if the calendar is currently counting or not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCalendar_acb1f582d771b2a1dc3a5211d6655c30e}\label{classCalendar_acb1f582d771b2a1dc3a5211d6655c30e} 
+\index{Calendar@{Calendar}!getDate@{getDate}}
+\index{getDate@{getDate}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{getDate()}{getDate()}}
+{\footnotesize\ttfamily std\+::string Calendar\+::get\+Date (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter method which gets the current in-\/game date. 
+
+\begin{DoxyReturn}{Returns}
+date as a string 
+\end{DoxyReturn}
+\Hypertarget{classCalendar_a30efdb474fca5f6101aa28b5f8d82639}\label{classCalendar_a30efdb474fca5f6101aa28b5f8d82639} 
+\index{Calendar@{Calendar}!getDay@{getDay}}
+\index{getDay@{getDay}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{getDay()}{getDay()}}
+{\footnotesize\ttfamily int Calendar\+::get\+Day (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter method which gets the current in-\/game day of the month. 
+
+\begin{DoxyReturn}{Returns}
+day as an int 
+\end{DoxyReturn}
+\Hypertarget{classCalendar_ad4076a37ece7a61abba3879bcd3f21e3}\label{classCalendar_ad4076a37ece7a61abba3879bcd3f21e3} 
+\index{Calendar@{Calendar}!getMonth@{getMonth}}
+\index{getMonth@{getMonth}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{getMonth()}{getMonth()}}
+{\footnotesize\ttfamily int Calendar\+::get\+Month (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter method which gets the current in-\/game month. 
+
+\begin{DoxyReturn}{Returns}
+month as an int 
+\end{DoxyReturn}
+\Hypertarget{classCalendar_a6cb3a275a60e4c54f1d5d878e80919cd}\label{classCalendar_a6cb3a275a60e4c54f1d5d878e80919cd} 
+\index{Calendar@{Calendar}!getYear@{getYear}}
+\index{getYear@{getYear}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{getYear()}{getYear()}}
+{\footnotesize\ttfamily int Calendar\+::get\+Year (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter method which gets the current in-\/game year. 
+
+\begin{DoxyReturn}{Returns}
+year as an int 
+\end{DoxyReturn}
+\Hypertarget{classCalendar_a69ef795291cf2384e08247cb673ab187}\label{classCalendar_a69ef795291cf2384e08247cb673ab187} 
+\index{Calendar@{Calendar}!isCounting@{isCounting}}
+\index{isCounting@{isCounting}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{isCounting()}{isCounting()}}
+{\footnotesize\ttfamily bool Calendar\+::is\+Counting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter method to find out if the calendar is currently counting or not. 
+
+\begin{DoxyReturn}{Returns}
+true if the calendar is counting, false if not. 
+\end{DoxyReturn}
+\Hypertarget{classCalendar_a3734ab8b42b81f46610506b776329b82}\label{classCalendar_a3734ab8b42b81f46610506b776329b82} 
+\index{Calendar@{Calendar}!isLeapYear@{isLeapYear}}
+\index{isLeapYear@{isLeapYear}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{isLeapYear()}{isLeapYear()}}
+{\footnotesize\ttfamily bool Calendar\+::is\+Leap\+Year (\begin{DoxyParamCaption}\item[{int}]{year }\end{DoxyParamCaption}) const}
+
+
+
+Method to check whether a year is a leap year. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em year} & \mbox{[}in\mbox{]} the year to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the year is a leap year, and false if the year is not. 
+\end{DoxyReturn}
+\Hypertarget{classCalendar_ac65777963991ed6594f7e952fb973a55}\label{classCalendar_ac65777963991ed6594f7e952fb973a55} 
+\index{Calendar@{Calendar}!pauseCounting@{pauseCounting}}
+\index{pauseCounting@{pauseCounting}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{pauseCounting()}{pauseCounting()}}
+{\footnotesize\ttfamily void Calendar\+::pause\+Counting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method pauses the in-\/game calendar. 
+
+As well as pausing, will keep track of the real time which the clock was paused at so that any time spent in the paused state is not used when the calendar is updated. \Hypertarget{classCalendar_a6aa2f8179fe170da34253909e0ff37f9}\label{classCalendar_a6aa2f8179fe170da34253909e0ff37f9} 
+\index{Calendar@{Calendar}!reset@{reset}}
+\index{reset@{reset}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void Calendar\+::reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method resets the in-\/game calendar. 
+
+Resets the calendar to a pre-\/determined date. \Hypertarget{classCalendar_a8df9c82136e879e56ae8f9de84e186c5}\label{classCalendar_a8df9c82136e879e56ae8f9de84e186c5} 
+\index{Calendar@{Calendar}!skipTime@{skipTime}}
+\index{skipTime@{skipTime}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{skipTime()}{skipTime()}}
+{\footnotesize\ttfamily void Calendar\+::skip\+Time (\begin{DoxyParamCaption}\item[{int}]{weeks,  }\item[{int}]{months,  }\item[{int}]{years }\end{DoxyParamCaption})}
+
+
+
+Method to fast forward the calendar by any number of weeks, months, or years. 
+
+This method will get the total number of days being skipped based off of the parameters, then will increment month and year while subtracting from total days until the new date is found. 
+\begin{DoxyParams}{Parameters}
+{\em weeks} & \mbox{[}in\mbox{]} number of weeks to skip. \\
+\hline
+{\em months} & \mbox{[}in\mbox{]} number of months to skip. \\
+\hline
+{\em years} & \mbox{[}in\mbox{]} number of years to skip. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classCalendar_acaed61f0d0ebb3cab0b5db7643e7b5c4}\label{classCalendar_acaed61f0d0ebb3cab0b5db7643e7b5c4} 
+\index{Calendar@{Calendar}!startCounting@{startCounting}}
+\index{startCounting@{startCounting}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{startCounting()}{startCounting()}}
+{\footnotesize\ttfamily void Calendar\+::start\+Counting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method starts the in-\/game calendar. 
+
+As well as starting the calendar, if the calendar is being started from a previously paused state, the time spent in the paused state will be subtracted from elapsed time. \Hypertarget{classCalendar_a84e90a9fb16f36718ffcc7ef4026cbbe}\label{classCalendar_a84e90a9fb16f36718ffcc7ef4026cbbe} 
+\index{Calendar@{Calendar}!update@{update}}
+\index{update@{update}!Calendar@{Calendar}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily void Calendar\+::update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method which increments the number days everytime it is called based on the time passed. 
+
+This method will also update the current month and year as well since they are dependent upon the day. This method will also check if the clock has been paused at all and will subtract off all time spent in the paused state. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Calendar.\+h\item 
+\mbox{\hyperlink{Calendar_8cpp}{Calendar.\+cpp}}\end{DoxyCompactItemize}

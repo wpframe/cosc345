@@ -1,0 +1,31 @@
+\doxysection{Headline.\+h}
+\hypertarget{Headline_8h_source}{}\label{Headline_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ HEADLINE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ HEADLINE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Stock.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classHeadline}{Headline}}\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ std::string\ headline;}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{double}\ multiplier;}
+\DoxyCodeLine{00012\ \ \ \ \ std::string\ sector;}
+\DoxyCodeLine{00013\ \ \ \ \ std::string\ type;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Headline>\ financial\_news;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Headline>\ tech\_news;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Headline>\ funny\_news;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Headline>\ rare\_news;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{static}\ std::vector<Headline>\ world\_news;}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classHeadline}{Headline}}(\textcolor{keyword}{const}\ std::string\&\ h,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\&\ m,\ \textcolor{keyword}{const}\ std::string\&\ s,\ \textcolor{keyword}{const}\ std::string\&\ t);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{static}\ std::pair<std::string,\ double>\ \mbox{\hyperlink{classHeadline_a2b7495dcad6eab433ecbcfd37c2258a3}{generateHeadline}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classStock}{Stock}}\&\ stock,\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ seed);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classHeadline_a61bbcb5709bcf6fb07f9b4c2cf5c02a7}{readFromCSV}}(\textcolor{keyword}{const}\ std::string\&\ filename);}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ HEADLINE\_H}}
+
+\end{DoxyCode}

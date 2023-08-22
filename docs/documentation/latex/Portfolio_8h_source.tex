@@ -1,0 +1,30 @@
+\doxysection{Portfolio.\+h}
+\hypertarget{Portfolio_8h_source}{}\label{Portfolio_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ PORTFOLIO\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ PORTFOLIO\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}Purchase.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Calendar.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classPortfolio}{Portfolio}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00011\ \ \ \ \ std::vector<Purchase>\ purchases;}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{void}\ replacePurchase(\textcolor{keyword}{const}\ \mbox{\hyperlink{classPurchase}{Purchase}}\ \&newPurchase);}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPortfolio_a7808d1ca2e5feb42e3d773954b8b1a9d}{addPurchase}}(\mbox{\hyperlink{classPurchase}{Purchase}}\ purchase);}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ updatePricesAndProfits();}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPortfolio_ae3e42c4ae4e830b1e3dfcd36ef332673}{printPortfolio}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classPurchase}{Purchase}}\ *\mbox{\hyperlink{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}{getPurchase}}(\textcolor{keyword}{const}\ std::string\ \&stockSymbol);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Purchase>\ \mbox{\hyperlink{classPortfolio_a867a21cf2a8a0a29522dbadfd564f82c}{getPurchases}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}{summarizePortfolio}}(\textcolor{keywordtype}{int}\ time)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ summarizePortfolio()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ addPurchaseToPortfolio(\mbox{\hyperlink{classPortfolio}{Portfolio}}\ \&portfolio,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classStock}{Stock}}\ \&selectedStock,\ \textcolor{keywordtype}{int}\ quantity,\ \textcolor{keywordtype}{float}\ purchasePrice,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCalendar}{Calendar}}\ \&calendar);}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PORTFOLIO\_H}}
+
+\end{DoxyCode}

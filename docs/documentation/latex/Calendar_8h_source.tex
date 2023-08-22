@@ -1,0 +1,48 @@
+\doxysection{Calendar.\+h}
+\hypertarget{Calendar_8h_source}{}\label{Calendar_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CALENDAR\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CALENDAR\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCalendar}{Calendar}}}
+\DoxyCodeLine{00008\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{classCalendar}{Calendar}}();}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCalendar_a84e90a9fb16f36718ffcc7ef4026cbbe}{update}}();}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCalendar_a6cb3a275a60e4c54f1d5d878e80919cd}{getYear}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCalendar_ad4076a37ece7a61abba3879bcd3f21e3}{getMonth}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classCalendar_a30efdb474fca5f6101aa28b5f8d82639}{getDay}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCalendar_a3734ab8b42b81f46610506b776329b82}{isLeapYear}}(\textcolor{keywordtype}{int}\ year)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00017\ \ \ \ \ std::string\ \mbox{\hyperlink{classCalendar_acb1f582d771b2a1dc3a5211d6655c30e}{getDate}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{int}\ getWeeks()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCalendar_acaed61f0d0ebb3cab0b5db7643e7b5c4}{startCounting}}();}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCalendar_ac65777963991ed6594f7e952fb973a55}{pauseCounting}}();}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCalendar_a6aa2f8179fe170da34253909e0ff37f9}{reset}}();}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCalendar_a8df9c82136e879e56ae8f9de84e186c5}{skipTime}}(\textcolor{keywordtype}{int}\ weeks,\ \textcolor{keywordtype}{int}\ months,\ \textcolor{keywordtype}{int}\ years);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCalendar_a69ef795291cf2384e08247cb673ab187}{isCounting}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{bool}\ countingStarted\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{bool}\ countingPaused\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{double}\ dayDuration;\ \textcolor{comment}{//\ Duration\ of\ a\ day\ in\ seconds}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{double}\ timePassed\ =\ 0.0;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ day\ =\ 1;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ month\ =\ 1;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ year\ =\ 2020;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{double}\ timeMultiplier\ =\ 1.0;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ daysInMonth[12]\ =\ \{31,\ 28,\ 31,\ 30,\ 31,\ 30,\ 31,\ 31,\ 30,\ 31,\ 30,\ 31\};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ std::chrono::time\_point<std::chrono::high\_resolution\_clock>\ lastUpdateTime\ =}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00039\ \ \ \ \ std::chrono::time\_point<std::chrono::high\_resolution\_clock>\ pauseStartTime\ =}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CALENDAR\_H}}
+
+\end{DoxyCode}
