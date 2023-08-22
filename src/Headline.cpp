@@ -1,27 +1,45 @@
+/*!
+    @file
+    @brief The implementation for the Headline class.
+    @details It has functions to read in a CSV file of news headlines, 
+                and generate a news headline for a specific stock.
+*/
+
 #include "Headline.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include "Stock.h"
 
-// ChatGPTed
-
+// Vectors of the different types of news.
 std::vector<Headline> Headline::financial_news;
 std::vector<Headline> Headline::tech_news;
 std::vector<Headline> Headline::funny_news;
 std::vector<Headline> Headline::rare_news;
 std::vector<Headline> Headline::world_news;
 
+/*!
+    @brief The constructor for the Headline class.
+    @details Takes and initializes the headline, multiplier, sector, and type.
+    @param h The headline.
+    @param m The multiplier.
+    @param s The sector.
+    @param t The type.
+*/
 Headline::Headline(const std::string& h, const double& m, const std::string& s, const std::string& t)
     : headline(h), multiplier(m), sector(s), type(t) {}
     
-
-std::vector<Headline> Headline::read_from_csv(const std::string& filename) {
+/*!
+    @brief Reads in a CSV file of news headlines.
+    @details It adds all of the headlines in the file to different static vectors depending on type.
+    @param filename The name of the file to parse.
+*/
+void Headline::readFromCSV(const std::string& filename) {
     std::vector<Headline> headlines;
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "Failed to open the CSV file." << std::endl;
-        return headlines;
+        return;
     }
 
     std::string line;
@@ -60,9 +78,16 @@ std::vector<Headline> Headline::read_from_csv(const std::string& filename) {
         }
     }
 
-    return headlines;
+
 }
 
+/*!
+    @brief Generates a news headline for a specific stock.
+    @details It randomly selects a headline from one of the vectors.
+    @param stock The stock to generate a headline for.
+    @param seed The seed for the random number generator.
+    @return A pair containing the headline and the multiplier.
+*/
 std::pair<std::string, double> Headline::generateHeadline(const Stock& stock, unsigned int seed) {
     srand(seed); // Seed the random number generator with the provided seed
 

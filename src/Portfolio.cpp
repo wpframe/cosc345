@@ -1,7 +1,19 @@
+/*!
+    @file
+    @brief The implementation for the Portfolio class.
+    @details It has the necessary data to store a collection of purchases.
+*/
+
+
 #include "Portfolio.h"
 #include <iostream>
 #include "Calendar.h"
 
+/*!
+    @brief Adds a purchase to the portfolio.
+    @details If the stock is already in the portfolio, it updates the quantity and purchase price.
+    @param purchase The purchase to add.
+*/
 void Portfolio::addPurchase(Purchase purchase)
 {
     int count = 1;
@@ -37,12 +49,16 @@ void Portfolio::addPurchase(Purchase purchase)
     }
 }
 
+// This can be removed
 void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar)
 {
     Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
     portfolio.addPurchase(purchase);
 }
 
+/*!
+    @brief Prints the portfolio to stdout.
+*/
 void Portfolio::printPortfolio() const
 {
     std::cout << "Portfolio Details:" << std::endl;
@@ -53,6 +69,11 @@ void Portfolio::printPortfolio() const
     }
 }
 
+/*!
+    @brief Gets a purchase for a specific stock from the portfolio.
+    @param stockSymbol The stock symbol of the purchase to get.
+    @return A pointer to the purchase if it exists, nullptr otherwise.
+*/
 Purchase *Portfolio::getPurchase(const std::string &stockSymbol)
 {
     for (Purchase &purchase : purchases)
@@ -65,11 +86,19 @@ Purchase *Portfolio::getPurchase(const std::string &stockSymbol)
     return nullptr;
 }
 
+/*!
+    @brief Accessor for the Purchase vector in the portfolio.
+    @return A vector of all the purchases in the portfolio.
+*/
 const std::vector<Purchase> Portfolio::getPurchases() const
 {
     return purchases;
 }
 
+/*!
+    @brief Prints a summary of the portfolio to stdout. This is only used in testing.
+    @param time The time to use for the summary.
+*/
 void Portfolio::summarizePortfolio(int time) const
 {
     float totalInvestment = 0.0;

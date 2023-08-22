@@ -20,7 +20,7 @@ public:
 
     Headline(const std::string& h, const double& m, const std::string& s, const std::string& t);
     static std::pair<std::string, double> generateHeadline(const Stock& stock, unsigned int seed);
-    static std::vector<Headline> read_from_csv(const std::string& filename);
+    static void readFromCSV(const std::string& filename);
 };
 
 #endif // HEADLINE_H

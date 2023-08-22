@@ -27,8 +27,6 @@ public:
 
     float getPurchasePrice() const;
 
-    // float calculateProfit() const;
-    // float calculateProfitPercentage() const;
     float calculateTotalCost() const;
     void printPurchaseDetails() const;
 };

@@ -1,3 +1,9 @@
+/*!
+    @file
+    @brief The implementation for the Stock class.
+    @details It holds the neccesary information for each stock, most importantly its symbol, name, and history.
+*/
+
 #include "Stock.h"
 #include "Headline.h"
 #include <fstream>
@@ -6,21 +12,44 @@
 #include <ctime>
 #include <string>
 
-// ChatGPTed
+/*!
+    @brief The constructor for the Stock class.
+    @details Takes and initializes the symbol, name, outstanding shares, IPO year, sector, and industry.
+    @param symbol The stock's symbol.
+    @param name The stock's name.
+    @param outstanding The stock's outstanding shares.
+    @param ipoYear The stock's IPO year.
+    @param sector The stock's sector.
+    @param industry The stock's industry.
+*/
 
 Stock::Stock(const std::string &symbol, const std::string &name, int outstanding, int ipoYear, const std::string &sector, const std::string &industry)
     : symbol(symbol), name(name), outstanding(outstanding), ipoYear(ipoYear), sector(sector), industry(industry) {}
 
+/*!
+    @brief Accessor for the stock's symbol.
+    @return The stock's symbol.
+*/
 std::string Stock::getSymbol() const
 {
     return symbol;
 }
 
+/*!
+    @brief Accessor for the stock's name.
+    @return The stock's name.
+*/
 std::string Stock::getName() const
 {
     return name;
 }
 
+/*!
+    @brief Parses a CSV file (the screener) containing information about all stocks.
+    @details It adds all of the stocks in the file to a vector called stocks.
+    @param filename The name of the file to parse.
+    @return A vector containing all of the stocks in the file.
+*/
 std::vector<Stock> parseCSV(const std::string &filename)
 {
     std::vector<Stock> stocks;
@@ -75,6 +104,10 @@ std::vector<Stock> parseCSV(const std::string &filename)
     return stocks;
 }
 
+/*!
+    @brief Parses a directory of CSV files containing stock history data.
+    @details It adds all of the stock history in the files to a vector called history for the current stock.
+*/
 void Stock::parseHistory()
 {
     std::string filename = "data/stocks/" + symbol + ".csv";
@@ -106,6 +139,12 @@ void Stock::parseHistory()
     file.close();
 }
 
+/*!
+    @brief A function used to get the next date from a given date.
+    @details The new date will be 7 days after the given date.
+    @param date The given date.
+    @return The new date.
+*/
 std::string getNextDate(const std::string &date)
 {
     struct tm tm = {};
@@ -124,7 +163,12 @@ std::string getNextDate(const std::string &date)
     return std::string(buffer);
 }
 
-void Stock::predictNextX(int x)
+/*!
+    @brief Predicts the next number of weeks of stock prices for the current stock.
+    @details It uses the stock's history to predict the next number of weeks of stock prices.
+    @param x The number of weeks to predict.
+*/
+void Stock::predictNextX(int numWeeks)
 {
     int n = history.size();
     if (n < 2)
@@ -146,7 +190,7 @@ void Stock::predictNextX(int x)
     double slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     double intercept = (sumY - slope * sumX) / n;
 
-    for (int i = 0; i < x; i++)
+    for (int i = 0; i < numWeeks; i++)
     {
         std::string nextDate = getNextDate(history.back().date);
         double predictedPrice = slope * (n + i) + intercept;
@@ -166,6 +210,7 @@ void Stock::predictNextX(int x)
     }
 }
 
+// This can be removed
 Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks)
 {
     for (const Stock &stock : stocks)
