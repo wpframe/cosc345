@@ -12,33 +12,14 @@
 Calendar calendar;
 Portfolio portfolio;
 int TIMECOUNT;
-
-// WILL NEED THIS FUNCTION BECAUSE PATH FROM APP TO CSV FILES IS DIFFERENT ON MAC OS
-
-// std::string findPathFromApp()
-// {
-
-//   // char buffer[PATH_MAX]; // PATH_MAX is a macro representing the maximum path length
-//   // if (getcwd(buffer, sizeof(buffer)) == nullptr)
-//   // {
-//   //   std::cout << "Could not find current directory: " << std::endl;
-//   //   return "";
-//   // }
-//   std::string buffer = "/Users/admin/Desktop/cosc345/cosc345/build/MyApp.app/Contents/MacOS/MyApp";
-
-//   // std::__fs::filesystem::path currentPath = std::__fs::filesystem::current_path(); // NEED TO UPDATE COMPILER TO USE THIS
-//   std::string modifiedPath = buffer;
-
-//   size_t pos = modifiedPath.rfind("build");
-
-//   if (pos != std::string::npos)
-//   {
-//     modifiedPath.erase(pos);
-//   }
-
-//   return modifiedPath;
-// }
 std::vector<Stock> stocks;
+
+/*
+TODO:
+- segfault when commit is pressed but no stock selected
+- Portfolio css
+
+**/
 
 MyApp::MyApp()
 {
@@ -100,9 +81,27 @@ MyApp::MyApp()
   // std::string filename = "../../../../src/data/nasdaq_screener_filtered.csv"; // FOR MAC
 
   // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR WINDOWS
-  std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
+  // std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
+
+  std::string pathPrefix = findPathFromApp();
+  std::string filename = pathPrefix + "src/data/nasdaq_screener_filtered.csv";
 
   stocks = parseCSV(filename);
+
+  if (!stocks.empty())
+  {
+    // for (int i = 0; i < static_cast<int>(stocks.size()); ++i) // FOR LOOP FOR ALL STOCKS
+    for (int i = 0; i < std::min(50, static_cast<int>(stocks.size())); ++i) // FOR LOOP FOR FIRST 100
+    {
+      const Stock &stock = stocks[i];
+      stocks[i].parseHistory();
+      stocks[i].predictNextX(5200);
+    }
+  }
+  else
+  {
+    std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
+  }
 }
 
 MyApp::~MyApp()
@@ -112,6 +111,20 @@ MyApp::~MyApp()
 void MyApp::Run()
 {
   app_->Run();
+}
+
+std::string MyApp::findPathFromApp()
+{
+  std::string pathPrefix;
+#if defined(__linux__)
+  pathPrefix = "../";
+#elif defined(__APPLE__)
+  pathPrefix = "../../../../";
+#else
+  pathPrefix = "../";
+#endif
+
+  return pathPrefix;
 }
 
 void MyApp::OnUpdate()
@@ -221,13 +234,20 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     JSStringRelease(jsSymbol);
     JSStringRelease(jsBuyOrSell);
 
-    std::cout << "Variables in the commitPurchase method:  symbol: " << symbol << "  buyOrSell: " << buyOrSell << "  quantity: " << quantity << std::endl;
+    // std::cout << "Variables in the commitPurchase method:  symbol: " << symbol << "  buyOrSell: " << buyOrSell << "  quantity: " << quantity << std::endl;
 
     // Purchase purchase(stock, quantity, 150.0, calendar.getDate(), 160.0);
 
     std::vector<Purchase> purchases;
 
-    Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
+    Stock selectedStock = stocks[0];
+    for (const Stock &stock : stocks)
+    {
+      if (stock.symbol == symbol)
+      {
+        Stock selectedStock = stock;
+      }
+    }
     // Stock selectedStock = stocks[10];
 
     selectedStock.parseHistory();
@@ -240,6 +260,49 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 190.0);
     portfolio.summarizePortfolio(TIMECOUNT);
     // portfolio.printPortfolio();
+  }
+  return JSValueMakeNull(ctx);
+}
+
+JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
+                          JSObjectRef thisObject, size_t argumentCount,
+                          const JSValueRef arguments[], JSValueRef *exception)
+{
+  std::cout << "stock selected..." << std::endl;
+  if (argumentCount >= 1)
+  {
+    JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    std::string symbol = JSStringToStdString(jsSymbol);
+
+    JSStringRelease(jsSymbol);
+
+    Stock selectedStock = stocks[0];
+    for (const Stock &stock : stocks)
+    {
+      if (stock.symbol == symbol)
+      {
+        Stock selectedStock = stock;
+      }
+    }
+    // selectedStock.parseHistory();
+    // selectedStock.predictNextX(5200);
+
+    const auto &history = selectedStock.history;
+    std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
+    std::cout << "here is close price: " << selectedStock.history[TIMECOUNT].closePrice << std::endl;
+    std::string jscode =
+        "document.getElementById('currentPrice').innerText = 'Price per stock: $" + closePriceString + "'";
+
+    const char *str = jscode.c_str();
+
+    // Create our string of JavaScript
+    JSStringRef script = JSStringCreateWithUTF8CString(str);
+
+    // Execute it with JSEvaluateScript, ignoring other parameters for now
+    JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+
+    // Release our string (we only Release what we Create)
+    JSStringRelease(script);
   }
   return JSValueMakeNull(ctx);
 }
@@ -264,11 +327,13 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
   JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
+  JSStringRef cppSelectStockRef = JSStringCreateWithUTF8CString("cppSelectStock");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
+  JSObjectRef cppSelectStockFunc = JSObjectMakeFunctionWithCallback(ctx, cppSelectStockRef, cppSelectStock);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -277,29 +342,21 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, fastForwardRef, fastForwardFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, cppSelectStockRef, cppSelectStockFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(startTimerRef);
   JSStringRelease(stopTimerRef);
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
+  JSStringRelease(cppSelectStockRef);
 
   /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
-  caller->EvaluateScript("showStockInfo('$1000000', '48964')"); // will be changed so that once a stock is selected, their current price is displayed
-
-  // std::string filename = absPath + "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR ALL???
-  // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
-  // std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
-
-  // WE ARE NOW READING IN THE STOCKS VECTOR AT LINE 100 SO THE VECTOR ONLY NEEDS TO BE POPULATED ONCE
-  // std::vector<Stock> stocks = parseCSV(filename);
+  caller->EvaluateScript("showStockInfo('Price per stock: ', '0')"); // will be changed so that once a stock is selected, its current price is displayed
 
   if (!stocks.empty())
   {
-    for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
+    for (const Stock &stock : stocks)
     {
-      const Stock &stock = stocks[i];
-      stocks[i].parseHistory();
-      stocks[i].predictNextX(5200);
       ultralight::String symbol = stock.symbol.c_str();
       caller->EvaluateScript("addStockDropdown('" + symbol + "')");
     }
@@ -308,15 +365,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   {
     std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
   }
-
-  // std::vector<Purchase> purchases;
-  // Stock selectedStock = stocks[10];
-
-  // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 150, 72.0, calendar, 170.0);
-  // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 170.0);
-  // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 170.0);
-
-  // portfolio.printPortfolio();
 }
 
 void MyApp::OnChangeCursor(ultralight::View *caller,

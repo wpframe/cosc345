@@ -1,12 +1,12 @@
 
 function goToHome() {
-    document.getElementById("home").innerHTML;
     window.location.href = "homepage.html";
 }
 function goToPortfolio() {
+    document.getElementById('portfolio').innerHTML;
+
     window.location.href = "portfolio.html";
 }
-
 
 function showStockInfo(currentPrice, stocksAvailable) {
     document.getElementById("currentPrice").textContent = currentPrice;
@@ -26,7 +26,7 @@ function switchBuySell() {
     }
 }
 function updateTotalPrice() {
-    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(18));
+    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(1));
     var quantity = parseInt(document.getElementById("quantity").value);
 
     var totalPrice = currentPrice * quantity;
@@ -66,9 +66,6 @@ function filterFunction() {
         }
     }
 }
-
-
-
 
 // Toggle dropdown display
 function toggleDropdown() {
@@ -128,6 +125,4 @@ function commitPurchaseJS() {
 
     commitPurchase(symbol, buyOrSell, quantity)
 }
-function commitPurchase() {
-
-}
+function commitPurchase() { }

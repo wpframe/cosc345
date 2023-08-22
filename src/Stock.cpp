@@ -6,6 +6,7 @@
 
 #include "Stock.h"
 #include "Headline.h"
+#include "MyApp.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -110,7 +111,8 @@ std::vector<Stock> parseCSV(const std::string &filename)
 */
 void Stock::parseHistory()
 {
-    std::string filename = "data/stocks/" + symbol + ".csv";
+    std::string prefix = MyApp::findPathFromApp();
+    std::string filename = prefix + "src/data/stocks/" + symbol + ".csv";
     std::ifstream file(filename);
 
     if (!file.is_open())
@@ -173,7 +175,7 @@ void Stock::predictNextX(int numWeeks)
     int n = history.size();
     if (n < 2)
     {
-        std::cerr << "Not enough data to predict." << std::endl;
+        std::cerr << "Not enough data to predict for stock: " << symbol << std::endl;
         return;
     }
 
@@ -208,18 +210,4 @@ void Stock::predictNextX(int numWeeks)
 
         history.push_back({nextDate, predictedPrice});
     }
-}
-
-// This can be removed
-Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks)
-{
-    for (const Stock &stock : stocks)
-    {
-        if (stock.symbol == symbol)
-        {
-            return stock;
-        }
-    }
-    // Return a default Stock or throw an exception if not found
-    return Stock("", "", 0, 0, "", "");
 }

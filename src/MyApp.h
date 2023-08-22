@@ -9,7 +9,11 @@ class MyApp : public AppListener,
               public LoadListener,
               public ViewListener
 {
+  ultralight::View *view_;
+
 public:
+  static std::string findPathFromApp();
+
   MyApp();
 
   virtual ~MyApp();
@@ -46,7 +50,7 @@ public:
                              const String &title) override;
 
 private:
-  ultralight::View *view_;
+  // ultralight::View *view_;
 
 protected:
   RefPtr<App> app_;

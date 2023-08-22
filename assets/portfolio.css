@@ -1,0 +1,61 @@
+@font-face {
+    font-family: Evil;
+    src: url(fonts/EvilEmpire-4BBVK.ttf);
+  }
+
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
+    font-family: 'Evil', sans-serif;
+    overflow-x: hidden;
+  }
+  
+  header {
+    background-color: #2BAE66;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  nav ul li {
+    margin-right: 20px;
+  }
+  
+  nav ul li button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .game-name h2 {
+    font-size: 24px;
+  }
+  
+  .tiles-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .stock-tile {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  

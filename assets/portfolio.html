@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="portfolio.css">
+  <title>Portfolio</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><button id="home" onclick="goToHome()">Home</button></li>
+        <li><button id="100years" onclick="goTo100years()">Back</button></li>
+        <li><button id="recenttrades" onclick="goToRecentTrades()">Recent Trades</button></li>
+      </ul>
+    </nav>
+    <div class="game-name">
+      <h2>Millionaire Tycoon</h2>
+    </div>
+  </header>
+
+  <section class="tiles-container">
+    <!-- Placeholder for stock tiles -->
+    <div class="stock-tile">
+      <p>Stock Name: AAPL</p>
+      <p>Current Price: $200</p>
+    </div>
+    <div class="stock-tile">
+      <p>Stock Name: AMZN</p>
+      <p>Current Price: $3000</p>
+    </div>
+    <div class="stock-tile">
+      <p>Stock Name: GOOG</p>
+      <p>Current Price: $2500</p>
+    </div>
+    <!-- Add more tiles here for different stocks -->
+  </section>
+
+  <script src="portfolio.js"></script>
+</body>
+
+</html>

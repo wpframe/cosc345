@@ -9,7 +9,7 @@
     @author Ben Knox
 */
 
-Calendar::Calendar() : year(2020), month(1), day(1), dayDuration(1.0) {} // dayduration = 1 day in game takes 1 second
+Calendar::Calendar() : year(2023), month(1), day(1), dayDuration(1.0) {} // dayduration = 1 day in game takes 1 second
 
 /*!
     @brief Method to check whether a year is a leap year.
@@ -88,6 +88,12 @@ void Calendar::startCounting()
         std::chrono::duration<double> elapsedTime = currentTime - pauseStartTime;
         timePassed -= elapsedTime.count() * timeMultiplier;
     }
+    else
+    {
+        year = 2023;
+        month = 1;
+        day = 1;
+    }
 }
 
 /*!
@@ -113,7 +119,7 @@ void Calendar::reset()
     // Reset the calendar to the initial date
     countingStarted = false;
     countingPaused = false;
-    year = 2020;
+    year = 2023;
     month = 1;
     day = 1;
     timePassed = 0.0;
@@ -199,13 +205,39 @@ std::string Calendar::getDate() const
     return date;
 }
 
+// int Calendar::getWeeks() const
+// {
+//     int totalDays = day + daysInMonth[month - 1] * (month - 1);
+
+//     if (month > 2 && isLeapYear(year))
+//     {
+//         totalDays++; // Add an extra day for leap years after February
+//     }
+
+//     int totalWeeks = totalDays / 7;
+//     return totalWeeks;
+// }
+
+/* New version counts weeks beyond the current year */
 int Calendar::getWeeks() const
 {
     int totalDays = day + daysInMonth[month - 1] * (month - 1);
 
+    for (int currYear = 2023; currYear < year; ++currYear)
+    {
+        if (isLeapYear(currYear))
+        {
+            totalDays += 366;
+        }
+        else
+        {
+            totalDays += 365;
+        }
+    }
+
     if (month > 2 && isLeapYear(year))
     {
-        totalDays++; // Add an extra day for leap years after February
+        totalDays++;
     }
 
     int totalWeeks = totalDays / 7;

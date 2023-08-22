@@ -26,7 +26,6 @@ public:
     std::vector<StockHistory> history;
     void parseHistory();
     void predictNextX(int x);
-    static Stock findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks);
 };
 
 std::vector<Stock> parseCSV(const std::string &filename);

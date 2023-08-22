@@ -15,11 +15,11 @@ function goToInfinite() {
 
 }
 function goTo100Years() {
-    // Change the button text
-    document.getElementById("100years").innerHTML;
+    // // Change the button text
+    // document.getElementById("100years").innerHTML;
 
-    // Redirect to "infinite.html"
-    window.location.href = "100-years.html";
+    // // Redirect to "infinite.html"
+    window.location.href = "100years.html";
 }
 
 function showHowToPlay() {
