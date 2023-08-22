@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: Portfolio.h Source File</title>
+<title>Millionaire Simulator: Portfolio.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,8 +21,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">Millionaire Simulator
    </div>
+   <div id="projectbrief">An investment simulator game.</div>
   </td>
  </tr>
  </tbody>
@@ -93,17 +94,18 @@ $(function() {
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">const</span> std::vector&lt;Purchase&gt; <a class="code hl_function" href="classPortfolio.html#a867a21cf2a8a0a29522dbadfd564f82c">getPurchases</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classPortfolio.html#a5e8e83cb75aca1c414cdab32643e9458">summarizePortfolio</a>(<span class="keywordtype">int</span> time) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">void</span> summarizePortfolio() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> addPurchaseToPortfolio(<a class="code hl_class" href="classPortfolio.html">Portfolio</a> &amp;portfolio, <span class="keyword">const</span> <a class="code hl_class" href="classStock.html">Stock</a> &amp;selectedStock, <span class="keywordtype">int</span> quantity, <span class="keywordtype">float</span> purchasePrice, <span class="keyword">const</span> <a class="code hl_class" href="classCalendar.html">Calendar</a> &amp;calendar);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">addPurchaseToPortfolio</a>(<a class="code hl_class" href="classPortfolio.html">Portfolio</a> &amp;portfolio, <span class="keyword">const</span> <a class="code hl_class" href="classStock.html">Stock</a> &amp;selectedStock, <span class="keywordtype">int</span> quantity, <span class="keywordtype">float</span> purchasePrice, <span class="keyword">const</span> <a class="code hl_class" href="classCalendar.html">Calendar</a> &amp;calendar);</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>};</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#endif </span><span class="comment">// PORTFOLIO_H</span></div>
 <div class="ttc" id="aclassCalendar_html"><div class="ttname"><a href="classCalendar.html">Calendar</a></div><div class="ttdef"><b>Definition</b> Calendar.h:8</div></div>
 <div class="ttc" id="aclassPortfolio_html"><div class="ttname"><a href="classPortfolio.html">Portfolio</a></div><div class="ttdef"><b>Definition</b> Portfolio.h:9</div></div>
-<div class="ttc" id="aclassPortfolio_html_a5e8e83cb75aca1c414cdab32643e9458"><div class="ttname"><a href="classPortfolio.html#a5e8e83cb75aca1c414cdab32643e9458">Portfolio::summarizePortfolio</a></div><div class="ttdeci">void summarizePortfolio(int time) const</div><div class="ttdoc">Prints a summary of the portfolio to stdout. This is only used in testing.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:102</div></div>
+<div class="ttc" id="aclassPortfolio_html_a5e8e83cb75aca1c414cdab32643e9458"><div class="ttname"><a href="classPortfolio.html#a5e8e83cb75aca1c414cdab32643e9458">Portfolio::summarizePortfolio</a></div><div class="ttdeci">void summarizePortfolio(int time) const</div><div class="ttdoc">Prints a summary of the portfolio to stdout. This is only used in testing.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:110</div></div>
 <div class="ttc" id="aclassPortfolio_html_a7808d1ca2e5feb42e3d773954b8b1a9d"><div class="ttname"><a href="classPortfolio.html#a7808d1ca2e5feb42e3d773954b8b1a9d">Portfolio::addPurchase</a></div><div class="ttdeci">void addPurchase(Purchase purchase)</div><div class="ttdoc">Adds a purchase to the portfolio.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:17</div></div>
-<div class="ttc" id="aclassPortfolio_html_a867a21cf2a8a0a29522dbadfd564f82c"><div class="ttname"><a href="classPortfolio.html#a867a21cf2a8a0a29522dbadfd564f82c">Portfolio::getPurchases</a></div><div class="ttdeci">const std::vector&lt; Purchase &gt; getPurchases() const</div><div class="ttdoc">Accessor for the Purchase vector in the portfolio.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:93</div></div>
-<div class="ttc" id="aclassPortfolio_html_a95d01053b129c56e21b30042e1c6afb5"><div class="ttname"><a href="classPortfolio.html#a95d01053b129c56e21b30042e1c6afb5">Portfolio::getPurchase</a></div><div class="ttdeci">Purchase * getPurchase(const std::string &amp;stockSymbol)</div><div class="ttdoc">Gets a purchase for a specific stock from the portfolio.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:77</div></div>
-<div class="ttc" id="aclassPortfolio_html_ae3e42c4ae4e830b1e3dfcd36ef332673"><div class="ttname"><a href="classPortfolio.html#ae3e42c4ae4e830b1e3dfcd36ef332673">Portfolio::printPortfolio</a></div><div class="ttdeci">void printPortfolio() const</div><div class="ttdoc">Prints the portfolio to stdout.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:62</div></div>
+<div class="ttc" id="aclassPortfolio_html_a867a21cf2a8a0a29522dbadfd564f82c"><div class="ttname"><a href="classPortfolio.html#a867a21cf2a8a0a29522dbadfd564f82c">Portfolio::getPurchases</a></div><div class="ttdeci">const std::vector&lt; Purchase &gt; getPurchases() const</div><div class="ttdoc">Accessor for the Purchase vector in the portfolio.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:101</div></div>
+<div class="ttc" id="aclassPortfolio_html_a95d01053b129c56e21b30042e1c6afb5"><div class="ttname"><a href="classPortfolio.html#a95d01053b129c56e21b30042e1c6afb5">Portfolio::getPurchase</a></div><div class="ttdeci">Purchase * getPurchase(const std::string &amp;stockSymbol)</div><div class="ttdoc">Gets a purchase for a specific stock from the portfolio.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:85</div></div>
+<div class="ttc" id="aclassPortfolio_html_ab25b15ab52e16f650952afba4cbdaa20"><div class="ttname"><a href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">Portfolio::addPurchaseToPortfolio</a></div><div class="ttdeci">void addPurchaseToPortfolio(Portfolio &amp;portfolio, const Stock &amp;selectedStock, int quantity, float purchasePrice, const Calendar &amp;calendar)</div><div class="ttdoc">Adds a purchase to the portfolio.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:61</div></div>
+<div class="ttc" id="aclassPortfolio_html_ae3e42c4ae4e830b1e3dfcd36ef332673"><div class="ttname"><a href="classPortfolio.html#ae3e42c4ae4e830b1e3dfcd36ef332673">Portfolio::printPortfolio</a></div><div class="ttdeci">void printPortfolio() const</div><div class="ttdoc">Prints the portfolio to stdout.</div><div class="ttdef"><b>Definition</b> Portfolio.cpp:70</div></div>
 <div class="ttc" id="aclassPurchase_html"><div class="ttname"><a href="classPurchase.html">Purchase</a></div><div class="ttdef"><b>Definition</b> Purchase.h:5</div></div>
 <div class="ttc" id="aclassStock_html"><div class="ttname"><a href="classStock.html">Stock</a></div><div class="ttdef"><b>Definition</b> Stock.h:15</div></div>
 </div><!-- fragment --></div><!-- contents -->

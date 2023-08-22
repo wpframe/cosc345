@@ -23,9 +23,8 @@ void \mbox{\hyperlink{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}{summariz
 \Hypertarget{classPortfolio_a5cb78af98d2fad3a04c3a3a1410c4e58}\label{classPortfolio_a5cb78af98d2fad3a04c3a3a1410c4e58} 
 void {\bfseries summarize\+Portfolio} () const
 \item 
-\Hypertarget{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}\label{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20} 
-void {\bfseries add\+Purchase\+To\+Portfolio} (\mbox{\hyperlink{classPortfolio}{Portfolio}} \&portfolio, const \mbox{\hyperlink{classStock}{Stock}} \&selected\+Stock, int quantity, float purchase\+Price, const \mbox{\hyperlink{classCalendar}{Calendar}} \&calendar)
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}{add\+Purchase\+To\+Portfolio}} (\mbox{\hyperlink{classPortfolio}{Portfolio}} \&portfolio, const \mbox{\hyperlink{classStock}{Stock}} \&selected\+Stock, int quantity, float purchase\+Price, const \mbox{\hyperlink{classCalendar}{Calendar}} \&calendar)
+\begin{DoxyCompactList}\small\item\em Adds a purchase to the portfolio. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Member Function Documentation}
@@ -42,6 +41,29 @@ Adds a purchase to the portfolio.
 If the stock is already in the portfolio, it updates the quantity and purchase price. 
 \begin{DoxyParams}{Parameters}
 {\em purchase} & The purchase to add. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}\label{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20} 
+\index{Portfolio@{Portfolio}!addPurchaseToPortfolio@{addPurchaseToPortfolio}}
+\index{addPurchaseToPortfolio@{addPurchaseToPortfolio}!Portfolio@{Portfolio}}
+\doxysubsubsection{\texorpdfstring{addPurchaseToPortfolio()}{addPurchaseToPortfolio()}}
+{\footnotesize\ttfamily void Portfolio\+::add\+Purchase\+To\+Portfolio (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPortfolio}{Portfolio}} \&}]{portfolio,  }\item[{const \mbox{\hyperlink{classStock}{Stock}} \&}]{selected\+Stock,  }\item[{int}]{quantity,  }\item[{float}]{purchase\+Price,  }\item[{const \mbox{\hyperlink{classCalendar}{Calendar}} \&}]{calendar }\end{DoxyParamCaption})}
+
+
+
+Adds a purchase to the portfolio. 
+
+If the stock is already in the portfolio, it updates the quantity and purchase price. 
+\begin{DoxyParams}{Parameters}
+{\em portfolio} & The portfolio to add the purchase to. \\
+\hline
+{\em selected\+Stock} & The stock to add to the portfolio. \\
+\hline
+{\em quantity} & The quantity of the stock to add. \\
+\hline
+{\em purchase\+Price} & The purchase price of the stock. \\
+\hline
+{\em calendar} & The calendar to use for the purchase timestamp. \\
 \hline
 \end{DoxyParams}
 \Hypertarget{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}\label{classPortfolio_a95d01053b129c56e21b30042e1c6afb5} 

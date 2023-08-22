@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.7"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: Portfolio Class Reference</title>
+<title>Millionaire Simulator: Portfolio Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,8 +21,9 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">Millionaire Simulator
    </div>
+   <div id="projectbrief">An investment simulator game.</div>
   </td>
  </tr>
  </tbody>
@@ -103,8 +104,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>printPortfolio</b> ()
 <tr class="memitem:a5cb78af98d2fad3a04c3a3a1410c4e58"><td class="memItemLeft" align="right" valign="top"><a id="a5cb78af98d2fad3a04c3a3a1410c4e58" name="a5cb78af98d2fad3a04c3a3a1410c4e58"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>summarizePortfolio</b> () const</td></tr>
 <tr class="separator:a5cb78af98d2fad3a04c3a3a1410c4e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab25b15ab52e16f650952afba4cbdaa20"><td class="memItemLeft" align="right" valign="top"><a id="ab25b15ab52e16f650952afba4cbdaa20" name="ab25b15ab52e16f650952afba4cbdaa20"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addPurchaseToPortfolio</b> (<a class="el" href="classPortfolio.html">Portfolio</a> &amp;portfolio, const <a class="el" href="classStock.html">Stock</a> &amp;selectedStock, int quantity, float purchasePrice, const <a class="el" href="classCalendar.html">Calendar</a> &amp;calendar)</td></tr>
+<tr class="memitem:ab25b15ab52e16f650952afba4cbdaa20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">addPurchaseToPortfolio</a> (<a class="el" href="classPortfolio.html">Portfolio</a> &amp;portfolio, const <a class="el" href="classStock.html">Stock</a> &amp;selectedStock, int quantity, float purchasePrice, const <a class="el" href="classCalendar.html">Calendar</a> &amp;calendar)</td></tr>
+<tr class="memdesc:ab25b15ab52e16f650952afba4cbdaa20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a purchase to the portfolio.  <br /></td></tr>
 <tr class="separator:ab25b15ab52e16f650952afba4cbdaa20"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -128,6 +129,64 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addPurchaseToPortfoli
 <p>If the stock is already in the portfolio, it updates the quantity and purchase price. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">purchase</td><td>The purchase to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab25b15ab52e16f650952afba4cbdaa20" name="ab25b15ab52e16f650952afba4cbdaa20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab25b15ab52e16f650952afba4cbdaa20">&#9670;&#160;</a></span>addPurchaseToPortfolio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Portfolio::addPurchaseToPortfolio </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classPortfolio.html">Portfolio</a> &amp;&#160;</td>
+          <td class="paramname"><em>portfolio</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classStock.html">Stock</a> &amp;&#160;</td>
+          <td class="paramname"><em>selectedStock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantity</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>purchasePrice</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classCalendar.html">Calendar</a> &amp;&#160;</td>
+          <td class="paramname"><em>calendar</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a purchase to the portfolio. </p>
+<p>If the stock is already in the portfolio, it updates the quantity and purchase price. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">portfolio</td><td>The portfolio to add the purchase to. </td></tr>
+    <tr><td class="paramname">selectedStock</td><td>The stock to add to the portfolio. </td></tr>
+    <tr><td class="paramname">quantity</td><td>The quantity of the stock to add. </td></tr>
+    <tr><td class="paramname">purchasePrice</td><td>The purchase price of the stock. </td></tr>
+    <tr><td class="paramname">calendar</td><td>The calendar to use for the purchase timestamp. </td></tr>
   </table>
   </dd>
 </dl>

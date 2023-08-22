@@ -49,7 +49,15 @@ void Portfolio::addPurchase(Purchase purchase)
     }
 }
 
-// This can be removed
+/*!
+    @brief Adds a purchase to the portfolio.
+    @details If the stock is already in the portfolio, it updates the quantity and purchase price.
+    @param portfolio The portfolio to add the purchase to.
+    @param selectedStock The stock to add to the portfolio.
+    @param quantity The quantity of the stock to add.
+    @param purchasePrice The purchase price of the stock.
+    @param calendar The calendar to use for the purchase timestamp.
+*/
 void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar)
 {
     Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
