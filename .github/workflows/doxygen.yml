@@ -18,3 +18,11 @@ jobs:
       run: |
         cd src
         doxygen
+        
+    - name: Commit and push if there are changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git commit -m "Add generated Doxygen documentation" || echo "No changes to commit"
+        git push
