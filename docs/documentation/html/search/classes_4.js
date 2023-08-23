@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['stock_0',['Stock',['../classStock.html',1,'']]],
-  ['stockhistory_1',['StockHistory',['../structStockHistory.html',1,'']]]
+  ['stock_59',['Stock',['../classStock.html',1,'']]],
+  ['stockhistory_60',['StockHistory',['../structStockHistory.html',1,'']]]
 ];

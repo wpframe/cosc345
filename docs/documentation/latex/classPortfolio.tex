@@ -1,26 +1,26 @@
-\doxysection{Portfolio Class Reference}
-\hypertarget{classPortfolio}{}\label{classPortfolio}\index{Portfolio@{Portfolio}}
-\doxysubsubsection*{Public Member Functions}
+\hypertarget{classPortfolio}{}\doxysection{Portfolio Class Reference}
+\label{classPortfolio}\index{Portfolio@{Portfolio}}
+\doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{classPortfolio_ae8fd9c0d26505c324747ca142d16338b}\label{classPortfolio_ae8fd9c0d26505c324747ca142d16338b} 
+\mbox{\Hypertarget{classPortfolio_ae8fd9c0d26505c324747ca142d16338b}\label{classPortfolio_ae8fd9c0d26505c324747ca142d16338b}} 
 void {\bfseries replace\+Purchase} (const \mbox{\hyperlink{classPurchase}{Purchase}} \&new\+Purchase)
 \item 
 void \mbox{\hyperlink{classPortfolio_a7808d1ca2e5feb42e3d773954b8b1a9d}{add\+Purchase}} (\mbox{\hyperlink{classPurchase}{Purchase}} purchase)
 \begin{DoxyCompactList}\small\item\em Adds a purchase to the portfolio. \end{DoxyCompactList}\item 
-\Hypertarget{classPortfolio_a02398bd17d5815f948525f7878787392}\label{classPortfolio_a02398bd17d5815f948525f7878787392} 
+\mbox{\Hypertarget{classPortfolio_a02398bd17d5815f948525f7878787392}\label{classPortfolio_a02398bd17d5815f948525f7878787392}} 
 void {\bfseries update\+Prices\+And\+Profits} ()
 \item 
-\Hypertarget{classPortfolio_ae3e42c4ae4e830b1e3dfcd36ef332673}\label{classPortfolio_ae3e42c4ae4e830b1e3dfcd36ef332673} 
-void {\bfseries print\+Portfolio} () const
+\mbox{\Hypertarget{classPortfolio_ae3e42c4ae4e830b1e3dfcd36ef332673}\label{classPortfolio_ae3e42c4ae4e830b1e3dfcd36ef332673}} 
+void \mbox{\hyperlink{classPortfolio_ae3e42c4ae4e830b1e3dfcd36ef332673}{print\+Portfolio}} () const
 \begin{DoxyCompactList}\small\item\em Prints the portfolio to stdout. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classPurchase}{Purchase}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}{get\+Purchase}} (const std\+::string \&stock\+Symbol)
+\mbox{\hyperlink{classPurchase}{Purchase}} $\ast$ \mbox{\hyperlink{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}{get\+Purchase}} (const std\+::string \&stock\+Symbol)
 \begin{DoxyCompactList}\small\item\em Gets a purchase for a specific stock from the portfolio. \end{DoxyCompactList}\item 
 const std\+::vector$<$ \mbox{\hyperlink{classPurchase}{Purchase}} $>$ \mbox{\hyperlink{classPortfolio_a867a21cf2a8a0a29522dbadfd564f82c}{get\+Purchases}} () const
-\begin{DoxyCompactList}\small\item\em Accessor for the \doxylink{classPurchase}{Purchase} vector in the portfolio. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Accessor for the \mbox{\hyperlink{classPurchase}{Purchase}} vector in the portfolio. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}{summarize\+Portfolio}} (int time) const
 \begin{DoxyCompactList}\small\item\em Prints a summary of the portfolio to stdout. This is only used in testing. \end{DoxyCompactList}\item 
-\Hypertarget{classPortfolio_a5cb78af98d2fad3a04c3a3a1410c4e58}\label{classPortfolio_a5cb78af98d2fad3a04c3a3a1410c4e58} 
+\mbox{\Hypertarget{classPortfolio_a5cb78af98d2fad3a04c3a3a1410c4e58}\label{classPortfolio_a5cb78af98d2fad3a04c3a3a1410c4e58}} 
 void {\bfseries summarize\+Portfolio} () const
 \item 
 void \mbox{\hyperlink{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}{add\+Purchase\+To\+Portfolio}} (\mbox{\hyperlink{classPortfolio}{Portfolio}} \&portfolio, const \mbox{\hyperlink{classStock}{Stock}} \&selected\+Stock, int quantity, float purchase\+Price, const \mbox{\hyperlink{classCalendar}{Calendar}} \&calendar)
@@ -28,7 +28,7 @@ void \mbox{\hyperlink{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}{add\+Pur
 
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{classPortfolio_a7808d1ca2e5feb42e3d773954b8b1a9d}\label{classPortfolio_a7808d1ca2e5feb42e3d773954b8b1a9d} 
+\mbox{\Hypertarget{classPortfolio_a7808d1ca2e5feb42e3d773954b8b1a9d}\label{classPortfolio_a7808d1ca2e5feb42e3d773954b8b1a9d}} 
 \index{Portfolio@{Portfolio}!addPurchase@{addPurchase}}
 \index{addPurchase@{addPurchase}!Portfolio@{Portfolio}}
 \doxysubsubsection{\texorpdfstring{addPurchase()}{addPurchase()}}
@@ -43,7 +43,7 @@ If the stock is already in the portfolio, it updates the quantity and purchase p
 {\em purchase} & The purchase to add. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}\label{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20} 
+\mbox{\Hypertarget{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}\label{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}} 
 \index{Portfolio@{Portfolio}!addPurchaseToPortfolio@{addPurchaseToPortfolio}}
 \index{addPurchaseToPortfolio@{addPurchaseToPortfolio}!Portfolio@{Portfolio}}
 \doxysubsubsection{\texorpdfstring{addPurchaseToPortfolio()}{addPurchaseToPortfolio()}}
@@ -66,11 +66,11 @@ If the stock is already in the portfolio, it updates the quantity and purchase p
 {\em calendar} & The calendar to use for the purchase timestamp. \\
 \hline
 \end{DoxyParams}
-\Hypertarget{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}\label{classPortfolio_a95d01053b129c56e21b30042e1c6afb5} 
+\mbox{\Hypertarget{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}\label{classPortfolio_a95d01053b129c56e21b30042e1c6afb5}} 
 \index{Portfolio@{Portfolio}!getPurchase@{getPurchase}}
 \index{getPurchase@{getPurchase}!Portfolio@{Portfolio}}
 \doxysubsubsection{\texorpdfstring{getPurchase()}{getPurchase()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classPurchase}{Purchase}} \texorpdfstring{$\ast$}{*} Portfolio\+::get\+Purchase (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{stock\+Symbol }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPurchase}{Purchase}} $\ast$ Portfolio\+::get\+Purchase (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{stock\+Symbol }\end{DoxyParamCaption})}
 
 
 
@@ -84,7 +84,7 @@ Gets a purchase for a specific stock from the portfolio.
 \begin{DoxyReturn}{Returns}
 A pointer to the purchase if it exists, nullptr otherwise. 
 \end{DoxyReturn}
-\Hypertarget{classPortfolio_a867a21cf2a8a0a29522dbadfd564f82c}\label{classPortfolio_a867a21cf2a8a0a29522dbadfd564f82c} 
+\mbox{\Hypertarget{classPortfolio_a867a21cf2a8a0a29522dbadfd564f82c}\label{classPortfolio_a867a21cf2a8a0a29522dbadfd564f82c}} 
 \index{Portfolio@{Portfolio}!getPurchases@{getPurchases}}
 \index{getPurchases@{getPurchases}!Portfolio@{Portfolio}}
 \doxysubsubsection{\texorpdfstring{getPurchases()}{getPurchases()}}
@@ -92,12 +92,12 @@ A pointer to the purchase if it exists, nullptr otherwise.
 
 
 
-Accessor for the \doxylink{classPurchase}{Purchase} vector in the portfolio. 
+Accessor for the \mbox{\hyperlink{classPurchase}{Purchase}} vector in the portfolio. 
 
 \begin{DoxyReturn}{Returns}
 A vector of all the purchases in the portfolio. 
 \end{DoxyReturn}
-\Hypertarget{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}\label{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458} 
+\mbox{\Hypertarget{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}\label{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}} 
 \index{Portfolio@{Portfolio}!summarizePortfolio@{summarizePortfolio}}
 \index{summarizePortfolio@{summarizePortfolio}!Portfolio@{Portfolio}}
 \doxysubsubsection{\texorpdfstring{summarizePortfolio()}{summarizePortfolio()}}

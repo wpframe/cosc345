@@ -1,33 +1,34 @@
-\doxysection{Stock.\+cpp File Reference}
-\hypertarget{Stock_8cpp}{}\label{Stock_8cpp}\index{Stock.cpp@{Stock.cpp}}
+\hypertarget{Stock_8cpp}{}\doxysection{Stock.\+cpp File Reference}
+\label{Stock_8cpp}\index{Stock.cpp@{Stock.cpp}}
 
 
-The implementation for the \doxylink{classStock}{Stock} class.  
+The implementation for the \mbox{\hyperlink{classStock}{Stock}} class.  
 
 
-{\ttfamily \#include \"{}Stock.\+h\"{}}\newline
-{\ttfamily \#include \"{}Headline.\+h\"{}}\newline
+{\ttfamily \#include \char`\"{}Stock.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}Headline.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}My\+App.\+h\char`\"{}}\newline
 {\ttfamily \#include $<$fstream$>$}\newline
 {\ttfamily \#include $<$sstream$>$}\newline
 {\ttfamily \#include $<$iostream$>$}\newline
 {\ttfamily \#include $<$ctime$>$}\newline
 {\ttfamily \#include $<$string$>$}\newline
-\doxysubsubsection*{Functions}
+\doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-std\+::vector$<$ \mbox{\hyperlink{classStock}{Stock}} $>$ \mbox{\hyperlink{Stock_8cpp_a3392bb8d03483c0b9ae7e72af181af9a}{parse\+CSV}} (const std\+::string \&filename)
+std\+::vector$<$ \mbox{\hyperlink{classStock}{Stock}} $>$ \mbox{\hyperlink{Stock_8cpp_aaa2fc3a16593a21f71286550af9eca04}{parse\+CSV}} (const std\+::string \&filename)
 \begin{DoxyCompactList}\small\item\em Parses a CSV file (the screener) containing information about all stocks. \end{DoxyCompactList}\item 
 std\+::string \mbox{\hyperlink{Stock_8cpp_af82933cb75923072b791a3db75c2ddb6}{get\+Next\+Date}} (const std\+::string \&date)
 \begin{DoxyCompactList}\small\item\em A function used to get the next date from a given date. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-The implementation for the \doxylink{classStock}{Stock} class. 
+The implementation for the \mbox{\hyperlink{classStock}{Stock}} class. 
 
 It holds the neccesary information for each stock, most importantly its symbol, name, and history. 
 
 \doxysubsection{Function Documentation}
-\Hypertarget{Stock_8cpp_af82933cb75923072b791a3db75c2ddb6}\label{Stock_8cpp_af82933cb75923072b791a3db75c2ddb6} 
+\mbox{\Hypertarget{Stock_8cpp_af82933cb75923072b791a3db75c2ddb6}\label{Stock_8cpp_af82933cb75923072b791a3db75c2ddb6}} 
 \index{Stock.cpp@{Stock.cpp}!getNextDate@{getNextDate}}
 \index{getNextDate@{getNextDate}!Stock.cpp@{Stock.cpp}}
 \doxysubsubsection{\texorpdfstring{getNextDate()}{getNextDate()}}
@@ -45,11 +46,11 @@ The new date will be 7 days after the given date.
 \begin{DoxyReturn}{Returns}
 The new date. 
 \end{DoxyReturn}
-\Hypertarget{Stock_8cpp_a3392bb8d03483c0b9ae7e72af181af9a}\label{Stock_8cpp_a3392bb8d03483c0b9ae7e72af181af9a} 
+\mbox{\Hypertarget{Stock_8cpp_aaa2fc3a16593a21f71286550af9eca04}\label{Stock_8cpp_aaa2fc3a16593a21f71286550af9eca04}} 
 \index{Stock.cpp@{Stock.cpp}!parseCSV@{parseCSV}}
 \index{parseCSV@{parseCSV}!Stock.cpp@{Stock.cpp}}
 \doxysubsubsection{\texorpdfstring{parseCSV()}{parseCSV()}}
-{\footnotesize\ttfamily std\+::vector$<$ \mbox{\hyperlink{classStock}{Stock}} $>$ parse\+CSV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classStock}{Stock}}$>$ parse\+CSV (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename }\end{DoxyParamCaption})}
 
 
 
