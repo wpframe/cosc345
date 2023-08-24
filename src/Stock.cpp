@@ -27,6 +27,18 @@
 Stock::Stock(const std::string &symbol, const std::string &name, int outstanding, int ipoYear, const std::string &sector, const std::string &industry)
     : symbol(symbol), name(name), outstanding(outstanding), ipoYear(ipoYear), sector(sector), industry(industry) {}
 
+Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks)
+{
+    for (const Stock &stock : stocks)
+    {
+        if (stock.symbol == symbol)
+        {
+            return stock;
+        }
+    }
+    // Return a default Stock or throw an exception if not found
+    return Stock("", "", 0, 0, "", "");
+}
 /*!
     @brief Accessor for the stock's symbol.
     @return The stock's symbol.

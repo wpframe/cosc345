@@ -225,14 +225,17 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
     JSStringRef jsBuyOrSell = JSValueToStringCopy(ctx, arguments[1], nullptr);
     int quantity = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
+    // JSStringRef jsPurchase = JSValueToStringCopy(ctx, arguments[3], nullptr);
 
     // Convert JSStringRef to C++ std::string
     std::string symbol = JSStringToStdString(jsSymbol);
     std::string buyOrSell = JSStringToStdString(jsBuyOrSell);
+    // std::string purchaseString = JSStringToStdString(jsPurchase);
 
     // Release JSStringRef
     JSStringRelease(jsSymbol);
     JSStringRelease(jsBuyOrSell);
+    // JSStringRelease(jsPurchase);
 
     // std::cout << "Variables in the commitPurchase method:  symbol: " << symbol << "  buyOrSell: " << buyOrSell << "  quantity: " << quantity << std::endl;
 
@@ -240,14 +243,18 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
 
     std::vector<Purchase> purchases;
 
-    Stock selectedStock = stocks[0];
-    for (const Stock &stock : stocks)
-    {
-      if (stock.symbol == symbol)
-      {
-        Stock selectedStock = stock;
-      }
-    }
+    // Stock selectedStock = stocks[0];
+    // for (const Stock &stock : stocks)
+    // {
+    //   if (stock.symbol == symbol)
+    //   {
+    //     Stock selectedStock = stock;
+    //     selectedStock.parseHistory();
+    //     selectedStock.predictNextX(5200);
+    //     const auto &history = selectedStock.history;
+    //   }
+    // }
+    Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
     // Stock selectedStock = stocks[10];
 
     selectedStock.parseHistory();
@@ -255,11 +262,28 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     const auto &history = selectedStock.history;
     portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
 
-    // portfolio.addPurchaseToPortfolio(portfolio, stock, 150, 72.0, calendar, 170.0);
-    // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 240, 79.0, calendar, 180.0);
-    // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, 100, 70.0, calendar, 190.0);
+    Purchase *p = portfolio.getPurchase(selectedStock.getSymbol());
+    std::string purchaseInfo = "Symbol: " + p->getStock().getSymbol() +
+                               "Quantity: " + std::to_string(p->getQuantity()) +
+                               "Purchase Price:" + std::to_string(p->getPurchasePrice()) +
+                               "Purchase Date:" + p->getTimeStamp();
+
+    std::cout << "here is purhcase info: " << purchaseInfo << std::endl;
+    std::string jscode =
+        "document.getElementById('purchaseInfoDiv').innerHTML = '" + purchaseInfo + "'";
+
+    const char *str = jscode.c_str();
+
+    // Create our string of JavaScript
+    JSStringRef script = JSStringCreateWithUTF8CString(str);
+
+    // Execute it with JSEvaluateScript, ignoring other parameters for now
+    JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+
+    // Release our string (we only Release what we Create)
+    JSStringRelease(script);
+
     portfolio.summarizePortfolio(TIMECOUNT);
-    // portfolio.printPortfolio();
   }
   return JSValueMakeNull(ctx);
 }
@@ -276,18 +300,24 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 
     JSStringRelease(jsSymbol);
 
-    Stock selectedStock = stocks[0];
-    for (const Stock &stock : stocks)
-    {
-      if (stock.symbol == symbol)
-      {
-        Stock selectedStock = stock;
-      }
-    }
+    // Stock selectedStock = stocks[0];
+    // for (const Stock &stock : stocks)
+    // {
+    //   if (stock.symbol == symbol)
+    //   {
+    //     Stock selectedStock = stock;
+    //     const auto &history = selectedStock.history;
+    //   }
+    // }
+    Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
+    // Stock selectedStock = stocks[10];
+
+    // selectedStock.parseHistory();
+    // selectedStock.predictNextX(5200);
+    const auto &history = selectedStock.history;
     // selectedStock.parseHistory();
     // selectedStock.predictNextX(5200);
 
-    const auto &history = selectedStock.history;
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
     std::cout << "here is close price: " << selectedStock.history[TIMECOUNT].closePrice << std::endl;
     std::string jscode =
