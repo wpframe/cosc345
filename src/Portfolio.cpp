@@ -4,7 +4,6 @@
     @details It has the necessary data to store a collection of purchases.
 */
 
-
 #include "Portfolio.h"
 #include <iostream>
 #include "Calendar.h"
@@ -112,6 +111,7 @@ void Portfolio::summarizePortfolio(int time) const
     float totalInvestment = 0.0;
     float currentValue = 0.0;
 
+    std::cout << "**************************" << std::endl;
     std::cout << "Portfolio Summary:" << std::endl;
     for (const Purchase &purchase : purchases)
     {

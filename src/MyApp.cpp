@@ -2,23 +2,25 @@
 #include "Stock.h"
 #include "Calendar.h"
 #include "Purchase.h"
-#include <iostream>
-#include <vector>
 #include "Portfolio.h"
+#include <iostream>
 #include <string>
+#include <vector>
+#include <chrono>
+#include <thread>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
 Calendar calendar;
 Portfolio portfolio;
 int TIMECOUNT;
+bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
 
 /*
 TODO:
-- segfault when commit is pressed but no stock selected
-- Portfolio css
-
+- refactor page navigation, using: overlay_->view()->LoadURL("file:///portfolio.html");
+-
 **/
 
 MyApp::MyApp()
@@ -87,15 +89,14 @@ MyApp::MyApp()
   std::string filename = pathPrefix + "src/data/nasdaq_screener_filtered.csv";
 
   stocks = parseCSV(filename);
-
   if (!stocks.empty())
   {
     // for (int i = 0; i < static_cast<int>(stocks.size()); ++i) // FOR LOOP FOR ALL STOCKS
-    for (int i = 0; i < std::min(50, static_cast<int>(stocks.size())); ++i) // FOR LOOP FOR FIRST 100
+    for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i) // FOR LOOP FOR FIRST 100
     {
       const Stock &stock = stocks[i];
       stocks[i].parseHistory();
-      stocks[i].predictNextX(5200);
+      stocks[i].predictNextX(2600);
     }
   }
   else
@@ -132,6 +133,29 @@ void MyApp::OnUpdate()
   ///
   /// OnUpdate is called constantly by the app so anything that needs to be updated on the page goes in here
   ///
+  ultralight::String script;
+  std::string jsScript = "";
+  if (startLoadingPortfolio == 1)
+  {
+
+    std::vector<Purchase> purchases = portfolio.getPurchases();
+    for (const Purchase &purchase : purchases)
+    {
+      // std::string symbol = purchase.getStockSymbol();
+      // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
+      // std::string quantity = std::to_string(purchase.getQuantity());
+      ultralight::String symbol = purchase.getStockSymbol().c_str();
+      ultralight::String currentPrice = std::to_string(purchase.getPurchasePrice()).c_str();
+      ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
+
+      script = "addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')";
+      view_->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
+    }
+
+    // ultralight::String script = jsScript.c_str();
+
+    startLoadingPortfolio = false;
+  }
   if (!calendar.isCounting())
   {
     return;
@@ -140,6 +164,8 @@ void MyApp::OnUpdate()
   calendar.update();
   ultralight::String date = calendar.getDate().c_str();
   view_->EvaluateScript("showDate('" + date + "')"); // view_ is an instance of View so can be called upon as you would 'caller'
+
+  // view_->EvaluateScript("addStockTile('ebay', '888888', '43')");
 }
 
 void MyApp::OnClose(ultralight::Window *window)
@@ -237,51 +263,32 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     JSStringRelease(jsBuyOrSell);
     // JSStringRelease(jsPurchase);
 
-    // std::cout << "Variables in the commitPurchase method:  symbol: " << symbol << "  buyOrSell: " << buyOrSell << "  quantity: " << quantity << std::endl;
-
-    // Purchase purchase(stock, quantity, 150.0, calendar.getDate(), 160.0);
-
     std::vector<Purchase> purchases;
 
-    // Stock selectedStock = stocks[0];
-    // for (const Stock &stock : stocks)
-    // {
-    //   if (stock.symbol == symbol)
-    //   {
-    //     Stock selectedStock = stock;
-    //     selectedStock.parseHistory();
-    //     selectedStock.predictNextX(5200);
-    //     const auto &history = selectedStock.history;
-    //   }
-    // }
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
-    // Stock selectedStock = stocks[10];
 
-    selectedStock.parseHistory();
-    selectedStock.predictNextX(5200);
     const auto &history = selectedStock.history;
     portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
 
-    Purchase *p = portfolio.getPurchase(selectedStock.getSymbol());
-    std::string purchaseInfo = "Symbol: " + p->getStock().getSymbol() +
-                               "Quantity: " + std::to_string(p->getQuantity()) +
-                               "Purchase Price:" + std::to_string(p->getPurchasePrice()) +
-                               "Purchase Date:" + p->getTimeStamp();
+    // Purchase *p = portfolio.getPurchase(selectedStock.getSymbol());
 
-    std::cout << "here is purhcase info: " << purchaseInfo << std::endl;
-    std::string jscode =
-        "document.getElementById('purchaseInfoDiv').innerHTML = '" + purchaseInfo + "'";
+    // std::string purchaseInfo = "Symbol: " + p->getStock().getSymbol() +
+    //                            "  Quantity: " + std::to_string(p->getQuantity()) +
+    //                            "  Purchase Price:" + std::to_string(p->getPurchasePrice()) +
+    //                            "  Purchase Date:" + p->getTimeStamp();
 
-    const char *str = jscode.c_str();
+    // std::string jscode =
+    //     "document.getElementById('purchaseInfoDiv').innerHTML = '" + purchaseInfo + "'";
 
-    // Create our string of JavaScript
-    JSStringRef script = JSStringCreateWithUTF8CString(str);
+    // const char *str = jscode.c_str();
+    // // Create our string of JavaScript
+    // JSStringRef script = JSStringCreateWithUTF8CString(str);
 
-    // Execute it with JSEvaluateScript, ignoring other parameters for now
-    JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+    // // Execute it with JSEvaluateScript, ignoring other parameters for now
+    // JSEvaluateScript(ctx, script, 0, 0, 0, 0);
 
-    // Release our string (we only Release what we Create)
-    JSStringRelease(script);
+    // // Release our string (we only Release what we Create)
+    // JSStringRelease(script);
 
     portfolio.summarizePortfolio(TIMECOUNT);
   }
@@ -292,7 +299,6 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
                           JSObjectRef thisObject, size_t argumentCount,
                           const JSValueRef arguments[], JSValueRef *exception)
 {
-  std::cout << "stock selected..." << std::endl;
   if (argumentCount >= 1)
   {
     JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
@@ -300,26 +306,13 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 
     JSStringRelease(jsSymbol);
 
-    // Stock selectedStock = stocks[0];
-    // for (const Stock &stock : stocks)
-    // {
-    //   if (stock.symbol == symbol)
-    //   {
-    //     Stock selectedStock = stock;
-    //     const auto &history = selectedStock.history;
-    //   }
-    // }
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
     // Stock selectedStock = stocks[10];
 
-    // selectedStock.parseHistory();
-    // selectedStock.predictNextX(5200);
     const auto &history = selectedStock.history;
-    // selectedStock.parseHistory();
-    // selectedStock.predictNextX(5200);
 
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
-    std::cout << "here is close price: " << selectedStock.history[TIMECOUNT].closePrice << std::endl;
+
     std::string jscode =
         "document.getElementById('currentPrice').innerText = 'Price per stock: $" + closePriceString + "'";
 
@@ -334,6 +327,14 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
     // Release our string (we only Release what we Create)
     JSStringRelease(script);
   }
+  return JSValueMakeNull(ctx);
+}
+
+JSValueRef loadPortfolio(JSContextRef ctx, JSObjectRef function,
+                         JSObjectRef thisObject, size_t argumentCount,
+                         const JSValueRef arguments[], JSValueRef *exception)
+{
+  startLoadingPortfolio = true;
   return JSValueMakeNull(ctx);
 }
 
@@ -358,12 +359,14 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
   JSStringRef cppSelectStockRef = JSStringCreateWithUTF8CString("cppSelectStock");
+  JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
   JSObjectRef cppSelectStockFunc = JSObjectMakeFunctionWithCallback(ctx, cppSelectStockRef, cppSelectStock);
+  JSObjectRef loadPortfolioFunc = JSObjectMakeFunctionWithCallback(ctx, loadPortfolioRef, loadPortfolio);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -373,20 +376,30 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, fastForwardRef, fastForwardFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, cppSelectStockRef, cppSelectStockFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, loadPortfolioRef, loadPortfolioFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(startTimerRef);
   JSStringRelease(stopTimerRef);
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
   JSStringRelease(cppSelectStockRef);
+  JSStringRelease(loadPortfolioRef);
 
-  /* USED TO POPULATE THE DROP DOWN WITH STOCKS LOADED IN FROM CSV INTO STOCK OBJECTS **/
-  caller->EvaluateScript("showStockInfo('Price per stock: ', '0')"); // will be changed so that once a stock is selected, its current price is displayed
+  caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
 
   if (!stocks.empty())
   {
-    for (const Stock &stock : stocks)
+    /*  LOADS EVERY STOCK ONTO THE STOCK SELECTOR **/
+    // for (const Stock &stock : stocks)
+    // {
+    //   ultralight::String symbol = stock.symbol.c_str();
+    //   caller->EvaluateScript("addStockDropdown('" + symbol + "')");
+    // }
+
+    /* LOADS FIRST 100 STOCKS **/
+    for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
     {
+      const Stock &stock = stocks[i];
       ultralight::String symbol = stock.symbol.c_str();
       caller->EvaluateScript("addStockDropdown('" + symbol + "')");
     }

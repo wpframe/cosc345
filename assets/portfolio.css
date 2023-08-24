@@ -14,11 +14,14 @@
     /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
     font-family: 'Evil', sans-serif;
     overflow-x: hidden;
+    background-color: #caeebf;
   }
   
   header {
-    background-color: #2BAE66;
-    color: white;
+    background-color: #caeebf;
+    border-bottom: 2px solid #2BAE66;
+    color: #2BAE66;
+    font-family: 'Evil', sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,12 +35,15 @@
   
   nav ul li {
     margin-right: 20px;
+    margin-left: 20px;
   }
   
   nav ul li button {
     background: none;
     border: none;
-    color: white;
+    border-radius: 0;
+    font-family: 'Evil', sans-serif;
+    color: #2BAE66;
     cursor: pointer;
   }
   
@@ -47,7 +53,7 @@
   
   .tiles-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
   }

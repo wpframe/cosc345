@@ -3,8 +3,6 @@ function goToHome() {
     window.location.href = "homepage.html";
 }
 function goToPortfolio() {
-    document.getElementById('portfolio').innerHTML;
-
     window.location.href = "portfolio.html";
 }
 
@@ -26,7 +24,7 @@ function switchBuySell() {
     }
 }
 function updateTotalPrice() {
-    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(1));
+    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(18));
     var quantity = parseInt(document.getElementById("quantity").value);
 
     var totalPrice = currentPrice * quantity;
