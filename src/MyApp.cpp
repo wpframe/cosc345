@@ -133,29 +133,7 @@ void MyApp::OnUpdate()
   ///
   /// OnUpdate is called constantly by the app so anything that needs to be updated on the page goes in here
   ///
-  ultralight::String script;
-  std::string jsScript = "";
-  if (startLoadingPortfolio == 1)
-  {
 
-    std::vector<Purchase> purchases = portfolio.getPurchases();
-    for (const Purchase &purchase : purchases)
-    {
-      // std::string symbol = purchase.getStockSymbol();
-      // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
-      // std::string quantity = std::to_string(purchase.getQuantity());
-      ultralight::String symbol = purchase.getStockSymbol().c_str();
-      ultralight::String currentPrice = std::to_string(purchase.getPurchasePrice()).c_str();
-      ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
-
-      script = "addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')";
-      view_->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
-    }
-
-    // ultralight::String script = jsScript.c_str();
-
-    startLoadingPortfolio = false;
-  }
   if (!calendar.isCounting())
   {
     return;
@@ -386,6 +364,27 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(loadPortfolioRef);
 
   caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
+
+  if (startLoadingPortfolio == 1)
+  {
+
+    std::vector<Purchase> purchases = portfolio.getPurchases();
+    for (const Purchase &purchase : purchases)
+    {
+      // std::string symbol = purchase.getStockSymbol();
+      // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
+      // std::string quantity = std::to_string(purchase.getQuantity());
+      ultralight::String symbol = purchase.getStockSymbol().c_str();
+      ultralight::String currentPrice = std::to_string(purchase.getPurchasePrice()).c_str();
+      ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
+
+      caller->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
+    }
+
+    // ultralight::String script = jsScript.c_str();
+
+    startLoadingPortfolio = false;
+  }
 
   if (!stocks.empty())
   {
