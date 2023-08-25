@@ -1,7 +1,7 @@
 /*!
-    @file
-    @brief The implementation for the Purchase class.
-    @details It holds the necessary information for keeping a record of purchasing a stock.
+   @file
+   @brief The implementation for the Purchase class.
+   @details It holds the neccesary information for keeping a record of purchasing a stock.
 */
 
 #include "Purchase.h"
@@ -13,66 +13,45 @@
 #include <vector>
 
 /*!
-    @brief Constructor for the Purchase class.
-    @details Initializes a purchase with the given stock, quantity, purchase price, and timestamp.
-    @param s The stock being purchased.
-    @param q The quantity being purchased.
-    @param purchasePrice The price at which the stock is purchased.
-    @param timestamp The timestamp of the purchase.
+    @file
+    @brief The constructor for the Purchase class.
+    @details Takes and initializes the stock, quantity, purchase price, and purchase timestamp.
 */
 Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp)
     : stock(s), quantity(q), purchasePrice(purchasePrice), purchaseTimestamp(timestamp)
 {
 }
 
-/*!
-    @brief Calculates the current value of the purchase.
-    @param currentPrice The current price of the stock.
-    @return The current value of the purchase.
-*/
 float Purchase::getCurrentPurchaseValue(float currentPrice) const
 {
+    // float currentPrice = getStock().history[time].closePrice;
     float currentValue = 0.0;
     float currentPurchaseValue = getQuantity() * currentPrice;
     currentValue += currentPurchaseValue;
     return currentValue;
 }
 
-/*!
-    @brief Calculates the initial purchase value.
-    @return The initial purchase value.
-*/
 float Purchase::getPurchaseValue() const
 {
     float purchaseValue = getQuantity() * getPurchasePrice();
     return purchaseValue;
 }
 
-/*!
-    @brief Calculates the profit or loss for the purchase.
-    @param currentPrice The current price of the stock.
-    @return The profit or loss for the purchase.
-*/
 float Purchase::getProfitLoss(float currentPrice) const
 {
     float profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
     return profitLoss;
 }
 
-/*!
-    @brief Calculates the profit or loss percentage for the purchase.
-    @param currentPrice The current price of the stock.
-    @return The profit or loss percentage for the purchase.
-*/
 float Purchase::getProfitLossPercentage(float currentPrice) const
 {
-    float profitLossPercentage = (getProfitLoss(currentPrice) / getPurchaseValue()) * 100;
-    return profitLossPercentage;
+    float profitLossPercentage = getProfitLoss(currentPrice) / getPurchaseValue();
+    return profitLossPercentage * 100;
 }
 
 /*!
-    @brief Accessor for the quantity of stock purchased.
-    @return The quantity of stock purchased.
+    @brief Accessor for the quantity purchased.
+    @return The quantity purchased.
 */
 int Purchase::getQuantity() const
 {
@@ -80,7 +59,7 @@ int Purchase::getQuantity() const
 }
 
 /*!
-    @brief Accessor for the purchase price.
+    @brief Accessor for the purchase price. This is only used in testing.
     @return The purchase price.
 */
 float Purchase::getPurchasePrice() const
@@ -89,7 +68,7 @@ float Purchase::getPurchasePrice() const
 }
 
 /*!
-    @brief Mutator for the stock. (For testing purposes)
+    @brief Mutator for the stock. This is only used in testing.
     @param s The stock to set.
 */
 void Purchase::setStock(const Stock &s)
@@ -98,8 +77,8 @@ void Purchase::setStock(const Stock &s)
 }
 
 /*!
-    @brief Mutator for the quantity of stock purchased. (For testing purposes)
-    @param q The quantity of stock purchased.
+    @brief Mutator for the quantity purchased. This is only used in testing.
+    @param q The quantity purchased.
 */
 void Purchase::setQuantity(int q)
 {
@@ -125,6 +104,15 @@ void Purchase::setPurchasePrice(float price)
 }
 
 /*!
+    @brief Mutator for the current price. This is only used in testing.
+    @param price The current price.
+*/
+void Purchase::setCurrentPrice(float price)
+{
+    currentPrice = price;
+}
+
+/*!
     @brief Mutator for the timestamp of the purchase.
     @param timestamp The timestamp of the purchase.
 */
@@ -143,7 +131,8 @@ float Purchase::calculateTotalCost() const
 }
 
 /*!
-    @brief Prints the details of the purchase to the console.
+    @brief Calculates the profit of the purchase.
+    @return The profit of the purchase.
 */
 void Purchase::printPurchaseDetails() const
 {
@@ -154,9 +143,16 @@ void Purchase::printPurchaseDetails() const
     std::cout << "Purchase Timestamp: " << purchaseTimestamp << std::endl;
 }
 
+// This can be removed
+std::string Purchase::getStockSymbol() const
+{
+    return stock.getSymbol();
+    // return "aplle";
+}
+
 /*!
-    @brief Accessor for the stock of the purchase.
-    @return The stock of the purchase.
+    @brief Accessor for the stock purchased.
+    @return The stock purchased.
 */
 Stock Purchase::getStock() const
 {
