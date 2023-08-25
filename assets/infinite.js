@@ -103,14 +103,13 @@ function showDate(newDate) {
 
 var playPauseButton = document.getElementById("playPauseButton");
 var iconElement = playPauseButton.querySelector("i");
-var isPlaying = true;
+var isPlaying = false;
 
 playPauseButton.addEventListener("click", function switchPlayPause() {
     if (isPlaying) {
         // Change to play icon
         iconElement.className = "fas fa-play";
         isPlaying = false;
-        console.log("timer should be stopped");
         stopTimer();
     } else {
         // Change to pause icon
@@ -119,6 +118,14 @@ playPauseButton.addEventListener("click", function switchPlayPause() {
         startTimer();
     }
 });
+
+function swapPlayAndPause() {
+    if (iconElement.className == "fas fa-play") {
+        iconElement.className = "fas fa-pause";
+    } else {
+        iconElement.className = "fas fa-play";
+    }
+}
 
 
 function commitPurchaseJS() {

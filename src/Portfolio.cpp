@@ -38,7 +38,7 @@ void Portfolio::addPurchase(Purchase purchase)
         float totalCost = existingPurchase->calculateTotalCost() + purchase.calculateTotalCost();
 
         float byHandTotal = firstPurchasePrice + updatedPurchasePrice;
-        std::cout << "tptalCost: " << byHandTotal << std::endl;
+        std::cout << "totalCost: " << byHandTotal << std::endl;
         existingPurchase->setPurchasePrice(byHandTotal / newQuant);
     }
     else

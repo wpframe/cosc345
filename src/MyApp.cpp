@@ -7,7 +7,6 @@
 #include <string>
 #include <vector>
 #include <chrono>
-#include <thread>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
@@ -16,6 +15,7 @@ Portfolio portfolio;
 int TIMECOUNT;
 bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
+ultralight::String latestDate = "01/01/2023";
 
 /*
 TODO:
@@ -136,14 +136,14 @@ void MyApp::OnUpdate()
 
   if (!calendar.isCounting())
   {
+    // calendar.update();
     return;
   }
+  ultralight::String date = calendar.getDate().c_str();
+  latestDate = date;
+  view_->EvaluateScript("showDate('" + date + "')"); // view_ is an instance of View so can be called upon as you would 'caller'
   TIMECOUNT = calendar.getWeeks();
   calendar.update();
-  ultralight::String date = calendar.getDate().c_str();
-  view_->EvaluateScript("showDate('" + date + "')"); // view_ is an instance of View so can be called upon as you would 'caller'
-
-  // view_->EvaluateScript("addStockTile('ebay', '888888', '43')");
 }
 
 void MyApp::OnClose(ultralight::Window *window)
@@ -316,6 +316,17 @@ JSValueRef loadPortfolio(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+JSValueRef toggleDropdown(JSContextRef ctx, JSObjectRef function,
+                          JSObjectRef thisObject, size_t argumentCount,
+                          const JSValueRef arguments[], JSValueRef *exception)
+{
+  ///
+  /// startTimer is a javascript function, when called will perform the following c++ operations
+  ///
+  calendar.pauseCounting();
+  return JSValueMakeNull(ctx);
+}
+
 void MyApp::OnDOMReady(ultralight::View *caller,
                        uint64_t frame_id,
                        bool is_main_frame,
@@ -338,6 +349,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
   JSStringRef cppSelectStockRef = JSStringCreateWithUTF8CString("cppSelectStock");
   JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
+  // JSStringRef toggleDropdownRef = JSStringCreateWithUTF8CString("toggleDropdown");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
@@ -345,6 +357,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
   JSObjectRef cppSelectStockFunc = JSObjectMakeFunctionWithCallback(ctx, cppSelectStockRef, cppSelectStock);
   JSObjectRef loadPortfolioFunc = JSObjectMakeFunctionWithCallback(ctx, loadPortfolioRef, loadPortfolio);
+  // JSObjectRef toggleDropdownFunc = JSObjectMakeFunctionWithCallback(ctx, toggleDropdownRef, toggleDropdown);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -355,6 +368,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, cppSelectStockRef, cppSelectStockFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, loadPortfolioRef, loadPortfolioFunc, 0, 0);
+  // JSObjectSetProperty(ctx, globalObj, toggleDropdownRef, toggleDropdownFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(startTimerRef);
   JSStringRelease(stopTimerRef);
@@ -362,8 +376,10 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(commitPurchaseRef);
   JSStringRelease(cppSelectStockRef);
   JSStringRelease(loadPortfolioRef);
+  // JSStringRelease(toggleDropdownRef);
 
   caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
+  caller->EvaluateScript("showDate('" + latestDate + "')");
 
   if (startLoadingPortfolio == 1)
   {
@@ -371,9 +387,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     std::vector<Purchase> purchases = portfolio.getPurchases();
     for (const Purchase &purchase : purchases)
     {
-      // std::string symbol = purchase.getStockSymbol();
-      // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
-      // std::string quantity = std::to_string(purchase.getQuantity());
       ultralight::String symbol = purchase.getStockSymbol().c_str();
       ultralight::String currentPrice = std::to_string(purchase.getPurchasePrice()).c_str();
       ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
