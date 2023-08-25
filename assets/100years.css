@@ -296,7 +296,7 @@ nav ul li button:focus {
   color: #2BAE66;
 }
 
-#commitButton:active {
+#commitButton button:active {
   background: #2BAE66;
   color: #2BAE66;
 }

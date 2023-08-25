@@ -1,3 +1,11 @@
+
+/*!
+    @file
+    @brief The implementation for linking with UI
+    @details Gives us the ability to display web assets (HTML, CSS, JS) on the screen
+      while linking to c++ and javascript functions
+*/
+
 #include "MyApp.h"
 #include "Stock.h"
 #include "Calendar.h"
@@ -20,9 +28,16 @@ ultralight::String latestDate = "01/01/2023";
 /*
 TODO:
 - refactor page navigation, using: overlay_->view()->LoadURL("file:///portfolio.html");
--
+- seg faults when a stock with no data is chosen from the dropdown
 **/
 
+/*!
+    @brief Constructor for the MyApp class.
+    @details This constructor initializes the main application, creates a resizable window,
+      sets up an HTML overlay, loads a webpage, registers listeners for various events,
+      and reads stock data from a CSV file.
+
+*/
 MyApp::MyApp()
 {
   ///
@@ -77,14 +92,6 @@ MyApp::MyApp()
   ///
   overlay_->view()->set_view_listener(this);
 
-  /* read in the stocks csv only once, when the app is run */
-
-  // std::string filename = "../../../../src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR MAC
-  // std::string filename = "../../../../src/data/nasdaq_screener_filtered.csv"; // FOR MAC
-
-  // std::string filename = "src/data/scraping/nasdaq_etf_screener_1691614852999.csv"; // FOR WINDOWS
-  // std::string filename = "../src/data/nasdaq_screener_filtered.csv"; // FOR WINDOWS
-
   std::string pathPrefix = findPathFromApp();
   std::string filename = pathPrefix + "src/data/nasdaq_screener_filtered.csv";
 
@@ -114,6 +121,12 @@ void MyApp::Run()
   app_->Run();
 }
 
+/*!
+  @brief Method which finds the relative path from app to the src directory.
+  @details checks what operating system a user is on and defines a relative path prefix.
+  @return the path prefix.
+
+**/
 std::string MyApp::findPathFromApp()
 {
   std::string pathPrefix;
@@ -128,6 +141,11 @@ std::string MyApp::findPathFromApp()
   return pathPrefix;
 }
 
+/*!
+  @brief Method called by the app's update loop.
+  @details This method performs all operations which need to be constantly updated.
+    Calculates the in-game date.
+*/
 void MyApp::OnUpdate()
 {
   ///
@@ -146,11 +164,23 @@ void MyApp::OnUpdate()
   calendar.update();
 }
 
+/*!
+  @brief Method is called whenever the window is closed.
+  @details Quits the application.
+  @param window an ultralight instance of the Window.
+**/
 void MyApp::OnClose(ultralight::Window *window)
 {
   app_->Quit();
 }
 
+/*!
+  @brief Method is called whenever the window changes size.
+  @details resizes the overlay to take up the entire window.
+  @param window an ultralight instance of Window.
+  @param width width of the screen in pixels.
+  @param height height of the screen in pixels.
+**/
 void MyApp::OnResize(ultralight::Window *window, uint32_t width, uint32_t height)
 {
   ///
@@ -161,6 +191,14 @@ void MyApp::OnResize(ultralight::Window *window, uint32_t width, uint32_t height
   overlay_->Resize(width, height);
 }
 
+/*!
+  @brief Method is called when a frame finishes loading on the page.
+  @details Not used.
+  @param caller instance of View.
+  @param frame_id id for the current frame.
+  @param is_main_frame check for whether current frame is main frame.
+  @param url url.
+**/
 void MyApp::OnFinishLoading(ultralight::View *caller,
                             uint64_t frame_id,
                             bool is_main_frame,
@@ -171,6 +209,11 @@ void MyApp::OnFinishLoading(ultralight::View *caller,
   ///
 }
 
+/*!
+  @brief Method which converts a JSString into a std::string
+  @param jsString a JSString
+  @return result, a std::string
+**/
 std::string JSStringToStdString(JSStringRef jsString)
 {
   size_t maxBufferSize = JSStringGetMaximumUTF8CStringSize(jsString);
@@ -183,6 +226,16 @@ std::string JSStringToStdString(JSStringRef jsString)
   return result;
 }
 
+/*!
+  @brief startTimer is a function which starts the in-game calendar
+  @details startTimer is a function which is called from javascript, and will perform cpp operations.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which
+  @param arguments list of arguments
+  @param exception value reference
+**/
 JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
                       JSObjectRef thisObject, size_t argumentCount,
                       const JSValueRef arguments[], JSValueRef *exception)
@@ -247,26 +300,6 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
 
     const auto &history = selectedStock.history;
     portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
-
-    // Purchase *p = portfolio.getPurchase(selectedStock.getSymbol());
-
-    // std::string purchaseInfo = "Symbol: " + p->getStock().getSymbol() +
-    //                            "  Quantity: " + std::to_string(p->getQuantity()) +
-    //                            "  Purchase Price:" + std::to_string(p->getPurchasePrice()) +
-    //                            "  Purchase Date:" + p->getTimeStamp();
-
-    // std::string jscode =
-    //     "document.getElementById('purchaseInfoDiv').innerHTML = '" + purchaseInfo + "'";
-
-    // const char *str = jscode.c_str();
-    // // Create our string of JavaScript
-    // JSStringRef script = JSStringCreateWithUTF8CString(str);
-
-    // // Execute it with JSEvaluateScript, ignoring other parameters for now
-    // JSEvaluateScript(ctx, script, 0, 0, 0, 0);
-
-    // // Release our string (we only Release what we Create)
-    // JSStringRelease(script);
 
     portfolio.summarizePortfolio(TIMECOUNT);
   }
@@ -391,9 +424,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       const auto &history = selectedStock.history;
       float currentPriceFloat = selectedStock.history[TIMECOUNT].closePrice;
 
-      // std::string symbol = purchase.getStockSymbol();
-      // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
-      // std::string quantity = std::to_string(purchase.getQuantity());
       ultralight::String symbol = purchase.getStockSymbol().c_str();
       ultralight::String purchasePrice = std::to_string(purchase.getPurchasePrice()).c_str();
       ultralight::String currentPrice = std::to_string(currentPriceFloat).c_str();
