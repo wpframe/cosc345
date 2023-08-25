@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['stock_2ecpp_66',['Stock.cpp',['../Stock_8cpp.html',1,'']]]
+  ['portfolio_2ecpp_72',['Portfolio.cpp',['../Portfolio_8cpp.html',1,'']]],
+  ['purchase_2ecpp_73',['Purchase.cpp',['../Purchase_8cpp.html',1,'']]]
 ];

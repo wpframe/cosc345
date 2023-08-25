@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['onchangecursor_88',['OnChangeCursor',['../classMyApp.html#a9f6a01f4fd0bfd0000d106089916142f',1,'MyApp']]],
-  ['onchangetitle_89',['OnChangeTitle',['../classMyApp.html#ab3171d50ca96e01041879e2f2414acb3',1,'MyApp']]],
-  ['onfinishloading_90',['OnFinishLoading',['../classMyApp.html#a3070d97d5a6cfd27b524e259f3f115a1',1,'MyApp']]],
-  ['onresize_91',['OnResize',['../classMyApp.html#a846fdf6a1bf69406024fcad91fe28c9c',1,'MyApp']]],
-  ['onupdate_92',['OnUpdate',['../classMyApp.html#ac0a067add6c4de70885b2b013f2febf5',1,'MyApp']]]
+  ['jsstringtostdstring_96',['JSStringToStdString',['../MyApp_8cpp.html#a3791cb6f9e8470d2b4b0ea655c4ebca6',1,'MyApp.cpp']]]
 ];

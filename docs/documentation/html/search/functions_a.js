@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['update_110',['update',['../classCalendar.html#a84e90a9fb16f36718ffcc7ef4026cbbe',1,'Calendar']]]
+  ['readfromcsv_110',['readFromCSV',['../classHeadline.html#a61bbcb5709bcf6fb07f9b4c2cf5c02a7',1,'Headline']]],
+  ['reset_111',['reset',['../classCalendar.html#a6aa2f8179fe170da34253909e0ff37f9',1,'Calendar']]]
 ];

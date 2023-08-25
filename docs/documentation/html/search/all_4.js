@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['iscounting_21',['isCounting',['../classCalendar.html#a69ef795291cf2384e08247cb673ab187',1,'Calendar']]],
-  ['isleapyear_22',['isLeapYear',['../classCalendar.html#a3734ab8b42b81f46610506b776329b82',1,'Calendar']]]
+  ['headline_20',['Headline',['../classHeadline.html',1,'Headline'],['../classHeadline.html#a8462050558f06293425b354e6feb4a3d',1,'Headline::Headline()']]],
+  ['headline_2ecpp_21',['Headline.cpp',['../Headline_8cpp.html',1,'']]]
 ];

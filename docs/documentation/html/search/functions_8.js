@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['readfromcsv_99',['readFromCSV',['../classHeadline.html#a61bbcb5709bcf6fb07f9b4c2cf5c02a7',1,'Headline']]],
-  ['reset_100',['reset',['../classCalendar.html#a6aa2f8179fe170da34253909e0ff37f9',1,'Calendar']]]
+  ['onchangecursor_98',['OnChangeCursor',['../classMyApp.html#a9f6a01f4fd0bfd0000d106089916142f',1,'MyApp']]],
+  ['onchangetitle_99',['OnChangeTitle',['../classMyApp.html#ab3171d50ca96e01041879e2f2414acb3',1,'MyApp']]],
+  ['onclose_100',['OnClose',['../classMyApp.html#a35736dd8977b3f279309581ba12b4f7b',1,'MyApp']]],
+  ['onfinishloading_101',['OnFinishLoading',['../classMyApp.html#a3070d97d5a6cfd27b524e259f3f115a1',1,'MyApp']]],
+  ['onresize_102',['OnResize',['../classMyApp.html#a846fdf6a1bf69406024fcad91fe28c9c',1,'MyApp']]],
+  ['onupdate_103',['OnUpdate',['../classMyApp.html#ac0a067add6c4de70885b2b013f2febf5',1,'MyApp']]]
 ];

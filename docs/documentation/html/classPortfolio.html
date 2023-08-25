@@ -72,15 +72,12 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae8fd9c0d26505c324747ca142d16338b"><td class="memItemLeft" align="right" valign="top"><a id="ae8fd9c0d26505c324747ca142d16338b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>replacePurchase</b> (const <a class="el" href="classPurchase.html">Purchase</a> &amp;newPurchase)</td></tr>
-<tr class="separator:ae8fd9c0d26505c324747ca142d16338b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a106e8cca5941143220327f833fd06c"><td class="memItemLeft" align="right" valign="top"><a id="a6a106e8cca5941143220327f833fd06c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Portfolio</b> (float initialBalance)</td></tr>
+<tr class="separator:a6a106e8cca5941143220327f833fd06c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7808d1ca2e5feb42e3d773954b8b1a9d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#a7808d1ca2e5feb42e3d773954b8b1a9d">addPurchase</a> (<a class="el" href="classPurchase.html">Purchase</a> purchase)</td></tr>
 <tr class="memdesc:a7808d1ca2e5feb42e3d773954b8b1a9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a purchase to the portfolio.  <a href="classPortfolio.html#a7808d1ca2e5feb42e3d773954b8b1a9d">More...</a><br /></td></tr>
 <tr class="separator:a7808d1ca2e5feb42e3d773954b8b1a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02398bd17d5815f948525f7878787392"><td class="memItemLeft" align="right" valign="top"><a id="a02398bd17d5815f948525f7878787392"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>updatePricesAndProfits</b> ()</td></tr>
-<tr class="separator:a02398bd17d5815f948525f7878787392"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3e42c4ae4e830b1e3dfcd36ef332673"><td class="memItemLeft" align="right" valign="top"><a id="ae3e42c4ae4e830b1e3dfcd36ef332673"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#ae3e42c4ae4e830b1e3dfcd36ef332673">printPortfolio</a> () const</td></tr>
 <tr class="memdesc:ae3e42c4ae4e830b1e3dfcd36ef332673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the portfolio to stdout. <br /></td></tr>
@@ -88,15 +85,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a95d01053b129c56e21b30042e1c6afb5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPurchase.html">Purchase</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#a95d01053b129c56e21b30042e1c6afb5">getPurchase</a> (const std::string &amp;stockSymbol)</td></tr>
 <tr class="memdesc:a95d01053b129c56e21b30042e1c6afb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a purchase for a specific stock from the portfolio.  <a href="classPortfolio.html#a95d01053b129c56e21b30042e1c6afb5">More...</a><br /></td></tr>
 <tr class="separator:a95d01053b129c56e21b30042e1c6afb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c01f02aea3b7a52f501b3372dfea26e"><td class="memItemLeft" align="right" valign="top"><a id="a4c01f02aea3b7a52f501b3372dfea26e"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>getTotalBalance</b> () const</td></tr>
+<tr class="separator:a4c01f02aea3b7a52f501b3372dfea26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a867a21cf2a8a0a29522dbadfd564f82c"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="classPurchase.html">Purchase</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#a867a21cf2a8a0a29522dbadfd564f82c">getPurchases</a> () const</td></tr>
 <tr class="memdesc:a867a21cf2a8a0a29522dbadfd564f82c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accessor for the <a class="el" href="classPurchase.html">Purchase</a> vector in the portfolio.  <a href="classPortfolio.html#a867a21cf2a8a0a29522dbadfd564f82c">More...</a><br /></td></tr>
 <tr class="separator:a867a21cf2a8a0a29522dbadfd564f82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e8e83cb75aca1c414cdab32643e9458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#a5e8e83cb75aca1c414cdab32643e9458">summarizePortfolio</a> (int time) const</td></tr>
 <tr class="memdesc:a5e8e83cb75aca1c414cdab32643e9458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a summary of the portfolio to stdout. This is only used in testing.  <a href="classPortfolio.html#a5e8e83cb75aca1c414cdab32643e9458">More...</a><br /></td></tr>
 <tr class="separator:a5e8e83cb75aca1c414cdab32643e9458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cb78af98d2fad3a04c3a3a1410c4e58"><td class="memItemLeft" align="right" valign="top"><a id="a5cb78af98d2fad3a04c3a3a1410c4e58"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>summarizePortfolio</b> () const</td></tr>
-<tr class="separator:a5cb78af98d2fad3a04c3a3a1410c4e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab25b15ab52e16f650952afba4cbdaa20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">addPurchaseToPortfolio</a> (<a class="el" href="classPortfolio.html">Portfolio</a> &amp;portfolio, const <a class="el" href="classStock.html">Stock</a> &amp;selectedStock, int quantity, float purchasePrice, const <a class="el" href="classCalendar.html">Calendar</a> &amp;calendar)</td></tr>
 <tr class="memdesc:ab25b15ab52e16f650952afba4cbdaa20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a purchase to the portfolio.  <a href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">More...</a><br /></td></tr>
 <tr class="separator:ab25b15ab52e16f650952afba4cbdaa20"><td class="memSeparator" colspan="2">&#160;</td></tr>
