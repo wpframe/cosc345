@@ -8,7 +8,7 @@ function goToPortfolio() {
 
 function showStockInfo(currentPrice, stocksAvailable) {
     document.getElementById("currentPrice").textContent = currentPrice;
-    document.getElementById("stocksAvailable").textContent = stocksAvailable;
+    // document.getElementById("stocksAvailable").textContent = stocksAvailable;
 }
 
 function switchBuySell() {
