@@ -11,7 +11,7 @@
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
 Calendar calendar;
-Portfolio portfolio;
+Portfolio portfolio(100000.0);
 int TIMECOUNT;
 bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
@@ -246,7 +246,10 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
 
     const auto &history = selectedStock.history;
-    portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+    if (quantity > 0)
+    {
+      portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+    }
 
     // Purchase *p = portfolio.getPurchase(selectedStock.getSymbol());
 
@@ -380,16 +383,26 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
   caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
   caller->EvaluateScript("showDate('" + latestDate + "')");
+  ultralight::String totalBalance = std::to_string(portfolio.getTotalBalance()).c_str();
+  ultralight::String placeholder = "0";
+  caller->EvaluateScript("initBalance('" + totalBalance + "')");
+  caller->EvaluateScript("addInvestmentSummary('" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "')");
 
   if (startLoadingPortfolio == 1)
   {
-
+    float totalInvestment = 0.0;
+    float portfolioValue = 0.0;
     std::vector<Purchase> purchases = portfolio.getPurchases();
     for (const Purchase &purchase : purchases)
     {
       Stock selectedStock = purchase.getStock();
       const auto &history = selectedStock.history;
       float currentPriceFloat = selectedStock.history[TIMECOUNT].closePrice;
+      totalInvestment += purchase.getPurchaseValue();
+      portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
+
+      float totalProfit = portfolioValue - totalInvestment;
+      float totalProfitPercentage = (totalProfit / totalInvestment) * 100;
 
       // std::string symbol = purchase.getStockSymbol();
       // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
@@ -402,9 +415,19 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       ultralight::String profitLossPercentage = std::to_string(purchase.getProfitLossPercentage(currentPriceFloat)).c_str();
       ultralight::String purchaseValue = std::to_string(purchase.getPurchaseValue()).c_str();
       ultralight::String currentPurchaseValue = std::to_string(purchase.getCurrentPurchaseValue(currentPriceFloat)).c_str();
+      ultralight::String totalInvestmentStr = std::to_string(totalInvestment).c_str();
+      ultralight::String portfolioValueStr = std::to_string(portfolioValue).c_str();
+      ultralight::String totalProfitStr = std::to_string(totalProfit).c_str();
+      ultralight::String totalProfitPercentageStr = std::to_string(totalProfitPercentage).c_str();
 
       caller->EvaluateScript("addStockTile('" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "')");
       // caller->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
+
+      caller->EvaluateScript("updateBalance('" + totalBalance + "')");
+
+      caller->EvaluateScript("updateInvestmentSummary('" + totalInvestmentStr + "', '" + portfolioValueStr + "', '" + totalProfitStr + "', '" + totalProfitPercentageStr + "')");
+      // addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, totalProfitPercentage)
+      //  ultralight::String totalBalance = std::to_string(portfolio.getTotalBalance()).c_str();
     }
 
     // ultralight::String script = jsScript.c_str();

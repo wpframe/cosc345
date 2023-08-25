@@ -40,10 +40,11 @@ void Portfolio::addPurchase(Purchase purchase)
         float byHandTotal = firstPurchasePrice + updatedPurchasePrice;
         std::cout << "totalCost: " << byHandTotal << std::endl;
         existingPurchase->setPurchasePrice(byHandTotal / newQuant);
+        totalBalance -= purchase.calculateTotalCost();
     }
     else
     {
-
+        totalBalance -= purchase.calculateTotalCost();
         purchases.push_back(purchase);
     }
 }
@@ -62,7 +63,10 @@ void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &select
     Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
     portfolio.addPurchase(purchase);
 }
-
+float Portfolio::getTotalBalance() const
+{
+    return totalBalance;
+}
 /*!
     @brief Prints the portfolio to stdout.
 */

@@ -65,6 +65,13 @@ function filterFunction() {
     }
 }
 
+function initBalance(totalBalance) {
+    var balanceContainer = document.getElementsByClassName("totalBalance")[0];
+    var balanceParagraph = document.createElement("h");
+    balanceParagraph.textContent = "Total Balance: " + totalBalance;
+    balanceContainer.appendChild(balanceParagraph);
+}
+
 // Toggle dropdown display
 function toggleDropdown() {
     var dropdown = document.getElementById("myDropdown");

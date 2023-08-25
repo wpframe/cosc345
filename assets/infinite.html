@@ -14,15 +14,15 @@
 
     <div class="main-width">
       <header>
-        
+
         <nav>
           <ul>
             <li><button id="home" onclick="goToHome()">Home</button></li>
             <li><button id="portfolio" onclick="goToPortfolio();stopTimer();loadPortfolio()">Portfolio</a></li>
 
-              
+
             <button id="playPauseButton" onclick="switchPlayPause()">
-              <i class="fa-solid fa-play style="color: #2bae66;"></i>
+              <i class="fa-solid fa-play style=" color: #2bae66;"></i>
             </button>
 
             <p id="dateTime"></p>
@@ -38,22 +38,25 @@
                 <button type="button" onclick="fastForward(0,0,10)">decade</button>
               </div>
             </div>
-            
-        
+
+
           </ul>
         </nav>
-            
+        <div class="totalBalance">
+
+        </div>
         <div class="game-name">
           <h2>Millionaire Tycoon </h2>
         </div>
-        
-        
+
+
       </header>
 
       <!-- buy/sell -->
       <div class="left-container">
         <div class="dropdown">
-          <button onclick="toggleDropdown();stopTimer();swapPlayAndPause()" class="dropbtn" id="dropbtn" >Choose Stock</button>
+          <button onclick="toggleDropdown();stopTimer();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
+            Stock</button>
           <div id="myDropdown" class="dropdown-content">
             <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
             <!-- <button type="button" onclick="selectStock('AAPL')">AAPL</button>
@@ -66,14 +69,14 @@
 
 
 
-        
+
         <div id="buySellContainer">
-          
+
           <label class="switch">
             <input type="checkbox" checked onclick="switchBuySell()">
             <span class="slider round"></span>
           </label>
-          
+
           <p id="buySell">Buy</p>
         </div>
 
@@ -96,22 +99,22 @@
 
 
       <!-- graph -->
-    <div class="right-container">
-        <div class = "graphBox">
+      <div class="right-container">
+        <div class="graphBox">
           <div class="graph">
             <p id="x1">x-axis</p>
             <p id="y1">y-axis</p>
             <div>
               <div id="point..."></div>
               <div id="line..."></div>
-          </div>
+            </div>
           </div>
         </div>
-    </div>
+      </div>
 
     </div>
   </section>
-  
+
   <script src="infinite.js"></script>
   <script src="https://kit.fontawesome.com/0fff93c7e8.js" crossorigin="anonymous"></script>
 

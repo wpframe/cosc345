@@ -13,6 +13,13 @@ function showStockInfo(currentPrice, stocksAvailable) {
     document.getElementById("stocksAvailable").textContent = stocksAvailable;
 }
 
+function initBalance(totalBalance) {
+    var balanceContainer = document.getElementsByClassName("totalBalance")[0];
+    var balanceParagraph = document.createElement("h");
+    balanceParagraph.textContent = "Total Balance: " + totalBalance;
+    balanceContainer.appendChild(balanceParagraph);
+}
+
 function switchBuySell() {
     var button = document.getElementById("buySell");
     if (button.innerHTML === "Buy") {

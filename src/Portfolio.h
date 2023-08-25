@@ -9,16 +9,16 @@ class Portfolio
 {
 private:
     std::vector<Purchase> purchases;
+    float totalBalance;
 
 public:
-    void replacePurchase(const Purchase &newPurchase);
+    Portfolio(float initialBalance) : totalBalance(initialBalance) {} // Initialize totalBalance in the constructor
     void addPurchase(Purchase purchase);
-    void updatePricesAndProfits();
     void printPortfolio() const;
     Purchase *getPurchase(const std::string &stockSymbol);
+    float getTotalBalance() const;
     const std::vector<Purchase> getPurchases() const;
     void summarizePortfolio(int time) const;
-    void summarizePortfolio() const;
     void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar);
 };
 

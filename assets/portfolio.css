@@ -1,85 +1,85 @@
 @font-face {
-    font-family: Evil;
-    src: url(fonts/EvilEmpire-4BBVK.ttf);
-  }
+  font-family: Evil;
+  src: url(fonts/EvilEmpire-4BBVK.ttf);
+}
 
 /* Reset some default styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
-    font-family: 'Evil', sans-serif;
-    overflow-x: hidden;
-    background-color: #caeebf;
-  }
-  
-  header {
-    background-color: #caeebf;
-    border-bottom: 2px solid #2BAE66;
-    color: #2BAE66;
-    font-family: 'Evil', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-  }
-  
-  nav ul {
-    list-style: none;
-    display: flex;
-  }
-  
-  nav ul li {
-    margin-right: 20px;
-    margin-left: 20px;
-  }
-  
-  nav ul li button {
-    background: none;
-    border: none;
-    border-radius: 0;
-    font-family: 'Evil', sans-serif;
-    color: #2BAE66;
-    cursor: pointer;
-  }
-  
-  .game-name h2 {
-    font-size: 24px;
-  }
-  
-  .tiles-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    max-width: 85%;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  
-  .stock-tile {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .skinny-tile {
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 160px;
-    margin-top: 40px;
-    right: 25px;
-    transform: translateY(-50%);
-    width: calc(15vw - 40px); /* 90vw for 90% of viewport width, subtract 40px for padding */
-    margin-right: 0px; /* Add a margin for spacing */
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
+  font-family: 'Evil', sans-serif;
+  overflow-x: hidden;
+  background-color: #caeebf;
+}
+
+header {
+  background-color: #caeebf;
+  border-bottom: 2px solid #2BAE66;
+  color: #2BAE66;
+  font-family: 'Evil', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+nav ul li button {
+  background: none;
+  border: none;
+  border-radius: 0;
+  font-family: 'Evil', sans-serif;
+  color: #2BAE66;
+  cursor: pointer;
+}
+
+.game-name h2 {
+  font-size: 24px;
+}
+
+.tiles-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 85%;
+  gap: 20px;
+  padding: 20px;
+}
 
 
-  
+.stock-tile {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.investment-summary {
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 160px;
+  margin-top: 40px;
+  right: 25px;
+  transform: translateY(-50%);
+  width: calc(15vw - 40px);
+  /* 90vw for 90% of viewport width, subtract 40px for padding */
+  margin-right: 0px;
+  /* Add a margin for spacing */
+}
