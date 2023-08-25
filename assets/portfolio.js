@@ -122,28 +122,7 @@ function updateInvestmentSummary(totalInvestment, portfolioValue, totalProfit, t
     if (existingSummaryTile) {
         tileContainer.removeChild(existingSummaryTile);
     }
+    addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, totalProfitPercentage);
 
-    // Create the main container div for the new summary
-    var summaryTile = document.createElement("div");
-    summaryTile.className = "summary-tile";
-
-    var totalInvestmentParagraph = document.createElement("p");
-    totalInvestmentParagraph.textContent = "Total Investment: " + totalInvestment;
-    summaryTile.appendChild(totalInvestmentParagraph);
-
-    var portfolioValueParagraph = document.createElement("p");
-    portfolioValueParagraph.textContent = "Current Portfolio Value: " + portfolioValue;
-    summaryTile.appendChild(portfolioValueParagraph);
-
-    var totalProfitParagraph = document.createElement("p");
-    totalProfitParagraph.textContent = "Total Profit/Loss: " + totalProfit;
-    summaryTile.appendChild(totalProfitParagraph);
-
-    var totalProfitPercentageParagraph = document.createElement("p");
-    totalProfitPercentageParagraph.textContent = "Total Profit/Loss Percentage: " + totalProfitPercentage + "%";
-    summaryTile.appendChild(totalProfitPercentageParagraph);
-
-    // Append the new summary to the tile container
-    tileContainer.appendChild(summaryTile);
 }
 
