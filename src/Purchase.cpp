@@ -22,6 +22,69 @@ Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string
 {
 }
 
+// void Portfolio::summarizePortfolio(int time) const
+// {
+//     float totalInvestment = 0.0;
+//     float currentValue = 0.0;
+
+//     std::cout << "**************************" << std::endl;
+//     std::cout << "Portfolio Summary:" << std::endl;
+//     for (const Purchase &purchase : purchases)
+//     {
+//         float purchaseValue = purchase.getQuantity() * purchase.getPurchasePrice();
+//         totalInvestment += purchaseValue;
+
+//         float currentPrice = purchase.getStock().history[time].closePrice;
+
+//         float currentPurchaseValue = purchase.getQuantity() * currentPrice;
+//         currentValue += currentPurchaseValue;
+
+//         std::cout << "Stock Symbol: " << purchase.getStockSymbol() << std::endl;
+//         std::cout << "Average Purchase Price: " << purchase.getPurchasePrice() << std::endl;
+//         std::cout << "Current Price: " << currentPrice << std::endl;
+//         std::cout << "Quantity: " << purchase.getQuantity() << std::endl;
+//         std::cout << "Purchase Value: " << purchaseValue << std::endl;
+//         std::cout << "Current Value: " << currentPurchaseValue << std::endl;
+
+//         // Calculate and display profit/loss percentage
+//         float profitLoss = currentPurchaseValue - purchaseValue;
+//         float profitLossPercentage = (profitLoss / purchaseValue) * 100.0;
+//         std::cout << "Profit/Loss: " << profitLossPercentage << "%" << std::endl;
+
+//         std::cout << "--------------------------" << std::endl;
+//     }
+
+// float Purchase::getTotalInvestmentForStock(){
+
+// }
+
+float Purchase::getCurrentPurchaseValue(float currentPrice) const
+{
+    // float currentPrice = getStock().history[time].closePrice;
+    float currentValue = 0.0;
+    float currentPurchaseValue = getQuantity() * currentPrice;
+    currentValue += currentPurchaseValue;
+    return currentValue;
+}
+
+float Purchase::getPurchaseValue() const
+{
+    float purchaseValue = getQuantity() * getPurchasePrice();
+    return purchaseValue;
+}
+
+float Purchase::getProfitLoss(float currentPrice) const
+{
+    float profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
+    return profitLoss;
+}
+
+float Purchase::getProfitLossPercentage(float currentPrice) const
+{
+    float profitLossPercentage = getProfitLoss(currentPrice) / getPurchaseValue();
+    return profitLossPercentage * 100;
+}
+
 /*!
     @brief Accessor for the quantity purchased.
     @return The quantity purchased.
@@ -33,17 +96,16 @@ int Purchase::getQuantity() const
 
 /*!
     @brief Accessor for the purchase price. This is only used in testing.
-    @return The purchase price. 
+    @return The purchase price.
 */
 float Purchase::getPurchasePrice() const
 {
     return purchasePrice;
 }
 
-
 /*!
     @brief Mutator for the stock. This is only used in testing.
-    @param s The stock to set. 
+    @param s The stock to set.
 */
 void Purchase::setStock(const Stock &s)
 {

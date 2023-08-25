@@ -24,8 +24,13 @@ public:
     std::string getStockSymbol() const;
     Stock getStock() const;
     int getQuantity() const;
-
+    float getCurrentPurchaseValue() const;
+    float getCurrentPurchaseValue(float currentPrice) const;
+    float getPurchaseValue() const;
     float getPurchasePrice() const;
+    float getProfitLoss(float currentPrice) const;
+
+    float getProfitLossPercentage(float currentPrice) const;
 
     float calculateTotalCost() const;
     void printPurchaseDetails() const;

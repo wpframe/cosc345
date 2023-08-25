@@ -387,11 +387,24 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     std::vector<Purchase> purchases = portfolio.getPurchases();
     for (const Purchase &purchase : purchases)
     {
-      ultralight::String symbol = purchase.getStockSymbol().c_str();
-      ultralight::String currentPrice = std::to_string(purchase.getPurchasePrice()).c_str();
-      ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
+      Stock selectedStock = purchase.getStock();
+      const auto &history = selectedStock.history;
+      float currentPriceFloat = selectedStock.history[TIMECOUNT].closePrice;
 
-      caller->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
+      // std::string symbol = purchase.getStockSymbol();
+      // std::string currentPrice = std::to_string(purchase.getPurchasePrice());
+      // std::string quantity = std::to_string(purchase.getQuantity());
+      ultralight::String symbol = purchase.getStockSymbol().c_str();
+      ultralight::String purchasePrice = std::to_string(purchase.getPurchasePrice()).c_str();
+      ultralight::String currentPrice = std::to_string(currentPriceFloat).c_str();
+      ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
+      ultralight::String profitLoss = std::to_string(purchase.getProfitLoss(currentPriceFloat)).c_str();
+      ultralight::String profitLossPercentage = std::to_string(purchase.getProfitLossPercentage(currentPriceFloat)).c_str();
+      ultralight::String purchaseValue = std::to_string(purchase.getPurchaseValue()).c_str();
+      ultralight::String currentPurchaseValue = std::to_string(purchase.getCurrentPurchaseValue(currentPriceFloat)).c_str();
+
+      caller->EvaluateScript("addStockTile('" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "')");
+      // caller->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
     }
 
     // ultralight::String script = jsScript.c_str();
