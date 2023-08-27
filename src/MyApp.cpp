@@ -11,6 +11,7 @@
 #include "Calendar.h"
 #include "Purchase.h"
 #include "Portfolio.h"
+#include "PathUtil.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -21,6 +22,7 @@
 Calendar calendar;
 Portfolio portfolio(100000.0);
 int TIMECOUNT;
+float TOTALBALANCE;
 bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
 ultralight::String latestDate = "01/01/2023";
@@ -92,7 +94,7 @@ MyApp::MyApp()
   ///
   overlay_->view()->set_view_listener(this);
 
-  std::string pathPrefix = findPathFromApp();
+  std::string pathPrefix = PathUtil::findPathFromApp();
   std::string filename = pathPrefix + "src/data/nasdaq_screener_filtered.csv";
 
   stocks = parseCSV(filename);
@@ -119,26 +121,6 @@ MyApp::~MyApp()
 void MyApp::Run()
 {
   app_->Run();
-}
-
-/*!
-  @brief Method which finds the relative path from app to the src directory.
-  @details checks what operating system a user is on and defines a relative path prefix.
-  @return the path prefix.
-
-**/
-std::string MyApp::findPathFromApp()
-{
-  std::string pathPrefix;
-#if defined(__linux__)
-  pathPrefix = "../";
-#elif defined(__APPLE__)
-  pathPrefix = "../../../../";
-#else
-  pathPrefix = "../";
-#endif
-
-  return pathPrefix;
 }
 
 /*!

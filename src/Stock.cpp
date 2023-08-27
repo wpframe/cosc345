@@ -6,7 +6,7 @@
 
 #include "Stock.h"
 #include "Headline.h"
-#include "MyApp.h"
+#include "PathUtil.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -39,6 +39,7 @@ Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stoc
     // Return a default Stock or throw an exception if not found
     return Stock("", "", 0, 0, "", "");
 }
+
 /*!
     @brief Accessor for the stock's symbol.
     @return The stock's symbol.
@@ -123,7 +124,7 @@ std::vector<Stock> parseCSV(const std::string &filename)
 */
 void Stock::parseHistory()
 {
-    std::string prefix = MyApp::findPathFromApp();
+    std::string prefix = PathUtil::findPathFromApp();
     std::string filename = prefix + "src/data/stocks/" + symbol + ".csv";
     std::ifstream file(filename);
 

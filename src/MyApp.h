@@ -12,8 +12,6 @@ class MyApp : public AppListener,
   ultralight::View *view_;
 
 public:
-  static std::string findPathFromApp();
-
   MyApp();
 
   virtual ~MyApp();
