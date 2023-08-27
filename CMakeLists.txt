@@ -4,6 +4,10 @@ project(MyApp C CXX)
 # Include your custom cmake file
 include(cmake/App.cmake)
 
+# Set coverage flags
+set(CMAKE_CXX_FLAGS "--coverage")
+set(CMAKE_C_FLAGS "--coverage")
+set(CMAKE_EXE_LINKER_FLAGS "--coverage")
 
 set(SOURCES "src/MyApp.h"
             "src/MyApp.cpp"
