@@ -27,18 +27,9 @@ void Portfolio::addPurchase(Purchase purchase)
         float firstPrice = existingPurchase->getPurchasePrice();
         float updatedPurchasePrice = purchase.getQuantity() * purchase.getPurchasePrice();
 
-        std::cout << "UdatedQuant: " << newQuant << std::endl;
         existingPurchase->setQuantity(newQuant);
 
-        std::cout << "first: " << firstPurchasePrice << std::endl;
-
-        std::cout << "second: " << updatedPurchasePrice << std::endl;
-
-        // IS NOT SETING TOTAL COST CORRECTLY AT THE MOMENT, NEED TO IMPLEMENT SETTOTAL() WILL BE EEASY
-        float totalCost = existingPurchase->calculateTotalCost() + purchase.calculateTotalCost();
-
         float byHandTotal = firstPurchasePrice + updatedPurchasePrice;
-        std::cout << "totalCost: " << byHandTotal << std::endl;
         existingPurchase->setPurchasePrice(byHandTotal / newQuant);
         totalBalance -= purchase.calculateTotalCost();
     }
@@ -63,6 +54,7 @@ void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &select
     Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
     portfolio.addPurchase(purchase);
 }
+
 float Portfolio::getTotalBalance() const
 {
     return totalBalance;

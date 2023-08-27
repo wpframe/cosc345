@@ -139,9 +139,9 @@ void Purchase::printPurchaseDetails() const
 {
     std::cout << "Stock: " << stock.getName() << " (" << stock.getSymbol() << ")" << std::endl;
     std::cout << "Quantity: " << quantity << std::endl;
-    std::cout << "Average Purchase Price: $" << purchasePrice << std::endl;
-    std::cout << "Total Cost: $" << calculateTotalCost() << std::endl;
-    std::cout << "Purchase Timestamp: " << purchaseTimestamp << std::endl;
+    std::cout << "Purchase Price: $" << purchasePrice << std::endl;
+    // std::cout << "Total Cost: $" << calculateTotalCost() << std::endl;
+    // std::cout << "Purchase Timestamp: " << purchaseTimestamp << std::endl;
 }
 
 // This can be removed
