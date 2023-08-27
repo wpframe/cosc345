@@ -3,6 +3,7 @@
    @brief The implementation for the Purchase class.
    @details It holds the neccesary information for keeping a record of purchasing a stock.
 */
+#pragma once
 
 #include "Purchase.h"
 #include "Portfolio.h"

@@ -19,7 +19,7 @@ void testStocks::run()
     std::vector<Stock> stocks = parseCSV(filename);
 
     // Create a Portfolio instance
-    Portfolio portfolio;
+    Portfolio portfolio(100000.00);
 
     // Pick 5 random stocks and add them to the portfolio
     // for (int i = 0; i < 5; ++i)
@@ -35,7 +35,7 @@ void testStocks::run()
 
     std::string initialPurchaseDate = selectedStock.history[0].date;
 
-    Purchase myPurchase(selectedStock, 50, selectedStock.history[0].closePrice, initialPurchaseDate, selectedStock.history[0].closePrice);
+    Purchase myPurchase(selectedStock, 50, selectedStock.history[0].closePrice, initialPurchaseDate);
 
     portfolio.addPurchase(myPurchase);
 
@@ -57,12 +57,12 @@ void testStocks::run()
         else
         {
             // Create a new purchase and add it to the portfolio
-            Purchase newPurchase(selectedStock, 50, newPurchasePrice, newPurchaseDate, newPurchasePrice);
+            Purchase newPurchase(selectedStock, 50, newPurchasePrice, newPurchaseDate);
             portfolio.addPurchase(newPurchase);
         }
 
         // Calculate profit/loss
-        float profitLoss = myPurchase.calculateProfit();
+        float profitLoss = myPurchase.getProfitLoss(newPurchasePrice);
         // std::cout << newPurchaseDate << std::endl;
         // std::cout << "Date: " << newPurchaseDate << ", New Price: $" << newPurchasePrice << std::endl;
     }

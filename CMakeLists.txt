@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.3.2)
 project(MyApp C CXX)
 
+# Include your custom cmake file
 include(cmake/App.cmake)
 
 
@@ -14,4 +15,6 @@ set(SOURCES "src/MyApp.h"
             "src/Portfolio.cpp"
             )
 
+# Create the executable target
 add_app("${SOURCES}")
+
