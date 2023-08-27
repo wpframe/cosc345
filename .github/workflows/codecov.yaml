@@ -1,19 +1,42 @@
-name: Codecov
+name: codecov
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+    branches: ["main"]
+    
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install lcov
+        run: sudo apt-get install lcov
+
+      - name: Configure CMake with Code Coverage
+        working-directory: build
+        run: cmake -DCODE_COVERAGE=ON ..
+
+      - name: Run build
+        run: ./build.sh
+
+      - name: Move into src directory
+        run: cd src
+
+      - name: Run tests
+        run: ./runTests.sh
+
+      - name: Move back to build directory
+        run: cd ../build/
+
+      - name: Generate coverage report
+        working-directory: build
+        run: |
+          lcov --capture --directory . --output-file coverage.info
+          lcov --remove coverage.info '/usr/*' '*/lib/Catch2/src/*' --output-file coverage.info
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./build/coverage.info
