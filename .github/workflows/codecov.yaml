@@ -28,9 +28,6 @@ jobs:
       - name: Run tests
         run: ./test.sh
       
-      - name: Move back to build directory
-        run: cd ../build/
-
       - name: Generate coverage report
         working-directory: build
         run: |
