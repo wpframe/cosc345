@@ -15,6 +15,9 @@ jobs:
       - name: Install lcov
         run: sudo apt-get install lcov
 
+      - name: Make build directory
+        run: mkdir build
+
       - name: Configure CMake with Code Coverage
         working-directory: build
         run: cmake -DCODE_COVERAGE=ON ..
