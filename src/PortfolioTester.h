@@ -9,11 +9,13 @@ class PortfolioTester
 {
 public:
     PortfolioTester();
-    void testAddPurchase();
-    void testAddPurchaseFunctionality();
-    void testGetTotalBalance();
-    void testAddMultiplePurchases();
+    int testAddPurchase();
+    int testAddPurchaseFunctionality();
+    int testGetTotalBalance();
+    int testAddMultiplePurchases();
     void runAllTests();
+    int testStock();
+    int testHeadline();
 };
 
 #endif // PORTFOLIO_TESTER_H

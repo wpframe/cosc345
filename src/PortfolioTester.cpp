@@ -9,6 +9,7 @@
 #include "Calendar.h"
 #include "PortfolioTester.h"
 #include "Purchase.h"
+#include "Headline.h"
 
 /**
  * @brief Default constructor for PortfolioTester class.
@@ -18,7 +19,7 @@ PortfolioTester::PortfolioTester() {}
 /**
  * @brief Test the functionality of adding a single purchase to the portfolio.
  */
-void PortfolioTester::testAddPurchase()
+int PortfolioTester::testAddPurchase()
 {
     std::cout << "TESTING ADDING PURCHASE FUNCTIONALITY" << std::endl;
     Calendar calendar;
@@ -35,18 +36,91 @@ void PortfolioTester::testAddPurchase()
     if (purchase->getPurchasePrice() == 150.0 && purchase->getQuantity() == 10 && purchase->getQuantity() * purchase->getPurchasePrice() == 150.0 * 10)
     {
         std::cout << "Test Passed: Purchase price, quantity and total cost are correct." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 0;
     }
     else
     {
         std::cout << "Test Failed" << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
     }
-    std::cout << "#######################################################" << std::endl;
 }
+
+/**
+ * @brief Test stock functionality.
+ */
+int PortfolioTester::testStock(){
+    std::string ticker = "AAPL";
+    std::string name = "Apple Inc.";
+    int marketCap = 1000000000;
+    int yearFounded = 1980;
+    std::string sector = "Technology";
+    std::string industry = "Consumer Electronics";
+    Stock x = Stock(ticker, name, marketCap, yearFounded, sector, industry);
+    std::cout << "TESTING STOCK FUNCTIONALITY" << std::endl;
+    bool flag = false;
+    try{
+        x.parseHistory();
+    }catch (const std::exception& e){
+        flag = true;
+    }
+    if(x.getName() != name){
+        flag = true;
+    }
+    if(x.getSymbol() != ticker){
+        flag = true;
+    }
+
+    if(flag == false){
+        std::cout << "Test Passed: Stock was correctly created." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 0;
+    }else{
+        std::cout << "Test Failed" << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
+    }
+    
+    
+}
+
+/**
+ * @brief Test headline functionality.
+ */
+int PortfolioTester::testHeadline(){
+    try{
+        Headline::readFromCSV("data/headlines.csv");
+    }catch (const std::exception& e){
+        std::cout << "Reading from CSV Failed" << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
+    }
+    
+    try{
+        Stock x = Stock("AAPL", "Apple Inc.", 1000000000, 1980, "Technology", "Consumer Electronics");
+        int seed = 112513251;
+        for(int i = 0; i < 52; i++){
+            Headline::generateHeadline(x, seed++);
+        }
+    }catch (const std::exception& e){
+        std::cout << "Generating Headline Failed" << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
+    }
+
+    std::cout << "Test Passed: Headlines were correctly generated." << std::endl;
+    std::cout << "#######################################################" << std::endl;
+    return 0;
+
+
+}
+
 
 /**
  * @brief Test the functionality of adding purchases of the same stock to the portfolio.
  */
-void PortfolioTester::testAddPurchaseFunctionality()
+int PortfolioTester::testAddPurchaseFunctionality()
 {
     std::cout << "TESTING ADDING PURCHASE OF SAME STOCK FUNCTIONALITY" << std::endl;
     Calendar calendar;
@@ -77,23 +151,28 @@ void PortfolioTester::testAddPurchaseFunctionality()
             addedPurchase->getPurchasePrice() == expectedAveragePrice)
         {
             std::cout << "Test Passed: Purchases were correctly added and updated." << std::endl;
+            std::cout << "#######################################################" << std::endl;
+            return 0;
         }
         else
         {
             std::cout << "Test Failed: Purchases were not updated correctly." << std::endl;
+            std::cout << "#######################################################" << std::endl;
+            return 1;
         }
     }
     else
     {
         std::cout << "Test Failed: Unable to retrieve added purchase." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
     }
-    std::cout << "#######################################################" << std::endl;
 }
 
 /**
  * @brief Test the functionality of calculating the total balance of the portfolio.
  */
-void PortfolioTester::testGetTotalBalance()
+int PortfolioTester::testGetTotalBalance()
 {
     std::cout << "TESTING TOTAL BALANCE FUNCTIONALITY" << std::endl;
     Calendar calendar;
@@ -117,18 +196,21 @@ void PortfolioTester::testGetTotalBalance()
     if (totalBalance == expectedTotalBalance)
     {
         std::cout << "Test Passed: Total balance calculated correctly." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 0;
     }
     else
     {
         std::cout << "Test Failed: Total balance calculation is incorrect." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
     }
-    std::cout << "#######################################################" << std::endl;
 }
 
 /**
  * @brief Test adding multiple purchases to the portfolio.
  */
-void PortfolioTester::testAddMultiplePurchases()
+int PortfolioTester::testAddMultiplePurchases()
 {
     std::cout << "TESTING ADDING MULTIPLE PURCHASES FUNCTIONALITY" << std::endl;
     Calendar calendar;
@@ -159,12 +241,15 @@ void PortfolioTester::testAddMultiplePurchases()
     if (actualTotalPurchases == expectedTotalPurchases)
     {
         std::cout << "Test Passed: All purchases were added correctly." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 0;
     }
     else
     {
         std::cout << "Test Failed: Some purchases were not added correctly." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
     }
-    std::cout << "#######################################################" << std::endl;
 }
 
 /**
@@ -173,9 +258,17 @@ void PortfolioTester::testAddMultiplePurchases()
 void PortfolioTester::runAllTests()
 {
     std::cout << "Running Portfolio Tests..." << std::endl;
-    testAddPurchase();
-    testAddPurchaseFunctionality();
-    testGetTotalBalance();
-    testAddMultiplePurchases();
-    std::cout << "All Portfolio Tests Passed!" << std::endl;
+    int failedCount = 0;
+    failedCount += testAddPurchase();
+    failedCount += testAddPurchaseFunctionality();
+    failedCount += testGetTotalBalance();
+    failedCount += testAddMultiplePurchases();
+    failedCount += testStock();
+    failedCount += testHeadline();
+    if(failedCount == 0){
+        std::cout << "All Tests Passed!" << std::endl;
+    }else{
+        std::cout << failedCount << " Tests Failed!" << std::endl;
+    }
+    
 }
