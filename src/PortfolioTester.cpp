@@ -126,6 +126,48 @@ void PortfolioTester::testGetTotalBalance()
 }
 
 /**
+ * @brief Test adding multiple purchases to the portfolio.
+ */
+void PortfolioTester::testAddMultiplePurchases()
+{
+    std::cout << "TESTING ADDING MULTIPLE PURCHASES FUNCTIONALITY" << std::endl;
+    Calendar calendar;
+    Portfolio portfolio(1000000);
+
+    Stock stock1("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
+    Stock stock2("GOOGL", "Alphabet Inc.", 1500000, 1998, "Technology", "Internet Services");
+    Stock stock3("MSFT", "Microsoft Corporation", 2000000, 1975, "Technology", "Software");
+    Stock stock4("AMZN", "Amazon.com Inc.", 1800000, 1994, "Retail", "E-Commerce");
+    Stock stock5("TSLA", "Tesla Inc.", 900000, 2003, "Automotive", "Electric Vehicles");
+
+    portfolio.addPurchaseToPortfolio(portfolio, stock1, 10, 150.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, stock2, 20, 250.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, stock3, 5, 300.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, stock4, 15, 1800.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, stock5, 8, 650.0, calendar);
+
+    bool allPurchasesAddedCorrectly = true;
+    for (const Purchase &purchase : portfolio.getPurchases())
+    {
+        purchase.printPurchaseDetails();
+    }
+
+    int expectedTotalPurchases = 5;
+
+    int actualTotalPurchases = portfolio.getPurchases().size();
+
+    if (actualTotalPurchases == expectedTotalPurchases)
+    {
+        std::cout << "Test Passed: All purchases were added correctly." << std::endl;
+    }
+    else
+    {
+        std::cout << "Test Failed: Some purchases were not added correctly." << std::endl;
+    }
+    std::cout << "#######################################################" << std::endl;
+}
+
+/**
  * @brief Run all the test methods of the PortfolioTester class.
  */
 void PortfolioTester::runAllTests()
@@ -134,5 +176,6 @@ void PortfolioTester::runAllTests()
     testAddPurchase();
     testAddPurchaseFunctionality();
     testGetTotalBalance();
+    testAddMultiplePurchases();
     std::cout << "All Portfolio Tests Passed!" << std::endl;
 }

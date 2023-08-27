@@ -12,6 +12,7 @@ public:
     void testAddPurchase();
     void testAddPurchaseFunctionality();
     void testGetTotalBalance();
+    void testAddMultiplePurchases();
     void runAllTests();
 };
 
