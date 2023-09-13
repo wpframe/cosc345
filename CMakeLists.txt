@@ -21,3 +21,10 @@ set(SOURCES "src/MyApp.h"
 
 # Create the executable target
 add_app("${SOURCES}")
+
+option(CODE_COVERAGE "Enable coverage reporting" OFF)
+if(CODE_COVERAGE AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+    #Add required flags (GCC & LLVM/Clang)
+endif()
