@@ -32,7 +32,7 @@ jobs:
         working-directory: build
         run: |
           lcov --capture --directory . --output-file coverage.info
-          # had to comment out the ignore below
+          # had to comment out the ignore below 
           # lcov --remove coverage.info '/usr/*' '*/lib/Catch2/src/*' --output-file coverage.info
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
