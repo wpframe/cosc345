@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['headline_72',['Headline',['../classHeadline.html',1,'']]]
+  ['headline_73',['Headline',['../classHeadline.html',1,'']]]
 ];

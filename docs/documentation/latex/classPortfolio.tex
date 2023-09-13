@@ -21,7 +21,9 @@ const std\+::vector$<$ \mbox{\hyperlink{classPurchase}{Purchase}} $>$ \mbox{\hyp
 void \mbox{\hyperlink{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}{summarize\+Portfolio}} (int time) const
 \begin{DoxyCompactList}\small\item\em Prints a summary of the portfolio to stdout. This is only used in testing. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{classPortfolio_ab25b15ab52e16f650952afba4cbdaa20}{add\+Purchase\+To\+Portfolio}} (\mbox{\hyperlink{classPortfolio}{Portfolio}} \&portfolio, const \mbox{\hyperlink{classStock}{Stock}} \&selected\+Stock, int quantity, float purchase\+Price, const \mbox{\hyperlink{classCalendar}{Calendar}} \&calendar)
-\begin{DoxyCompactList}\small\item\em Adds a purchase to the portfolio. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Adds a purchase to the portfolio. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classPortfolio_ada5215e4e56797a135d49b2a29965117}{sell\+Purchase}} (const \mbox{\hyperlink{classStock}{Stock}} \&selected\+Stock, int quantity\+To\+Sell, float current\+Price)
+\begin{DoxyCompactList}\small\item\em Sells a purchase from the portfolio and adds the value back to the total balance. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Member Function Documentation}
@@ -93,6 +95,28 @@ Accessor for the \mbox{\hyperlink{classPurchase}{Purchase}} vector in the portfo
 
 \begin{DoxyReturn}{Returns}
 A vector of all the purchases in the portfolio. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classPortfolio_ada5215e4e56797a135d49b2a29965117}\label{classPortfolio_ada5215e4e56797a135d49b2a29965117}} 
+\index{Portfolio@{Portfolio}!sellPurchase@{sellPurchase}}
+\index{sellPurchase@{sellPurchase}!Portfolio@{Portfolio}}
+\doxysubsubsection{\texorpdfstring{sellPurchase()}{sellPurchase()}}
+{\footnotesize\ttfamily void Portfolio\+::sell\+Purchase (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classStock}{Stock}} \&}]{selected\+Stock,  }\item[{int}]{quantity\+To\+Sell,  }\item[{float}]{current\+Price }\end{DoxyParamCaption})}
+
+
+
+Sells a purchase from the portfolio and adds the value back to the total balance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stock\+Symbol} & The stock symbol to sell. \\
+\hline
+{\em quantity\+To\+Sell} & The quantity of the stock to sell. \\
+\hline
+{\em current\+Price} & The current price of the stock. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if the sale was successful, false otherwise. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}\label{classPortfolio_a5e8e83cb75aca1c414cdab32643e9458}} 
 \index{Portfolio@{Portfolio}!summarizePortfolio@{summarizePortfolio}}

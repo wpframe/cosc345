@@ -97,6 +97,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>getTotalBalance</b> 
 <tr class="memitem:ab25b15ab52e16f650952afba4cbdaa20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">addPurchaseToPortfolio</a> (<a class="el" href="classPortfolio.html">Portfolio</a> &amp;portfolio, const <a class="el" href="classStock.html">Stock</a> &amp;selectedStock, int quantity, float purchasePrice, const <a class="el" href="classCalendar.html">Calendar</a> &amp;calendar)</td></tr>
 <tr class="memdesc:ab25b15ab52e16f650952afba4cbdaa20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a purchase to the portfolio.  <a href="classPortfolio.html#ab25b15ab52e16f650952afba4cbdaa20">More...</a><br /></td></tr>
 <tr class="separator:ab25b15ab52e16f650952afba4cbdaa20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada5215e4e56797a135d49b2a29965117"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPortfolio.html#ada5215e4e56797a135d49b2a29965117">sellPurchase</a> (const <a class="el" href="classStock.html">Stock</a> &amp;selectedStock, int quantityToSell, float currentPrice)</td></tr>
+<tr class="memdesc:ada5215e4e56797a135d49b2a29965117"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sells a purchase from the portfolio and adds the value back to the total balance.  <a href="classPortfolio.html#ada5215e4e56797a135d49b2a29965117">More...</a><br /></td></tr>
+<tr class="separator:ada5215e4e56797a135d49b2a29965117"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a7808d1ca2e5feb42e3d773954b8b1a9d"></a>
@@ -227,6 +230,51 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>getTotalBalance</b> 
 
 <p>Accessor for the <a class="el" href="classPurchase.html">Purchase</a> vector in the portfolio. </p>
 <dl class="section return"><dt>Returns</dt><dd>A vector of all the purchases in the portfolio. </dd></dl>
+
+</div>
+</div>
+<a id="ada5215e4e56797a135d49b2a29965117"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada5215e4e56797a135d49b2a29965117">&#9670;&nbsp;</a></span>sellPurchase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Portfolio::sellPurchase </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classStock.html">Stock</a> &amp;&#160;</td>
+          <td class="paramname"><em>selectedStock</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>quantityToSell</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>currentPrice</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sells a purchase from the portfolio and adds the value back to the total balance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stockSymbol</td><td>The stock symbol to sell. </td></tr>
+    <tr><td class="paramname">quantityToSell</td><td>The quantity of the stock to sell. </td></tr>
+    <tr><td class="paramname">currentPrice</td><td>The current price of the stock. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the sale was successful, false otherwise. </dd></dl>
 
 </div>
 </div>
