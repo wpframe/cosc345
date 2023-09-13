@@ -7,6 +7,8 @@
 #include "Portfolio.h"
 #include <iostream>
 #include "Calendar.h"
+#include <vector>
+#include <algorithm>
 
 /*!
     @brief Adds a purchase to the portfolio.
@@ -53,6 +55,47 @@ void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &select
 {
     Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
     portfolio.addPurchase(purchase);
+}
+
+/*!
+    @brief Sells a purchase from the portfolio and adds the value back to the total balance.
+    @param stockSymbol The stock symbol to sell.
+    @param quantityToSell The quantity of the stock to sell.
+    @param currentPrice The current price of the stock.
+    @return True if the sale was successful, false otherwise.
+*/
+void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice)
+{
+    Purchase *purchaseToSell = getPurchase(selectedStock.getSymbol());
+
+    if (purchaseToSell && purchaseToSell->getQuantity() >= quantityToSell)
+    {
+        int remainingQuantity = purchaseToSell->getQuantity() - quantityToSell;
+        float saleValue = quantityToSell * currentPrice;
+        totalBalance += saleValue;
+
+        if (remainingQuantity > 0)
+        {
+            purchaseToSell->setQuantity(remainingQuantity);
+        }
+        if (remainingQuantity == 0)
+        {
+
+            for (auto it = purchases.begin(); it != purchases.end();)
+            {
+                if (it->getStockSymbol() == purchaseToSell->getStockSymbol())
+                {
+                    it = purchases.erase(it);
+                }
+            }
+
+            std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
+        }
+        else
+        {
+            std::cout << "Unable to sell " << quantityToSell << " shares of " << selectedStock.getSymbol() << ". Insufficient quantity in the portfolio." << std::endl;
+        }
+    }
 }
 
 float Portfolio::getTotalBalance() const

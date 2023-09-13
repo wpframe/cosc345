@@ -20,6 +20,7 @@ public:
     const std::vector<Purchase> getPurchases() const;
     void summarizePortfolio(int time) const;
     void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar);
+    void sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice);
 };
 
 #endif // PORTFOLIO_H
