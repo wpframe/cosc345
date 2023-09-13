@@ -281,9 +281,20 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
 
     const auto &history = selectedStock.history;
-    if (quantity > 0)
+    if (buyOrSell == "Buy")
     {
-      portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+      if (quantity > 0)
+      {
+        portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+      }
+    }
+    if (buyOrSell == "Sell")
+    {
+      if (quantity > 0)
+      {
+        // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+        portfolio.sellPurchase(selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice);
+      }
     }
 
     portfolio.summarizePortfolio(TIMECOUNT);
