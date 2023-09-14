@@ -34,7 +34,9 @@ jobs:
           lcov --capture --directory . --output-file coverage.info
           # had to comment out the ignore below 
           # lcov --remove coverage.info '/usr/*' '*/lib/Catch2/src/*' --output-file coverage.info
-      - name: Upload coverage to Codecov
+      - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v1
         with:
-          file: ./build/coverage.info
+            file: ./build/coverage.info
+          #env:
+          #  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
