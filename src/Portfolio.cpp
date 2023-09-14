@@ -66,7 +66,6 @@ void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &select
 */
 void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice)
 {
-    std::cout << "ARE WE GETTING HERE?" << std::endl;
 
     Purchase *purchaseToSell = getPurchase(selectedStock.getSymbol());
 

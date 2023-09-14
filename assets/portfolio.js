@@ -207,6 +207,7 @@ function showSellTile(symbol, quantity, purchasePrice, currentPrice) {
 
         // Close the modal
         sellTileModal.style.display = "none";
+        window.location.reload()
 
     });
 

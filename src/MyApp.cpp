@@ -285,6 +285,7 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     {
       portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
     }
+    portfolio.summarizePortfolio(TIMECOUNT);
   }
   return JSValueMakeNull(ctx);
 }
@@ -480,7 +481,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
     // ultralight::String script = jsScript.c_str();
 
-    startLoadingPortfolio = false;
+    // startLoadingPortfolio = false;
   }
 
   if (!stocks.empty())

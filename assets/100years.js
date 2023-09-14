@@ -137,5 +137,6 @@ function commitPurchaseJS() {
     var quantity = document.getElementById('quantity').value;
 
     commitPurchase(symbol, buyOrSell, quantity)
+    window.location.reload()
 }
 function commitPurchase() { }
