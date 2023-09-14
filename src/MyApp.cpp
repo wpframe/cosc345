@@ -281,20 +281,40 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
 
     const auto &history = selectedStock.history;
-    if (buyOrSell == "Buy")
+    if (quantity > 0)
     {
-      if (quantity > 0)
-      {
-        portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
-      }
+      portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
     }
-    if (buyOrSell == "Sell")
+  }
+  return JSValueMakeNull(ctx);
+}
+
+JSValueRef commitSale(JSContextRef ctx, JSObjectRef function,
+                      JSObjectRef thisObject, size_t argumentCount,
+                      const JSValueRef arguments[], JSValueRef *exception)
+{
+  if (argumentCount >= 3)
+  {
+
+    JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    int amountToSell = static_cast<int>(JSValueToNumber(ctx, arguments[1], nullptr));
+    int quantity = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
+
+    // Convert JSStringRef to C++ std::string
+    std::string symbol = JSStringToStdString(jsSymbol);
+
+    // Release JSStringRef
+    JSStringRelease(jsSymbol);
+
+    std::vector<Purchase> purchases;
+
+    Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
+
+    const auto &history = selectedStock.history;
+
+    if (quantity > 0)
     {
-      if (quantity > 0)
-      {
-        // portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
-        portfolio.sellPurchase(selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice);
-      }
+      portfolio.sellPurchase(selectedStock, amountToSell, selectedStock.history[TIMECOUNT].closePrice);
     }
 
     portfolio.summarizePortfolio(TIMECOUNT);
@@ -376,6 +396,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
   JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
+  JSStringRef commitSaleRef = JSStringCreateWithUTF8CString("commitSale");
+
   JSStringRef cppSelectStockRef = JSStringCreateWithUTF8CString("cppSelectStock");
   JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
   // JSStringRef toggleDropdownRef = JSStringCreateWithUTF8CString("toggleDropdown");
@@ -384,6 +406,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
+  JSObjectRef commitSaleFunc = JSObjectMakeFunctionWithCallback(ctx, commitSaleRef, commitSale);
   JSObjectRef cppSelectStockFunc = JSObjectMakeFunctionWithCallback(ctx, cppSelectStockRef, cppSelectStock);
   JSObjectRef loadPortfolioFunc = JSObjectMakeFunctionWithCallback(ctx, loadPortfolioRef, loadPortfolio);
   // JSObjectRef toggleDropdownFunc = JSObjectMakeFunctionWithCallback(ctx, toggleDropdownRef, toggleDropdown);
@@ -395,6 +418,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, fastForwardRef, fastForwardFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, commitSaleRef, commitSaleFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, cppSelectStockRef, cppSelectStockFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, loadPortfolioRef, loadPortfolioFunc, 0, 0);
   // JSObjectSetProperty(ctx, globalObj, toggleDropdownRef, toggleDropdownFunc, 0, 0);
@@ -403,6 +427,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(stopTimerRef);
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
+  JSStringRelease(commitSaleRef);
   JSStringRelease(cppSelectStockRef);
   JSStringRelease(loadPortfolioRef);
   // JSStringRelease(toggleDropdownRef);

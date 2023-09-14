@@ -66,6 +66,8 @@ void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &select
 */
 void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice)
 {
+    std::cout << "ARE WE GETTING HERE?" << std::endl;
+
     Purchase *purchaseToSell = getPurchase(selectedStock.getSymbol());
 
     if (purchaseToSell && purchaseToSell->getQuantity() >= quantityToSell)
@@ -88,13 +90,8 @@ void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, flo
                     it = purchases.erase(it);
                 }
             }
-
-            std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
         }
-        else
-        {
-            std::cout << "Unable to sell " << quantityToSell << " shares of " << selectedStock.getSymbol() << ". Insufficient quantity in the portfolio." << std::endl;
-        }
+        std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
     }
 }
 
