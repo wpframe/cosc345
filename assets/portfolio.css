@@ -59,12 +59,62 @@ nav ul li button {
   padding: 20px;
 }
 
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  overflow: auto;
+  /* Enable vertical scrolling */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 33%;
+  height: 50%;
+  border-style: ridge;
+  border-color: #2BAE66;
+  border-width: 20px;
+  background: #caeebf;
+  /* Use the desired value */
+  box-sizing: border-box;
+  /* Ensure padding and border are included in the width */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  border-radius: 8px;
+  position: relative;
+  /* Add relative positioning to the modal content */
+}
+
 
 .stock-tile {
+  position: relative;
   background-color: #f0f0f0;
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sell-button {
+  position: absolute;
+  top: 10px;
+  /* Adjust this value to position the button as desired */
+  right: 10px;
+  /* Adjust this value to position the button as desired */
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  /* Add any other styling for the button */
 }
 
 
