@@ -286,7 +286,14 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
 
     const auto &history = selectedStock.history;
-    if (quantity > 0)
+
+    // if (TOTALBALANCE - selectedStock.history[TIMECOUNT].closePrice * quantity < 0)
+    // {
+    //   return JSValueMakeNull(ctx);
+
+    // }
+
+    if (quantity > 0 && portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity >= 0)
     {
       portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
     }

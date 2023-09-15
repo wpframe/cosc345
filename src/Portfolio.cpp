@@ -17,12 +17,17 @@
 */
 void Portfolio::addPurchase(Purchase purchase)
 {
-    int count = 1;
     Purchase *existingPurchase = getPurchase(purchase.getStockSymbol());
+    float totalCost = purchase.calculateTotalCost();
 
+    // Check if adding the purchase will result in a negative total balance
+    // if (totalBalance - totalCost < 0)
+    // {
+    //     std::cout << "Cannot add purchase. Insufficient funds." << std::endl;
+    //     return; // Exit the function without adding the purchase
+    // }
     if (existingPurchase)
     {
-        count++;
         int newQuant = existingPurchase->getQuantity() + purchase.getQuantity();
         float firstPurchasePrice = existingPurchase->getQuantity() * existingPurchase->getPurchasePrice();
         int firstQuant = existingPurchase->getQuantity();
@@ -81,14 +86,13 @@ void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, flo
         }
         if (remainingQuantity == 0)
         {
-
-            for (auto it = purchases.begin(); it != purchases.end();)
-            {
-                if (it->getStockSymbol() == purchaseToSell->getStockSymbol())
-                {
-                    it = purchases.erase(it);
-                }
-            }
+            purchases.erase(
+                std::remove_if(purchases.begin(), purchases.end(),
+                               [&](const Purchase &purchase)
+                               {
+                                   return purchase.getStockSymbol() == selectedStock.getSymbol();
+                               }),
+                purchases.end());
         }
         std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
     }
