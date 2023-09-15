@@ -9,12 +9,15 @@ struct StockHistory
 {
     std::string date;
     double closePrice;
+    std::string headline;
+    double multiplier;
 };
 
 class Stock
 {
 public:
     Stock(const std::string &symbol, const std::string &name, int outstanding, int ipoYear, const std::string &sector, const std::string &industry);
+    static Stock updateStockHistory(Stock &selectedStock);
     std::string getSymbol() const;
     std::string getName() const;
     std::string symbol;

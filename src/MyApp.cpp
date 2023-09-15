@@ -12,6 +12,7 @@
 #include "Purchase.h"
 #include "Portfolio.h"
 #include "PathUtil.h"
+#include "Headline.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -98,20 +99,24 @@ MyApp::MyApp()
   std::string filename = pathPrefix + "src/data/nasdaq_screener_filtered.csv";
 
   stocks = parseCSV(filename);
-  if (!stocks.empty())
-  {
-    // for (int i = 0; i < static_cast<int>(stocks.size()); ++i) // FOR LOOP FOR ALL STOCKS
-    for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i) // FOR LOOP FOR FIRST 100
-    {
-      const Stock &stock = stocks[i];
-      stocks[i].parseHistory();
-      stocks[i].predictNextX(2600);
-    }
-  }
-  else
-  {
-    std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
-  }
+
+  std::string prefix = PathUtil::findPathFromApp();
+  std::string filename2 = prefix + "src/data/headlines.csv";
+  Headline::readFromCSV(filename2);
+  // if (!stocks.empty())
+  // {
+  //   // for (int i = 0; i < static_cast<int>(stocks.size()); ++i) // FOR LOOP FOR ALL STOCKS
+  //   for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i) // FOR LOOP FOR FIRST 100
+  //   {
+  //     const Stock &stock = stocks[i];
+  //     stocks[i].parseHistory();
+  //     stocks[i].predictNextX(2600);
+  //   }
+  // }
+  // else
+  // {
+  //   std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
+  // }
 }
 
 MyApp::~MyApp()
@@ -329,6 +334,7 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 {
   if (argumentCount >= 1)
   {
+
     JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
     std::string symbol = JSStringToStdString(jsSymbol);
 
@@ -336,6 +342,16 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
     // Stock selectedStock = stocks[10];
+
+    for (size_t i = 0; i < stocks.size(); ++i)
+    {
+      if (stocks[i].symbol == symbol)
+      {
+        stocks[i] = Stock::updateStockHistory(stocks[i]);
+        selectedStock = stocks[i];
+        break;
+      }
+    }
 
     const auto &history = selectedStock.history;
 
@@ -398,7 +414,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
   JSStringRef commitSaleRef = JSStringCreateWithUTF8CString("commitSale");
-
   JSStringRef cppSelectStockRef = JSStringCreateWithUTF8CString("cppSelectStock");
   JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
   // JSStringRef toggleDropdownRef = JSStringCreateWithUTF8CString("toggleDropdown");
@@ -450,6 +465,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       Stock selectedStock = purchase.getStock();
       const auto &history = selectedStock.history;
       float currentPriceFloat = selectedStock.history[TIMECOUNT].closePrice;
+      std::string headlineStr = selectedStock.history[TIMECOUNT].headline;
+      float headlineMultiplierStr = selectedStock.history[TIMECOUNT].multiplier;
       totalInvestment += purchase.getPurchaseValue();
       portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
 
@@ -459,6 +476,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       ultralight::String symbol = purchase.getStockSymbol().c_str();
       ultralight::String purchasePrice = std::to_string(purchase.getPurchasePrice()).c_str();
       ultralight::String currentPrice = std::to_string(currentPriceFloat).c_str();
+      ultralight::String headline = headlineStr.c_str();
+      ultralight::String headlineMultiplier = std::to_string(headlineMultiplierStr).c_str();
       ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
       ultralight::String profitLoss = std::to_string(purchase.getProfitLoss(currentPriceFloat)).c_str();
       ultralight::String profitLossPercentage = std::to_string(purchase.getProfitLossPercentage(currentPriceFloat)).c_str();
@@ -469,7 +488,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       ultralight::String totalProfitStr = std::to_string(totalProfit).c_str();
       ultralight::String totalProfitPercentageStr = std::to_string(totalProfitPercentage).c_str();
 
-      caller->EvaluateScript("addStockTile('" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "')");
+      caller->EvaluateScript("addStockTile('" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "', '" + headline + "', '" + headlineMultiplier + "')");
       // caller->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
 
       caller->EvaluateScript("updateBalance('" + totalBalance + "')");

@@ -4,13 +4,13 @@
     @details It has functions to read in a CSV file of news headlines,
                 and generate a news headline for a specific stock.
 */
-#pragma once
 
 #include "Headline.h"
+#include "Stock.h"
+#include "PathUtil.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "Stock.h"
 
 // Vectors of the different types of news.
 std::vector<Headline> Headline::financial_news;
@@ -104,9 +104,12 @@ std::pair<std::string, double> Headline::generateHeadline(const Stock &stock, un
 {
     srand(seed); // Seed the random number generator with the provided seed
 
-    int financial_chance = rand() % 20;
-    int rare_chance = rand() % 300;
-    int funny_chance = rand() % 80;
+    // int financial_chance = rand() % 20;
+    // int rare_chance = rand() % 300;
+    // int funny_chance = rand() % 80;
+    int financial_chance = 0;
+    int rare_chance = rand() % 13;
+    int funny_chance = rand() % 7;
     int tech_chance = (stock.sector == "Technology") ? rand() % 600 : 601; // If not tech, set it to an impossible value
 
     std::vector<Headline> *selected_news = nullptr;
@@ -114,6 +117,7 @@ std::pair<std::string, double> Headline::generateHeadline(const Stock &stock, un
     if (financial_chance == 0)
     {
         selected_news = &financial_news;
+        // std::cout << "lenght of financial news: " << financial_news.size() << std::endl;
     }
     else if (rare_chance == 0)
     {

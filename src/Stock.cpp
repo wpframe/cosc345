@@ -27,6 +27,13 @@
 Stock::Stock(const std::string &symbol, const std::string &name, int outstanding, int ipoYear, const std::string &sector, const std::string &industry)
     : symbol(symbol), name(name), outstanding(outstanding), ipoYear(ipoYear), sector(sector), industry(industry) {}
 
+Stock Stock::updateStockHistory(Stock &selectedStock)
+{
+    selectedStock.parseHistory();
+    selectedStock.predictNextX(2600);
+    return selectedStock;
+}
+
 Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks)
 {
     for (const Stock &stock : stocks)
@@ -207,6 +214,8 @@ void Stock::predictNextX(int numWeeks)
 
     for (int i = 0; i < numWeeks; i++)
     {
+        StockHistory historyPlusHeadline;
+
         std::string nextDate = getNextDate(history.back().date);
         double predictedPrice = slope * (n + i) + intercept;
 
@@ -221,6 +230,21 @@ void Stock::predictNextX(int numWeeks)
         // Ensure the price doesn't go negative
         predictedPrice = std::max(predictedPrice, 0.01);
 
-        history.push_back({nextDate, predictedPrice});
+        historyPlusHeadline.date = nextDate;
+        historyPlusHeadline.closePrice = predictedPrice;
+        historyPlusHeadline.headline = headlineEvent.first;
+        historyPlusHeadline.multiplier = headlineEvent.second;
+
+        if (i == 0)
+        {
+            history[0].date = historyPlusHeadline.date;
+            history[0].closePrice = historyPlusHeadline.closePrice;
+            history[0].headline = historyPlusHeadline.headline;
+            history[0].multiplier = historyPlusHeadline.multiplier;
+        }
+        else
+        {
+            history.push_back(historyPlusHeadline);
+        }
     }
 }

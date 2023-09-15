@@ -12,7 +12,7 @@
 
 body {
   /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
-  font-family: 'Evil', sans-serif;
+  font-family: Arial, sans-serif;
   overflow-x: hidden;
   background-color: #caeebf;
 }
@@ -21,7 +21,7 @@ header {
   background-color: #caeebf;
   border-bottom: 2px solid #2BAE66;
   color: #2BAE66;
-  font-family: 'Evil', sans-serif;
+  font-family: Arial, sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -132,4 +132,10 @@ nav ul li button {
   /* 90vw for 90% of viewport width, subtract 40px for padding */
   margin-right: 0px;
   /* Add a margin for spacing */
+}
+
+.headlineParagraph,
+.multiplier {
+  margin-top: 10px;
+  background-color: #888;
 }

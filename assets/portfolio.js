@@ -77,7 +77,7 @@ function updateInvestmentSummary(totalInvestment, portfolioValue, totalProfit, t
 }
 
 
-function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, currentBalance) {
+function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, headline, multiplier) {
     var tileContainer = document.getElementsByClassName("tiles-container")[0]; // Assuming there's only one container
 
     // Create the main container div
@@ -146,6 +146,16 @@ function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss,
     var profitLossPercentParagraph = document.createElement("p");
     profitLossPercentParagraph.textContent = "Profit/Loss Percentage: " + profitLossPercent + "%"; // Change this to the actual price
     stockTile.appendChild(profitLossPercentParagraph);
+
+    var headlineParagrah = document.createElement("p");
+    headlineParagrah.className = "headlineParagraph";
+    headlineParagrah.textContent = "News this week: " + headline; // Change this to the actual price
+    stockTile.appendChild(headlineParagrah);
+
+    var multiplierParagraph = document.createElement("p");
+    multiplierParagraph.className = "multiplier";
+    multiplierParagraph.textContent = "changed total stock value by: " + multiplier; // Change this to the actual price
+    stockTile.appendChild(multiplierParagraph);
 
 
 
