@@ -235,12 +235,12 @@ void Stock::predictNextX(int numWeeks)
         historyPlusHeadline.headline = headlineEvent.first;
         historyPlusHeadline.multiplier = headlineEvent.second;
 
-        if (i == 0)
+        if (i + 1 < history.size())
         {
-            history[0].date = historyPlusHeadline.date;
-            history[0].closePrice = historyPlusHeadline.closePrice;
-            history[0].headline = historyPlusHeadline.headline;
-            history[0].multiplier = historyPlusHeadline.multiplier;
+            history[i].date = historyPlusHeadline.date;
+            history[i].closePrice = historyPlusHeadline.closePrice;
+            history[i].headline = historyPlusHeadline.headline;
+            history[i].multiplier = historyPlusHeadline.multiplier;
         }
         else
         {

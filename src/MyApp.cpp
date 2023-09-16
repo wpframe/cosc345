@@ -297,7 +297,7 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
     {
       portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
     }
-    portfolio.summarizePortfolio(TIMECOUNT);
+    // portfolio.summarizePortfolio(TIMECOUNT);
   }
   return JSValueMakeNull(ctx);
 }
@@ -330,7 +330,7 @@ JSValueRef commitSale(JSContextRef ctx, JSObjectRef function,
       portfolio.sellPurchase(selectedStock, amountToSell, selectedStock.history[TIMECOUNT].closePrice);
     }
 
-    portfolio.summarizePortfolio(TIMECOUNT);
+    // portfolio.summarizePortfolio(TIMECOUNT);
   }
   return JSValueMakeNull(ctx);
 }

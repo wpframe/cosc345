@@ -11,10 +11,8 @@
 
 <body>
   <section class="hero">
-
     <div class="main-width">
       <header>
-
         <nav>
           <ul>
             <li><button id="home" onclick="goToHome()">Home</button></li>
@@ -25,7 +23,6 @@
             </button>
 
             <p id="dateTime"></p>
-
 
             <div class="ff-dropdown-container">
               <button onclick="fastForwardDropdown()" id="ffDropbtn">
@@ -38,8 +35,6 @@
                 <button type="button" onclick="fastForward(0,0,10)">decade</button>
               </div>
             </div>
-
-
           </ul>
         </nav>
         <div class="totalBalance">
@@ -49,70 +44,57 @@
           <h2>Millionaire Tycoon</h2>
         </div>
 
-
       </header>
 
-      <!-- buy/sell -->
-      <div class="left-container">
-        <div class="dropdown">
-          <button onclick="toggleDropdown();stopTimer();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
-            Stock</button>
-          <div id="myDropdown" class="dropdown-content">
-            <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
-            <!-- <button type="button" onclick="selectStock('AAPL')">AAPL</button>
-            <button type="button" onclick="selectStock('AMZN')">AMZN</button>
-            <button type="button" onclick="selectStock('GOOG')">GOOG</button>
-            <button type="button" onclick="selectStock('AMGN')">AMGN</button>
-            <button type="button" onclick="selectStock('MSFT')">MSFT</button> -->
-          </div>
-        </div>
 
+      <div class="container">
 
-        <div id="buySellContainer">
-
-          <label class="switch">
-            <input type="checkbox" checked onclick="switchBuySell()">
-            <span class="slider round"></span>
-          </label>
-
-          <p id="buySell">Buy</p>
-        </div>
-
-        <div id="currentPrice">$21.15</div>
-
-        <div id="stocksAvailable">11,346</div>
-
-        <label for="quantity">Quantity needed:</label>
-        <input type="number" id="quantity" name="quantity" min="1">
-
-        <div id="totalPrice"></div>
-
-        <div id="commitTransaction">
-          <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
-        </div>
-
-
-
-      </div>
-
-
-
-
-
-      <!-- graph -->
-      <div class="right-container">
-        <div class="graphBox">
-          <div class="graph">
-            <p id="x1">x-axis</p>
-            <p id="y1">y-axis</p>
-            <div>
-              <div id="point..."></div>
-              <div id="line..."></div>
+        <!-- buy/sell -->
+        <div class="left-container">
+          <div class="dropdown">
+            <button onclick="toggleDropdown();stopTimer();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
+              Stock</button>
+            <div id="myDropdown" class="dropdown-content">
+              <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
             </div>
           </div>
-        </div>
-      </div>
 
+
+          <div id="buySellContainer">
+
+            <label class="switch">
+              <input type="checkbox" checked onclick="switchBuySell()">
+              <span class="slider round"></span>
+            </label>
+
+            <p id="buySell">Buy</p>
+          </div>
+
+          <div id="currentPrice">$21.15</div>
+
+          <div id="stocksAvailable">11,346</div>
+
+          <label for="quantity">Quantity needed:</label>
+          <input type="number" id="quantity" name="quantity" min="1">
+
+          <div id="totalPrice"></div>
+
+          <div id="commitTransaction">
+            <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
+          </div>
+
+        </div>
+
+
+
+
+
+        <!-- graph -->
+        <div class="right-container">
+
+        </div>
+
+      </div>
     </div>
   </section>
 

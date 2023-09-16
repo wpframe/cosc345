@@ -147,15 +147,19 @@ function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss,
     profitLossPercentParagraph.textContent = "Profit/Loss Percentage: " + profitLossPercent + "%"; // Change this to the actual price
     stockTile.appendChild(profitLossPercentParagraph);
 
-    var headlineParagrah = document.createElement("p");
-    headlineParagrah.className = "headlineParagraph";
-    headlineParagrah.textContent = "News this week: " + headline; // Change this to the actual price
-    stockTile.appendChild(headlineParagrah);
+    var headlineString = headline.toString();
 
-    var multiplierParagraph = document.createElement("p");
-    multiplierParagraph.className = "multiplier";
-    multiplierParagraph.textContent = "changed total stock value by: " + multiplier; // Change this to the actual price
-    stockTile.appendChild(multiplierParagraph);
+    if (headlineString.length > 2) {
+        var headlineParagrah = document.createElement("p");
+        headlineParagrah.className = "headlineParagraph";
+        headlineParagrah.textContent = "News this week: " + headline; // Change this to the actual price
+        stockTile.appendChild(headlineParagrah);
+
+        var multiplierParagraph = document.createElement("p");
+        multiplierParagraph.className = "multiplier";
+        multiplierParagraph.textContent = "changed total stock value by: " + multiplier; // Change this to the actual price
+        stockTile.appendChild(multiplierParagraph);
+    }
 
 
 

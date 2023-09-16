@@ -102,14 +102,17 @@ void Headline::readFromCSV(const std::string &filename)
 */
 std::pair<std::string, double> Headline::generateHeadline(const Stock &stock, unsigned int seed)
 {
+    seed *= rand();
+    seed /= rand();
+    seed += rand();
     srand(seed); // Seed the random number generator with the provided seed
 
-    // int financial_chance = rand() % 20;
+    int financial_chance = rand() % 2;
+    int rare_chance = rand() % 30;
+    int funny_chance = rand() % 8;
+    // int financial_chance = 20;
     // int rare_chance = rand() % 300;
     // int funny_chance = rand() % 80;
-    int financial_chance = 0;
-    int rare_chance = rand() % 13;
-    int funny_chance = rand() % 7;
     int tech_chance = (stock.sector == "Technology") ? rand() % 600 : 601; // If not tech, set it to an impossible value
 
     std::vector<Headline> *selected_news = nullptr;

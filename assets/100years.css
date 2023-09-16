@@ -92,12 +92,34 @@ nav ul li button:focus {
   border-bottom: 2px solid #2BAE66;
 }
 
+.container {
+  display: flex;
+}
+
+
 /* Container for both the background div and the graph */
-.rightContainer {
-  width: 65%; /* Adjust the width as needed */
-  margin-left: 35%; /* Align the right container */
-  margin-top: 100px;
-  position: relative;
+.right-container {
+  box-sizing: border-box;
+  width: 62%; /* Adjust the width as needed */
+  height: 70%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  position: absolute;
+  top: 110px;
+  right: 40px;
+}
+
+.left-container {
+  box-sizing: border-box;
+  width: 28%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  position: absolute;
+  top: 110px;
+  left: 40px;
 }
 
 /* Styles for the background div */
@@ -263,18 +285,6 @@ nav ul li button:focus {
   display: flex;
 }
 
-
-/* Left container or buy/sell box  */
-
-.left-container {
-  background-color: #f0f0f0;
-  width: 25%; /* Adjust the width as needed */
-  padding: 20px;
-  border-radius: 10px;
-  position: absolute;
-  top: 110px;
-  left: 40px;
-}
 
 #buySellContainer button,
 #commitTransaction button {
