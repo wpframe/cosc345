@@ -5,31 +5,51 @@
   <meta charset="utf-8">
   <title>Millionaire Tycoon</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="homepage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
 </head>
 
-<body>
-  <section class="hero">
-    <div class="main-width">
-      <header>
-        <div class="game-name">
-          <h2>Millionaire Tycoon </h2>
-        </div>
-        <nav>
-          <ul>
-            <li><button id="infinite" onclick="startTimer();stopTimer();goToInfinite()">Infinite - Currently Unavailable</button></li>
-            <li><button id="100years" onclick="startTimer();stopTimer();goTo100Years()">100 Years</button></li>
-            <li><button id="speedrun">Millionaire Speedrun - Currently Unavailable</button></li>
-            <li><button id="leaderboard">Leaderboards - Currently Unavailable</button></li>
-            <li class="help"><button id="help" onclick="showHowToPlay()">How to Play</button></li>
-          </ul>
-        </nav>
-      </header>
-    </div>
-  </section>
 
-  <!-- Custom Modal -->
+<body>
+  <header>
+    <h1>Millionaire Tycoon </h1>
+    <div id="button-container">
+      <button id="help" onclick="showHowToPlay()">How to Play</button>
+      <button id="leaderboard">Leaderboards - Currently Unavailable</button>
+    </div>
+
+
+  </header>
+
+
+  <menu>
+    <div id="stock-text">
+      <h2>Stock Market Simulator</h2>
+    </div>
+
+    <div id="start-button">
+      <button id="hundyyears" onclick="startTimer();stopTimer();goTo100Years()">Start Trading Now!</button>
+    </div>
+
+    <!-- <nav>
+      <ul> -->
+
+    <!-- <li><button id="infinite" onclick="startTimer();stopTimer();goToInfinite()">Infinite - Currently
+            Unavailable</button></li>
+        <li><button id="speedrun">Millionaire Speedrun - Currently Unavailable</button></li> -->
+
+    <!-- </ul>
+    </nav> -->
+  </menu>
+
+  <main>
+    <img id="arrows" src="—Pngtree—blue gradient financial arrow_6489125.png" alt="Image Description">
+  </main>
+
+
+
   <div class="modal" id="howToPlayModal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">&times;</span>
@@ -93,7 +113,7 @@
     </div>
   </div>
 
-  <script src="homepage.js" ></script>
+  <script src="homepage.js"></script>
 </body>
 
 </html>
