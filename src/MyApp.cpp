@@ -560,19 +560,17 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
       float totalProfit = portfolioValue - totalInvestment;
       float totalProfitPercentage = (totalProfit / totalInvestment) * 100;
+      totalInvestment += purchase.getPurchaseValue();
+      portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
 
       std::string holdingTypeStr;
       PositionType type = purchase.getPositionType();
       if (type == PositionType::Short)
       {
-        totalInvestment += purchase.getPurchaseValue();
-        portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
         holdingTypeStr = "Short";
       }
       else
       {
-        totalInvestment += purchase.getPurchaseValue();
-        portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
         holdingTypeStr = "Long";
       }
 
