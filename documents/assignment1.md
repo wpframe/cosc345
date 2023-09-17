@@ -57,83 +57,83 @@ To ensure we meet our assignment timeline, we have devised a PERT chart outlinin
 
 ### Functional requirements
 
-- Stock Market Trading
+  - Stock Market Trading
 
 Players must be able to buy and sell stocks to make profit.
 
-- Real Estate Trading
+  - Real Estate Trading
 
 Players must be able to buy, sell, and rent out properties in order to make profit.
 
-- Job and Education Simulation
+  - Job and Education Simulation
 
 Players must be able to choose an education and job to make some extra money alongside their investments.
 
-- Updating Leaderboard
+  - Updating Leaderboard
 
 The online leaderboard should be updated with users showing the highest growth.
 
-- Economic Simulation with news headlines
+  - Economic Simulation with news headlines
 
 The game must simulate an economy with news headlines ingame that impact stock prices or different parts of the economy.
 
-- Portfolio Management
+  - Portfolio Management
 
 Players must be able to manage their portfolio, being able to easily buy and sell stocks at any available quantity.
 
-- Real time data updating
+  - Real time data updating
 
 Players of the real world mode must be able to receive real updated stock data daily.
 
 ### Non-functional requirements
 
-- Fun
+  - Fun
 
 The game must be engaging and satisfying to keep players interested.
 
-- Intuitive UI
+  - Intuitive UI
 
 The user interface must be easily understandable, allowing players with no knowledge of the stock market can pick it up with ease. The UI should not be cluttered and should display only the required information to the user.
 
-- Less than 2 second load time for each year of data
+  - Less than 2 second load time for each year of data
 
 The software and data processing/collection must be optimized to ensure smooth gameplay without interruptions, aiming for a load time of less than 2 seconds for each year of data
 
-- C++ program
+  - C++ program
 
 The packaged application must be implemented in C++ in accordance with the project requirements.
 
-- Must compile with most C++ compilers
+  - Must compile with most C++ compilers
 
 Our program must be built with standard and widely supported C++ libraries, so it will compile on as many compilers as possible (such as GCC and Clang).
 
-- Server uptime for the leaderboard
+  - Server uptime for the leaderboard
 
 The leaderboard should have high availability to provide consistent access to players. 
 
-- Ultralight for GUI
+  - Ultralight for GUI
 
 We decided on using Ultralight for our GUI rendering. Ultralight is a lightweight UI toolkit making use of HTML and CSS, which are familiar languages for our team.
 
 ### General constraints (as per the assignment):
 
-- No multithreading
+  - No multithreading
 
 As per the requirements we aren't allowed to use multithreading on the CPU.
 
-- GUI must be simple to prevent it taking up too much of our time
+  - GUI must be simple to prevent it taking up too much of our time
 
 Using HTML and CSS should significantly reduce the amount of time required to build the GUI, however we still need to keep simplicity in mind as to not add to the amount of time required for development.
 
-- Testing (GTest looks pretty good?)
+  - Testing (GTest looks pretty good?)
 
 While we are still deciding on the specific testing tools to use, GTest seems to be a popular option.
 
-- CI/CD (unsure)
+  - CI/CD (unsure)
 
 We will have to ask for clarification on what is required for CI/CD. We plan to set up automated build actions and testing for each commit.
 
-- Documentation (Doxygen)
+  - Documentation (Doxygen)
 
 As per the suggestion in the assignment requirements we will use Doxygen for documentation. 
 

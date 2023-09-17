@@ -1,16 +1,30 @@
+/**
+ * Redirect to homepage
+ */
 function goToHome() {
     window.location.href = "homepage.html";
 }
 
+/**
+ * Redirect to portfolio
+ */
 function goToPortfolio() {
     window.location.href = "portfolio.html";
 }
 
+/**
+ * Displays current price of selected stock
+ * @param {number} currentPrice 
+ * @param {*} stocksAvailable 
+ */
 function showStockInfo(currentPrice, stocksAvailable) {
     document.getElementById("currentPrice").textContent = currentPrice;
     // document.getElementById("stocksAvailable").textContent = stocksAvailable;
 }
 
+/**
+ * Switches the text shown next to the long/short slider
+ */
 function switchBuySell() {
     var button = document.getElementById("buySell");
     if (button.innerHTML === "Long") {
@@ -24,6 +38,10 @@ function switchBuySell() {
     }
 }
 
+/**
+ * Calculates the total price of the number of shares selected
+ * @returns break out of function
+ */
 function updateTotalPrice() {
     var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(18));
     var quantity = parseInt(document.getElementById("quantity").value, 10);
@@ -55,7 +73,7 @@ window.addEventListener("click", function (event) {
  * Filters a list of items based on a search input.
  */
 function filterFunction() {
-    var input, filter, a, i;
+    var input, filter, div, i;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     div = document.getElementById("myDropdown");
@@ -71,6 +89,10 @@ function filterFunction() {
     }
 }
 
+/**
+ * Shows the users balance
+ * @param {number} totalBalance 
+ */
 function initBalance(totalBalance) {
     var balanceContainer = document.getElementsByClassName("totalBalance")[0];
     var balanceParagraph = document.createElement("h");
@@ -78,7 +100,9 @@ function initBalance(totalBalance) {
     balanceContainer.appendChild(balanceParagraph);
 }
 
-// Toggle dropdown display
+/**
+ * Toggles the dropdown display
+ */
 function toggleDropdown() {
     var dropdown = document.getElementById("myDropdown");
     var dropbtn = document.getElementById("dropbtn");
@@ -86,6 +110,10 @@ function toggleDropdown() {
     dropbtn.style.display = (dropdown.style.display === "none") ? "none" : "block";
 }
 
+/**
+ * Adds a stock to the dropdown menu
+ * @param {string} ticker 
+ */
 function addStockDropdown(ticker) {
     var dropdown = document.getElementById("myDropdown");
     var newButton = document.createElement("button");
@@ -98,11 +126,19 @@ function addStockDropdown(ticker) {
     dropdown.appendChild(newButton);
 }
 
+/**
+ * Sets the content of the button to the stock symbol
+ * @param {string} ticker
+ */
 function selectStock(ticker) {
     var dropbtn = document.getElementById("dropbtn");
     dropbtn.textContent = ticker;
 }
 
+/**
+ * displays the current date
+ * @param {string} newDate 
+ */
 function showDate(newDate) {
     var dateElement = document.getElementById("dateTime");
     dateElement.innerHTML = newDate;
@@ -128,6 +164,9 @@ playPauseButton.addEventListener("click", function switchPlayPause() {
     }
 });
 
+/**
+ * Swaps between play and pause icon when clicked
+ */
 function swapPlayAndPause() {
     if (iconElement.className == "fas fa-play") {
         iconElement.className = "fas fa-pause";
@@ -136,7 +175,9 @@ function swapPlayAndPause() {
     }
 }
 
-
+/**
+ * Calls commitPurchase with parameters from the buySell box
+ */
 function commitPurchaseJS() {
     var symbol = document.getElementById('dropbtn').textContent;
     var buyOrSell = document.getElementById('buySell').innerText;

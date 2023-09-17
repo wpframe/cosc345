@@ -60,7 +60,7 @@ window.addEventListener("click", function (event) {
 });
 
 function filterFunction() {
-    var input, filter, a, i;
+    var input, filter, div, i;
     input = document.getElementById("myInput");
     filter = input.value.toUpperCase();
     div = document.getElementById("myDropdown");
