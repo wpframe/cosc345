@@ -12,6 +12,7 @@
 #include <iostream>
 #include <ctime>
 #include <string>
+#include <cmath>
 
 /*!
     @brief The constructor for the Stock class.
@@ -238,7 +239,7 @@ void Stock::predictNextX(int numWeeks)
         // Simulating stock volatility using geometric Brownian motion model.
         double volatility = 0.05; // Assume 5% volatility for illustration. You can adjust this.
         double drift = 0.005;     // General trend (up or down). Adjust based on historical performance.
-        double randomFactor = exp(drift + volatility * (std::rand() % 1000 / 1000.0 - 0.5));
+        double randomFactor = std::exp(drift + volatility * (std::rand() % 1000 / 1000.0 - 0.5));
 
         predictedPrice *= randomFactor;
 
