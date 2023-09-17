@@ -475,6 +475,11 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   caller->EvaluateScript("initBalance('" + totalBalance + "')");
   caller->EvaluateScript("addInvestmentSummary('" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "')");
 
+  std::string prefix = PathUtil::findPathFromApp();
+  std::string filepath = prefix + "src/data/graph/data.csv";
+  ultralight::String filepathStr = filepath.c_str();
+  caller->EvaluateScript("getFilePath('" + filepathStr + "')");
+
   if (startLoadingPortfolio == 1)
   {
     float totalInvestment = 0.0;

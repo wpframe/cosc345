@@ -1,0 +1,106 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>100 Years</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="100years.css">
+
+</head>
+
+<body>
+  <section class="hero">
+    <div class="main-width">
+      <header>
+        <nav>
+          <ul>
+            <li><button id="home" onclick="goToHome()">Home</button></li>
+            <li><button id="portfolio" onclick="goToPortfolio();stopTimer();loadPortfolio()">Portfolio</a></li>
+
+            <button id="playPauseButton" onclick="switchPlayPause()">
+              <i class="fa-solid fa-play style=" color: #2bae66;"></i>
+            </button>
+
+            <p id="dateTime"></p>
+
+            <div class="ff-dropdown-container">
+              <button onclick="fastForwardDropdown()" id="ffDropbtn">
+                <i class="fa-solid fa-forward" style="color: #2bae66;"></i>
+              </button>
+              <div id="ff-dropdown-content" class="ff-dropdown-content">
+                <button type="button" onclick="fastForward(1,0,0)">week</button>
+                <button type="button" onclick="fastForward(0,1,0)">month</button>
+                <button type="button" onclick="fastForward(0,0,1)">year</button>
+                <button type="button" onclick="fastForward(0,0,10)">decade</button>
+              </div>
+            </div>
+          </ul>
+        </nav>
+        <div class="totalBalance">
+
+        </div>
+        <div class="game-name">
+          <h2>Millionaire Tycoon</h2>
+        </div>
+
+      </header>
+
+
+      <div class="container">
+
+        <!-- buy/sell -->
+        <div class="left-container">
+          <div class="dropdown">
+            <button onclick="toggleDropdown();stopTimer();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
+              Stock</button>
+            <div id="myDropdown" class="dropdown-content">
+              <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+            </div>
+          </div>
+
+
+          <div id="buySellContainer">
+
+            <label class="switch">
+              <input type="checkbox" checked onclick="switchBuySell()">
+              <span class="slider round"></span>
+            </label>
+
+            <p id="buySell">Long</p>
+          </div>
+
+          <div id="currentPrice">$21.15</div>
+
+          <div id="stocksAvailable">11,346</div>
+
+          <label for="quantity">Quantity needed:</label>
+          <input type="number" id="quantity" name="quantity" min="1">
+
+          <div id="totalPrice"></div>
+
+          <div id="commitTransaction">
+            <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
+          </div>
+
+        </div>
+
+
+
+
+
+        <!-- graph -->
+        <div class="right-container" id="container">
+         
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="100years.js"></script>
+  <script src="https://kit.fontawesome.com/0fff93c7e8.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
