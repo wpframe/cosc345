@@ -20,12 +20,6 @@ void Portfolio::addPurchase(Purchase purchase, PositionType holdType)
     Purchase *existingPurchase = getPurchase(purchase.getStockSymbol(), holdType);
     float totalCost = purchase.calculateTotalCost();
 
-    // Check if adding the purchase will result in a negative total balance
-    // if (totalBalance - totalCost < 0)
-    // {
-    //     std::cout << "Cannot add purchase. Insufficient funds." << std::endl;
-    //     return; // Exit the function without adding the purchase
-    // }
     if (existingPurchase)
     {
         int newQuant = existingPurchase->getQuantity() + purchase.getQuantity();
@@ -70,7 +64,7 @@ void Portfolio::addPurchase(Purchase purchase, PositionType holdType)
     @param purchasePrice The purchase price of the stock.
     @param calendar The calendar to use for the purchase timestamp.
 */
-void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, std::string purchaseType)
+void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, const std::string purchaseType)
 {
     PositionType type;
     if (purchaseType == "Short")
@@ -158,10 +152,15 @@ void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, flo
     }
 }
 
+/*!
+    @brief Getter for total balance of player.
+    @return A float, the total balance.
+*/
 float Portfolio::getTotalBalance() const
 {
     return totalBalance;
 }
+
 /*!
     @brief Prints the portfolio to stdout.
 */

@@ -103,20 +103,6 @@ MyApp::MyApp()
   std::string prefix = PathUtil::findPathFromApp();
   std::string filename2 = prefix + "src/data/headlines.csv";
   Headline::readFromCSV(filename2);
-  // if (!stocks.empty())
-  // {
-  //   // for (int i = 0; i < static_cast<int>(stocks.size()); ++i) // FOR LOOP FOR ALL STOCKS
-  //   for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i) // FOR LOOP FOR FIRST 100
-  //   {
-  //     const Stock &stock = stocks[i];
-  //     stocks[i].parseHistory();
-  //     stocks[i].predictNextX(2600);
-  //   }
-  // }
-  // else
-  // {
-  //   std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
-  // }
 }
 
 MyApp::~MyApp()
@@ -219,7 +205,7 @@ std::string JSStringToStdString(JSStringRef jsString)
   @param ctx Javascript context
   @param function Object reference
   @param thisObject Object reference
-  @param argumentCount number of arguments which
+  @param argumentCount number of arguments which are passed in from javascript
   @param arguments list of arguments
   @param exception value reference
 **/
@@ -234,6 +220,16 @@ JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief stopTimer is a function which stops the in-game calendar
+  @details stopTimer is a function which is called from javascript, and will perform cpp operations.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+**/
 JSValueRef stopTimer(JSContextRef ctx, JSObjectRef function,
                      JSObjectRef thisObject, size_t argumentCount,
                      const JSValueRef arguments[], JSValueRef *exception)
@@ -245,6 +241,20 @@ JSValueRef stopTimer(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief fastForward is a function which fast forwards the in-game calendar
+  @details fastForward is a function which is called from javascript, and will perform cpp operations to
+  fast forward the game time by given amount of time.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+  @param years (arguments[0]), number of years to skip
+  @param months (arguments[1]), number of months to skip
+  @param days (arguments[2]), number of days to skip
+**/
 JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
                        JSObjectRef thisObject, size_t argumentCount,
                        const JSValueRef arguments[], JSValueRef *exception)
@@ -260,6 +270,19 @@ JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief commitPurchase is a function which commits a purchase and adds that purchase to the portfolio.
+  @details checks if the user has enough money, then adds the purchase to portfolio if so.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+  @param jsSymbol (arguments[0]), the stocks ticker symbol
+  @param jsBuyOrSell (arguments[1]), whether the purchase is long or short
+  @param quantity (arguments[2]), the quantity being purchased
+**/
 JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
                           JSObjectRef thisObject, size_t argumentCount,
                           const JSValueRef arguments[], JSValueRef *exception)
@@ -287,12 +310,6 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
 
     const auto &history = selectedStock.history;
 
-    // if (TOTALBALANCE - selectedStock.history[TIMECOUNT].closePrice * quantity < 0)
-    // {
-    //   return JSValueMakeNull(ctx);
-
-    // }
-
     if (quantity > 0 && portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity >= 0)
     {
       portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar, buyOrSell);
@@ -302,11 +319,25 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief commitSale is a function which commits a sale and removes that purchase from the portfolio.
+  @details checks whether the purchase is a long or a short, then sells that purchase.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+  @param jsHoldingType (arguments[0]), whether the purchase is a long or a short
+  @param jsSymbol (arguments[1]), the stocks ticker symbol
+  @param amountToSell (arguments[2]), the quantity of stock being sold
+  @param quantity (arguments[3]), the quantity of stock currently owned
+**/
 JSValueRef commitSale(JSContextRef ctx, JSObjectRef function,
                       JSObjectRef thisObject, size_t argumentCount,
                       const JSValueRef arguments[], JSValueRef *exception)
 {
-  if (argumentCount >= 3)
+  if (argumentCount >= 4)
   {
 
     JSStringRef jsHoldingType = JSValueToStringCopy(ctx, arguments[0], nullptr);
@@ -348,6 +379,17 @@ JSValueRef commitSale(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief cppSelectStock is a function which loads the selected stock.
+  @details predicts the future stock prices for the selected stock, and displays the price per stock on the screen.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+  @param jsSymbol (arguments[0]), the stocks ticker symbol
+**/
 JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
                           JSObjectRef thisObject, size_t argumentCount,
                           const JSValueRef arguments[], JSValueRef *exception)
@@ -361,7 +403,6 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
     JSStringRelease(jsSymbol);
 
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
-    // Stock selectedStock = stocks[10];
 
     for (size_t i = 0; i < stocks.size(); ++i)
     {
@@ -394,6 +435,16 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief loadPortfolio is a function which sets a boolean to true.
+  @details sets the boolean to true so that in the OnDOMReady function, the portfolio can be filled with purchases.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+**/
 JSValueRef loadPortfolio(JSContextRef ctx, JSObjectRef function,
                          JSObjectRef thisObject, size_t argumentCount,
                          const JSValueRef arguments[], JSValueRef *exception)
@@ -402,17 +453,31 @@ JSValueRef loadPortfolio(JSContextRef ctx, JSObjectRef function,
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief toggleDropdown is a function which stops the calendar from counting when the dropdown is selected.
+  @details stops the calendar so that stock prices arent continuosly changing when trying to purchase a stock.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+**/
 JSValueRef toggleDropdown(JSContextRef ctx, JSObjectRef function,
                           JSObjectRef thisObject, size_t argumentCount,
                           const JSValueRef arguments[], JSValueRef *exception)
 {
-  ///
-  /// startTimer is a javascript function, when called will perform the following c++ operations
-  ///
   calendar.pauseCounting();
   return JSValueMakeNull(ctx);
 }
 
+/*!
+  @brief function which is called every time a new page is loaded onto the screen.
+  @param caller instance of view
+  @param frame_id the frame id
+  @param is_main_frame bool which checks if current frame is the main frame.
+  @param url the url of the page
+**/
 void MyApp::OnDOMReady(ultralight::View *caller,
                        uint64_t frame_id,
                        bool is_main_frame,
@@ -531,10 +596,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
       caller->EvaluateScript("updateInvestmentSummary('" + totalInvestmentStr + "', '" + portfolioValueStr + "', '" + totalProfitStr + "', '" + totalProfitPercentageStr + "')");
     }
-
-    // ultralight::String script = jsScript.c_str();
-
-    // startLoadingPortfolio = false;
   }
 
   if (!stocks.empty())

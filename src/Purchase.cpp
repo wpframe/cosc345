@@ -22,11 +22,20 @@ Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string
 {
 }
 
+/*!
+    @brief Accessor for the hold type of the purchase
+    @return holdType.
+*/
 PositionType Purchase::getPositionType() const
 {
     return holdType;
 }
 
+/*!
+    @brief Calculates current value of stocks owned for given purchase.
+    @param currentPrice the current price of the stock.
+    @return The value of a number of a given stock.
+*/
 float Purchase::getCurrentPurchaseValue(float currentPrice) const
 {
     float currentValue = 0.0;
@@ -42,12 +51,22 @@ float Purchase::getCurrentPurchaseValue(float currentPrice) const
     return currentValue;
 }
 
+/*!
+    @brief Calculates the total value of the purchase for when the purchase was made.
+    @return The value of the purchase.
+*/
 float Purchase::getPurchaseValue() const
 {
     float purchaseValue = getQuantity() * getPurchasePrice();
     return purchaseValue;
 }
 
+/*!
+    @brief Calculates profit or loss.
+    @details calculates profit or loss after checking whether the position type is a long or short.
+    @param currentPrice the current price of the stock.
+    @return The profit or loss at current time.
+*/
 float Purchase::getProfitLoss(float currentPrice) const
 {
     float profitLoss = 0.0;
@@ -65,6 +84,11 @@ float Purchase::getProfitLoss(float currentPrice) const
     return profitLoss;
 }
 
+/*!
+    @brief gets the percentage gained or lost based on profit and loss.
+    @param currentPrice the current price of the stock.
+    @return profit/loss as a percentage.
+*/
 float Purchase::getProfitLossPercentage(float currentPrice) const
 {
     float profitLossPercentage = getProfitLoss(currentPrice) / getPurchaseValue();
