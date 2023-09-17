@@ -87,7 +87,7 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity, profi
     var sellButton = document.createElement('button');
     sellButton.type = "button";
     sellButton.innerText = 'Sell';
-
+    sellButton.className = 'sell-button';
     // Add data attributes to store stock information
     sellButton.setAttribute("data-type", type);
     sellButton.setAttribute("data-symbol", symbol);
@@ -181,7 +181,13 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     // Populate the modal with stock information
     var modalContent = sellTileModal.querySelector(".modal-content");
     modalContent.innerHTML = ""; // Clear existing content
-
+    var closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "close"
+    closeButton.innerText = 'Close';
+    closeButton.addEventListener('click', function () {
+        document.getElementById("sellTileModal").style.display = "none";
+    });
     // Create and add stock information to the modal
     var typeParagraph = document.createElement("p");
     typeParagraph.textContent = "holding type: " + type;
@@ -213,6 +219,8 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     sellButton.type = "button";
     sellButton.innerText = 'Sell';
 
+
+
     // Add data attributes to store stock information
     sellButton.setAttribute("data-type", type);
     sellButton.setAttribute("data-symbol", symbol);
@@ -238,6 +246,7 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     });
 
     modalContent.appendChild(sellButton);
+    modalContent.appendChild(closeButton);
 }
 
 
