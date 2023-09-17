@@ -25,10 +25,12 @@ int PortfolioTester::testAddPurchase()
     Calendar calendar;
     Portfolio portfolio(100000);
     Stock testStock("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
+    PositionType holdingType = PositionType::Long;
+    std::string holdingTypeStr = "Long";
 
-    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar, holdingTypeStr);
 
-    Purchase *purchase = portfolio.getPurchase("AAPL");
+    Purchase *purchase = portfolio.getPurchase("AAPL", holdingType);
 
     purchase->printPurchaseDetails();
     std::cout << "Total Cost of Purchase: " << purchase->getQuantity() << " * " << purchase->getPurchasePrice() << " = " << purchase->getQuantity() * purchase->getPurchasePrice() << std::endl;
@@ -50,7 +52,8 @@ int PortfolioTester::testAddPurchase()
 /**
  * @brief Test stock functionality.
  */
-int PortfolioTester::testStock(){
+int PortfolioTester::testStock()
+{
     std::string ticker = "AAPL";
     std::string name = "Apple Inc.";
     int marketCap = 1000000000;
@@ -60,50 +63,64 @@ int PortfolioTester::testStock(){
     Stock x = Stock(ticker, name, marketCap, yearFounded, sector, industry);
     std::cout << "TESTING STOCK FUNCTIONALITY" << std::endl;
     bool flag = false;
-    try{
+    try
+    {
         x.parseHistory();
-    }catch (const std::exception& e){
+    }
+    catch (const std::exception &e)
+    {
         flag = true;
     }
-    if(x.getName() != name){
+    if (x.getName() != name)
+    {
         flag = true;
     }
-    if(x.getSymbol() != ticker){
+    if (x.getSymbol() != ticker)
+    {
         flag = true;
     }
 
-    if(flag == false){
+    if (flag == false)
+    {
         std::cout << "Test Passed: Stock was correctly created." << std::endl;
         std::cout << "#######################################################" << std::endl;
         return 0;
-    }else{
+    }
+    else
+    {
         std::cout << "Test Failed" << std::endl;
         std::cout << "#######################################################" << std::endl;
         return 1;
     }
-    
-    
 }
 
 /**
  * @brief Test headline functionality.
  */
-int PortfolioTester::testHeadline(){
-    try{
+int PortfolioTester::testHeadline()
+{
+    try
+    {
         Headline::readFromCSV("data/headlines.csv");
-    }catch (const std::exception& e){
+    }
+    catch (const std::exception &e)
+    {
         std::cout << "Reading from CSV Failed" << std::endl;
         std::cout << "#######################################################" << std::endl;
         return 1;
     }
-    
-    try{
+
+    try
+    {
         Stock x = Stock("AAPL", "Apple Inc.", 1000000000, 1980, "Technology", "Consumer Electronics");
         int seed = 112513251;
-        for(int i = 0; i < 52; i++){
+        for (int i = 0; i < 52; i++)
+        {
             Headline::generateHeadline(x, seed++);
         }
-    }catch (const std::exception& e){
+    }
+    catch (const std::exception &e)
+    {
         std::cout << "Generating Headline Failed" << std::endl;
         std::cout << "#######################################################" << std::endl;
         return 1;
@@ -112,10 +129,7 @@ int PortfolioTester::testHeadline(){
     std::cout << "Test Passed: Headlines were correctly generated." << std::endl;
     std::cout << "#######################################################" << std::endl;
     return 0;
-
-
 }
-
 
 /**
  * @brief Test the functionality of adding purchases of the same stock to the portfolio.
@@ -125,13 +139,15 @@ int PortfolioTester::testAddPurchaseFunctionality()
     std::cout << "TESTING ADDING PURCHASE OF SAME STOCK FUNCTIONALITY" << std::endl;
     Calendar calendar;
     Portfolio portfolio(100000);
+    PositionType holdingType = PositionType::Long;
+    std::string holdingTypeStr = "Long";
 
     Stock testStock("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
 
-    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar);
-    portfolio.addPurchaseToPortfolio(portfolio, testStock, 5, 160.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 5, 160.0, calendar, holdingTypeStr);
 
-    Purchase *addedPurchase = portfolio.getPurchase("AAPL");
+    Purchase *addedPurchase = portfolio.getPurchase("AAPL", holdingType);
 
     if (addedPurchase)
     {
@@ -177,12 +193,14 @@ int PortfolioTester::testGetTotalBalance()
     std::cout << "TESTING TOTAL BALANCE FUNCTIONALITY" << std::endl;
     Calendar calendar;
     Portfolio portfolio(100000);
+    PositionType holdingType = PositionType::Long;
+    std::string holdingTypeStr = "Long";
     std::cout << "Starting Total Balance: " << portfolio.getTotalBalance() << std::endl;
     Stock testStock("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
-    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar);
-    portfolio.addPurchaseToPortfolio(portfolio, testStock, 5, 160.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 5, 160.0, calendar, holdingTypeStr);
 
-    Purchase *purchase = portfolio.getPurchase("AAPL");
+    Purchase *purchase = portfolio.getPurchase("AAPL", holdingType);
 
     float totalPurchaseCost = purchase->calculateTotalCost();
 
@@ -215,6 +233,8 @@ int PortfolioTester::testAddMultiplePurchases()
     std::cout << "TESTING ADDING MULTIPLE PURCHASES FUNCTIONALITY" << std::endl;
     Calendar calendar;
     Portfolio portfolio(1000000);
+    PositionType holdingType = PositionType::Long;
+    std::string holdingTypeStr = "Long";
 
     Stock stock1("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
     Stock stock2("GOOGL", "Alphabet Inc.", 1500000, 1998, "Technology", "Internet Services");
@@ -222,11 +242,11 @@ int PortfolioTester::testAddMultiplePurchases()
     Stock stock4("AMZN", "Amazon.com Inc.", 1800000, 1994, "Retail", "E-Commerce");
     Stock stock5("TSLA", "Tesla Inc.", 900000, 2003, "Automotive", "Electric Vehicles");
 
-    portfolio.addPurchaseToPortfolio(portfolio, stock1, 10, 150.0, calendar);
-    portfolio.addPurchaseToPortfolio(portfolio, stock2, 20, 250.0, calendar);
-    portfolio.addPurchaseToPortfolio(portfolio, stock3, 5, 300.0, calendar);
-    portfolio.addPurchaseToPortfolio(portfolio, stock4, 15, 1800.0, calendar);
-    portfolio.addPurchaseToPortfolio(portfolio, stock5, 8, 650.0, calendar);
+    portfolio.addPurchaseToPortfolio(portfolio, stock1, 10, 150.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, stock2, 20, 250.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, stock3, 5, 300.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, stock4, 15, 1800.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, stock5, 8, 650.0, calendar, holdingTypeStr);
 
     bool allPurchasesAddedCorrectly = true;
     for (const Purchase &purchase : portfolio.getPurchases())
@@ -265,10 +285,12 @@ void PortfolioTester::runAllTests()
     failedCount += testAddMultiplePurchases();
     failedCount += testStock();
     failedCount += testHeadline();
-    if(failedCount == 0){
+    if (failedCount == 0)
+    {
         std::cout << "All Tests Passed!" << std::endl;
-    }else{
+    }
+    else
+    {
         std::cout << failedCount << " Tests Failed!" << std::endl;
     }
-    
 }
