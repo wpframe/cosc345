@@ -1,60 +1,95 @@
-@font-face {
-  font-family: Evil;
-  src: url(fonts/EvilEmpire-4BBVK.ttf);
-}
-
-* {
-  padding: 0;
-  margin: 0;
+tml,
+body {
+  overflow: hidden;
 }
 
 body {
-  /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
-  font-family: 'Evil', sans-serif;
-  overflow-x: hidden;
-}
-
-.main-width {
-  width: 1400px;
-  max-width: 95%;
-  margin: 0 auto;
-}
-
-.hero {
-  height: 100%;
-  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  display: grid;
+  grid-template-rows: 70px 1fr 100px;
+  grid-template-columns: 1fr 1fr;
   min-height: 100vh;
-  /* background: radial-gradient(#f0b57a, 20%, #703709); */
-  background: #caeebf;
-  position: relative;
+  margin: 0;
+  /* Remove margin */
+  padding: 0;
+  /* Remove padding */
+
+  background: #446ef8;
+
 }
 
-.hero header .game-name h2 {
-  display: block;
-  font-size: 3.5vw;
-  transform: scale(.7, 1);
-  text-decoration: none;
-  color: #2BAE66;
-  letter-spacing: 5px;
-  position: relative;
-  top: 11px;
-  margin-bottom: 20px;
-}
+header {
 
-.hero header {
+  width: 100%;
+  /* Ensure full width */
   display: flex;
   justify-content: space-between;
+  background: white;
+  /* Align items to the left and right */
   align-items: center;
-  /* Center elements horizontally */
-  border-bottom: 2px solid #2BAE66;
-  /* Add the border */
-
-  /* Add some padding to the bottom of the header */
+  /* Center vertically */
+  text-align: center;
+  padding: 0 20px;
+  /* Add horizontal padding to the header */
+  grid-column: span 2;
 }
 
-nav ul {
-  list-style: none;
+header h1 {
+  /* font-family: 'Orbitron', sans-serif; */
+  /* font-size: 58px; */
+  /* Your h1 styles remain the same */
+  /* position: absolute; */
+  left: 50%;
+  color: #040568;
+
+}
+
+#button-container {
   display: flex;
+  flex-direction: row;
+  /* Arrange buttons vertically */
+}
+
+/* Style the buttons */
+#portfolio {
+  display: block;
+  width: auto;
+  /* Let the button size adjust to content */
+  padding: 10px 20px;
+  /* Reduce padding to make the buttons smaller */
+  background-color: #040568;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  /* Increase border-radius for rounded edges */
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 50px;
+  margin-right: 30px;
+}
+
+#home {
+  display: block;
+  width: auto;
+  /* Let the button size adjust to content */
+  padding: 10px 20px;
+  /* Reduce padding to make the buttons smaller */
+  background-color: #040568;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  /* Increase border-radius for rounded edges */
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 50px;
+}
+
+/* Hover effect for buttons */
+#home:hover,
+#portfolio:hover {
+  background-color: #0e12db;
 }
 
 button {
@@ -89,7 +124,7 @@ nav ul li:not(:last-child) {
 
 nav ul li button:hover,
 nav ul li button:focus {
-  border-bottom: 2px solid #2BAE66;
+  border-bottom: 2px solid #040568;
 }
 
 .container {
@@ -100,7 +135,8 @@ nav ul li button:focus {
 /* Container for both the background div and the graph */
 .right-container {
   box-sizing: border-box;
-  width: 62%; /* Adjust the width as needed */
+  width: 62%;
+  /* Adjust the width as needed */
   height: 70%;
   background-color: #f0f0f0;
   padding: 20px;
@@ -162,23 +198,26 @@ nav ul li button:focus {
 }
 
 
-#x1, #y1 {
+#x1,
+#y1 {
   position: absolute;
   font-size: larger;
-  }
+}
+
 #x1 {
   bottom: -40px;
   left: 330px;
 }
-#y1{
+
+#y1 {
   left: -60px;
   bottom: 175px;
-  }
+}
 
 
-  /* Dropdown Button */
+/* Dropdown Button */
 .dropbtn {
-  background-color: #04AA6D;
+  background-color: #040568;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -202,16 +241,21 @@ nav ul li button:focus {
   border: none;
   border-bottom: 1px solid #ddd;
 
-  height: 50px; /* Adjust the height as needed */
-  
+  height: 50px;
+  /* Adjust the height as needed */
+
   /* Set the input to stay at the top */
-  position: fixed; /* or position: fixed; */
+  position: fixed;
+  /* or position: fixed; */
   top: 130px;
-  z-index: 2; /* Make sure it's above the dropdown content */
+  z-index: 2;
+  /* Make sure it's above the dropdown content */
 }
 
 /* The search field when it gets focus/clicked on */
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {
+  outline: 3px solid #ddd;
+}
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -228,7 +272,8 @@ nav ul li button:focus {
   border: 1px solid #ddd;
   z-index: 1;
 
-  max-height: 300px; /* Adjust the height as needed */
+  max-height: 300px;
+  /* Adjust the height as needed */
   overflow-y: auto;
 }
 
@@ -238,16 +283,22 @@ nav ul li button:focus {
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  border: none; /* Remove any border on the buttons */
-  background: none; /* Remove the background color */
+  border: none;
+  /* Remove any border on the buttons */
+  background: none;
+  /* Remove the background color */
   cursor: pointer;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+.show {
+  display: block;
+}
 
 
 .ff-dropdown-container {
@@ -256,7 +307,8 @@ nav ul li button:focus {
 }
 
 #ffDropbtn {
-  z-index: 100; /* Set a higher z-index for the dropdown button */
+  z-index: 100;
+  /* Set a higher z-index for the dropdown button */
 }
 
 .ff-dropdown-content {
@@ -265,19 +317,22 @@ nav ul li button:focus {
   background-color: transparent;
   min-width: 160px;
   z-index: 1;
-  top: 0px; /* Adjust this value as needed to align the dropdown */
+  top: 0px;
+  /* Adjust this value as needed to align the dropdown */
   left: 0;
-  margin-left:10px;
+  margin-left: 10px;
 }
-.ff-dropdown-content{
-  padding:6px 20px;
+
+.ff-dropdown-content {
+  padding: 6px 20px;
 }
-.ff-dropdown-content button{
+
+.ff-dropdown-content button {
   border: none;
-  border-radius: 0;
-  background-color: #caeebf;
+  border-radius: 5%;
+  background-color: #368af7;
   font-family: 'Evil', sans-serif;
-  color: #2BAE66;
+  color: #040568;
   margin: 0 10px;
 }
 
@@ -303,12 +358,12 @@ nav ul li button:focus {
 
 #buySell {
   margin-left: 10px;
-  color: #2BAE66;
+  color: #040568;
 }
 
 #commitButton button:active {
-  background: #2BAE66;
-  color: #2BAE66;
+  background: #040568;
+  color: #040568;
 }
 
 
@@ -354,15 +409,15 @@ nav ul li button:focus {
   transition: .4s;
 }
 
-input:checked + .slider {
-  background-color: #2BAE66;
+input:checked+.slider {
+  background-color: #040568;
 }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2BAE66;
+input:focus+.slider {
+  box-shadow: 0 0 1px #040568;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -387,5 +442,5 @@ input:checked + .slider:before {
   margin: 5px;
   /* margin-top: 0px; */
   padding-right: 15px;
-  color: #2BAE66;
+  color: #040568;
 }
