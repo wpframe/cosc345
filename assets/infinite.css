@@ -9,7 +9,6 @@
 }
 
 body {
-  /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
   font-family: 'Evil', sans-serif;
   overflow-x: hidden;
 }
@@ -24,7 +23,6 @@ body {
   height: 100%;
   width: 100%;
   min-height: 100vh;
-  /* background: radial-gradient(#f0b57a, 20%, #703709); */
   background: #caeebf;
   position: relative;
 }
@@ -45,11 +43,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* Center elements horizontally */
   border-bottom: 2px solid #2BAE66;
-  /* Add the border */
-
-  /* Add some padding to the bottom of the header */
 }
 
 nav ul {
@@ -74,7 +68,6 @@ nav ul li button,
   transition: 0.5s;
   font-family: 'Evil', sans-serif;
   border-radius: 0;
-  /* Add the custom font */
 }
 
 #dateTime {
@@ -102,57 +95,42 @@ nav ul li button:focus {
 
 /* Styles for the background div */
 .graphBox {
-  /* Set the width to 3/5 of the screen width minus 100px for spacing */
   width: calc((3/5 * 100vw));
-  /* Set the height to 80% of the viewport height */
   height: 60vh;
-  /* Set the right margin to 100px for spacing */
   right: 30px;
-  /* Set the top margin to 100px */
   margin-top: 30px;
-  /* Add some padding for the content inside the div */
   padding: 20px;
-  /* Use absolute positioning to place the div against the right side */
   position: absolute;
-  /* Set the background color */
   background: #f0f0f0;
-  /* Add border-radius for rounded corners */
   border-radius: 10px;
 }
 
 /* Styles for the graph */
 .graph {
-  /* Set the width to 1/2 of the screen width minus 100px for spacing */
   width: calc((1/2 * 100vw));
-  /* Set the height to 250px (you can adjust this value as needed) */
   height: 350px;
-  /* Set the top margin to 100px */
   margin-top: 40px;
-  /* Add some padding for the content inside the graph */
   padding: 0;
-  /* Use absolute positioning to place the graph against the right side */
   position: absolute;
-  /* Add borders to the right and bottom for the graph appearance */
   border-left: 1px solid black;
   border-bottom: 1px solid black;
-  /* Set the right margin to 100px for spacing */
   right: 100px;
 }
-
 
 #x1, #y1 {
   position: absolute;
   font-size: larger;
-  }
+}
+
 #x1 {
   bottom: -40px;
   left: 330px;
 }
+
 #y1{
   left: -60px;
   bottom: 175px;
-  }
-
+}
 
   /* Dropdown Button */
 .dropbtn {
@@ -164,11 +142,6 @@ nav ul li button:focus {
   cursor: pointer;
 }
 
-/* Dropdown button on hover & focus
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #3e8e41;
-} */
-
 /* The search field */
 #myInput {
   box-sizing: border-box;
@@ -179,10 +152,7 @@ nav ul li button:focus {
   width: 230px;
   border: none;
   border-bottom: 1px solid #ddd;
-
   height: 50px; /* Adjust the height as needed */
-  
-  /* Set the input to stay at the top */
   position: fixed; /* or position: fixed; */
   top: 130px;
   z-index: 2; /* Make sure it's above the dropdown content */
@@ -205,7 +175,6 @@ nav ul li button:focus {
   min-width: 230px;
   border: 1px solid #ddd;
   z-index: 1;
-
   max-height: 300px; /* Adjust the height as needed */
   overflow-y: auto;
 }
@@ -227,7 +196,6 @@ nav ul li button:focus {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {display:block;}
 
-
 .ff-dropdown-container {
   position: relative;
   display: inline-block;
@@ -243,13 +211,15 @@ nav ul li button:focus {
   background-color: transparent;
   min-width: 160px;
   z-index: 1;
-  top: 0px; /* Adjust this value as needed to align the dropdown */
+  top: 0; /* Adjust this value as needed to align the dropdown */
   left: 0;
   margin-left:10px;
 }
+
 .ff-dropdown-content{
   padding:6px 20px;
 }
+
 .ff-dropdown-content button{
   border: none;
   border-radius: 0;
@@ -262,9 +232,6 @@ nav ul li button:focus {
 .ff-dropdown-container:hover .ff-dropdown-content {
   display: flex;
 }
-
-
-/* Left container or buy/sell box  */
 
 .left-container {
   background-color: #f0f0f0;
@@ -300,9 +267,6 @@ nav ul li button:focus {
   background: #2BAE66;
   color: #2BAE66;
 }
-
-
-/* For buy/sell slider */
 
 /* The switch - the box around the slider */
 .switch {
@@ -367,7 +331,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-
 #playPauseButton,
 #ffDropbtn {
   background: none;
@@ -375,7 +338,6 @@ input:checked + .slider:before {
   border: none;
   font-size: 20px;
   margin: 5px;
-  /* margin-top: 0px; */
   padding-right: 15px;
   color: #2BAE66;
 }

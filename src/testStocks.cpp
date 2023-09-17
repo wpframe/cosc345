@@ -15,7 +15,7 @@ void testStocks::run()
     // Set seed for random number generation
     std::srand(std::time(0));
 
-    std::string filename = "data/nasdaq_screener_filtered.csv"; // Assuming the CSV file is named "stocks.csv"
+    std::string filename = "data/nasdaq.csv";
     std::vector<Stock> stocks = parseCSV(filename);
 
     // Create a Portfolio instance
@@ -25,7 +25,7 @@ void testStocks::run()
     // for (int i = 0; i < 5; ++i)
     // {
     int randomIndex = std::rand() % stocks.size(); // Generate a random index
-    Stock &selectedStock = stocks[21];             // Get the selected stock
+    Stock &selectedStock = stocks[randomIndex];    // Get the selected stock
 
     // Parse historical data and predict next prices
     selectedStock.parseHistory();
@@ -35,9 +35,10 @@ void testStocks::run()
 
     std::string initialPurchaseDate = selectedStock.history[0].date;
 
-    Purchase myPurchase(selectedStock, 50, selectedStock.history[0].closePrice, initialPurchaseDate);
+    PositionType type = PositionType::Long;
+    Purchase myPurchase(selectedStock, 50, selectedStock.history[0].closePrice, initialPurchaseDate, type);
 
-    portfolio.addPurchase(myPurchase);
+    portfolio.addPurchase(myPurchase, type);
 
     portfolio.printPortfolio();
     for (int i = 1; i <= 1; ++i)
@@ -46,7 +47,7 @@ void testStocks::run()
         float newPurchasePrice = selectedStock.history[i].closePrice;
         std::string newPurchaseDate = selectedStock.history[i].date;
 
-        Purchase *existingPurchase = portfolio.getPurchase(selectedStock.symbol);
+        Purchase *existingPurchase = portfolio.getPurchase(selectedStock.symbol, type);
 
         if (existingPurchase)
         {
@@ -57,16 +58,15 @@ void testStocks::run()
         else
         {
             // Create a new purchase and add it to the portfolio
-            Purchase newPurchase(selectedStock, 50, newPurchasePrice, newPurchaseDate);
-            portfolio.addPurchase(newPurchase);
+            Purchase newPurchase(selectedStock, 50, newPurchasePrice, newPurchaseDate, type);
+            portfolio.addPurchase(newPurchase, type);
         }
 
         // Calculate profit/loss
-        float profitLoss = myPurchase.getProfitLoss(newPurchasePrice);
+        // float profitLoss = myPurchase.getProfitLoss(newPurchasePrice);
         // std::cout << newPurchaseDate << std::endl;
         // std::cout << "Date: " << newPurchaseDate << ", New Price: $" << newPurchasePrice << std::endl;
     }
-    // }
 
     portfolio.printPortfolio();
 }

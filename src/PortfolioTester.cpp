@@ -326,7 +326,6 @@ int PortfolioTester::testAddMultiplePurchases()
     std::cout << "TESTING ADDING MULTIPLE PURCHASES FUNCTIONALITY" << std::endl;
     Calendar calendar;
     Portfolio portfolio(1000000);
-    PositionType holdingType = PositionType::Long;
     std::string holdingTypeStr = "Long";
 
     Stock stock1("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
@@ -341,7 +340,6 @@ int PortfolioTester::testAddMultiplePurchases()
     portfolio.addPurchaseToPortfolio(portfolio, stock4, 15, 1800.0, calendar, holdingTypeStr);
     portfolio.addPurchaseToPortfolio(portfolio, stock5, 8, 650.0, calendar, holdingTypeStr);
 
-    bool allPurchasesAddedCorrectly = true;
     for (const Purchase &purchase : portfolio.getPurchases())
     {
         purchase.printPurchaseDetails();

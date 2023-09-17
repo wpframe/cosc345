@@ -1,5 +1,4 @@
 import yfinance as yf
-import csv
 
 # Assuming you've already extracted the top 1000 tickers and saved them in the 'top_1000_by_market_cap_tickers.txt' file:
 with open('tickers.txt', 'r') as file:
@@ -7,6 +6,7 @@ with open('tickers.txt', 'r') as file:
 
 start_date = "2013-08-08"
 end_date = "2023-08-08"
+
 
 def download_stock_data(ticker):
     # Download the data
@@ -16,6 +16,7 @@ def download_stock_data(ticker):
     output_filename = f"{ticker}.csv"
     df.to_csv(output_filename)
     print(f"Data for {ticker} saved to {output_filename}")
+
 
 for ticker in tickers:
     try:

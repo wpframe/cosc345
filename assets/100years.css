@@ -4,64 +4,46 @@ body {
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   display: grid;
   grid-template-rows: 70px 1fr 100px;
   grid-template-columns: 1fr 1fr;
   min-height: 100vh;
   margin: 0;
-  /* Remove margin */
   padding: 0;
-  /* Remove padding */
-
   background: #446ef8;
-
 }
 
 header {
-
   width: 100%;
-  /* Ensure full width */
   display: flex;
   justify-content: space-between;
   background: white;
-  /* Align items to the left and right */
   align-items: center;
-  /* Center vertically */
   text-align: center;
   padding: 0 20px;
-  /* Add horizontal padding to the header */
   grid-column: span 2;
 }
 
 header h1 {
-  /* font-family: 'Orbitron', sans-serif; */
-  /* font-size: 58px; */
-  /* Your h1 styles remain the same */
-  /* position: absolute; */
   left: 50%;
   color: #040568;
-
 }
 
 #button-container {
   display: flex;
   flex-direction: row;
-  /* Arrange buttons vertically */
 }
 
 /* Style the buttons */
 #portfolio {
   display: block;
   width: auto;
-  /* Let the button size adjust to content */
   padding: 10px 20px;
-  /* Reduce padding to make the buttons smaller */
   background-color: #040568;
   color: #fff;
   border: none;
   border-radius: 20px;
-  /* Increase border-radius for rounded edges */
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -72,14 +54,11 @@ header h1 {
 #home {
   display: block;
   width: auto;
-  /* Let the button size adjust to content */
   padding: 10px 20px;
-  /* Reduce padding to make the buttons smaller */
   background-color: #040568;
   color: #fff;
   border: none;
   border-radius: 20px;
-  /* Increase border-radius for rounded edges */
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -109,7 +88,6 @@ nav ul li button,
   transition: 0.5s;
   font-family: 'Evil', sans-serif;
   border-radius: 0;
-  /* Add the custom font */
 }
 
 #dateTime {
@@ -131,12 +109,10 @@ nav ul li button:focus {
   display: flex;
 }
 
-
 /* Container for both the background div and the graph */
 .right-container {
   box-sizing: border-box;
   width: 62%;
-  /* Adjust the width as needed */
   height: 70%;
   background-color: #f0f0f0;
   padding: 20px;
@@ -160,43 +136,27 @@ nav ul li button:focus {
 
 /* Styles for the background div */
 .graphBox {
-  /* Set the width to 3/5 of the screen width minus 100px for spacing */
   width: calc((3/5 * 100vw));
-  /* Set the height to 80% of the viewport height */
   height: 60vh;
-  /* Set the right margin to 100px for spacing */
   right: 30px;
-  /* Set the top margin to 100px */
   margin-top: 30px;
-  /* Add some padding for the content inside the div */
   padding: 20px;
-  /* Use absolute positioning to place the div against the right side */
   position: absolute;
-  /* Set the background color */
   background: #f0f0f0;
-  /* Add border-radius for rounded corners */
   border-radius: 10px;
 }
 
 /* Styles for the graph */
 .graph {
-  /* Set the width to 1/2 of the screen width minus 100px for spacing */
   width: calc((1/2 * 100vw));
-  /* Set the height to 250px (you can adjust this value as needed) */
   height: 350px;
-  /* Set the top margin to 100px */
   margin-top: 40px;
-  /* Add some padding for the content inside the graph */
   padding: 0;
-  /* Use absolute positioning to place the graph against the right side */
   position: absolute;
-  /* Add borders to the right and bottom for the graph appearance */
   border-left: 1px solid black;
   border-bottom: 1px solid black;
-  /* Set the right margin to 100px for spacing */
   right: 100px;
 }
-
 
 #x1,
 #y1 {
@@ -214,7 +174,6 @@ nav ul li button:focus {
   bottom: 175px;
 }
 
-
 /* Dropdown Button */
 .dropbtn {
   background-color: #040568;
@@ -224,11 +183,6 @@ nav ul li button:focus {
   border: none;
   cursor: pointer;
 }
-
-/* Dropdown button on hover & focus
-.dropbtn:hover, .dropbtn:focus {
-  background-color: #3e8e41;
-} */
 
 /* The search field */
 #myInput {
@@ -240,16 +194,10 @@ nav ul li button:focus {
   width: 230px;
   border: none;
   border-bottom: 1px solid #ddd;
-
   height: 50px;
-  /* Adjust the height as needed */
-
-  /* Set the input to stay at the top */
   position: fixed;
-  /* or position: fixed; */
   top: 130px;
   z-index: 2;
-  /* Make sure it's above the dropdown content */
 }
 
 /* The search field when it gets focus/clicked on */
@@ -271,9 +219,7 @@ nav ul li button:focus {
   min-width: 230px;
   border: 1px solid #ddd;
   z-index: 1;
-
   max-height: 300px;
-  /* Adjust the height as needed */
   overflow-y: auto;
 }
 
@@ -284,9 +230,7 @@ nav ul li button:focus {
   text-decoration: none;
   display: block;
   border: none;
-  /* Remove any border on the buttons */
   background: none;
-  /* Remove the background color */
   cursor: pointer;
 }
 
@@ -300,7 +244,6 @@ nav ul li button:focus {
   display: block;
 }
 
-
 .ff-dropdown-container {
   position: relative;
   display: inline-block;
@@ -308,7 +251,6 @@ nav ul li button:focus {
 
 #ffDropbtn {
   z-index: 100;
-  /* Set a higher z-index for the dropdown button */
 }
 
 .ff-dropdown-content {
@@ -317,8 +259,7 @@ nav ul li button:focus {
   background-color: transparent;
   min-width: 160px;
   z-index: 1;
-  top: 0px;
-  /* Adjust this value as needed to align the dropdown */
+  top: 0;
   left: 0;
   margin-left: 10px;
 }
@@ -339,7 +280,6 @@ nav ul li button:focus {
 .ff-dropdown-container:hover .ff-dropdown-content {
   display: flex;
 }
-
 
 #buySellContainer button,
 #commitTransaction button {
@@ -365,9 +305,6 @@ nav ul li button:focus {
   background: #040568;
   color: #040568;
 }
-
-
-/* For buy/sell slider */
 
 /* The switch - the box around the slider */
 .switch {
@@ -432,7 +369,6 @@ input:checked+.slider:before {
   border-radius: 50%;
 }
 
-
 #playPauseButton,
 #ffDropbtn {
   background: none;
@@ -440,7 +376,6 @@ input:checked+.slider:before {
   border: none;
   font-size: 20px;
   margin: 5px;
-  /* margin-top: 0px; */
   padding-right: 15px;
   color: #040568;
 }

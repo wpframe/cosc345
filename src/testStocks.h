@@ -1,9 +1,10 @@
 #ifndef APP_H
 #define APP_H
 
-// TEMPORARY TEST APP 
+// TEMPORARY TEST APP
 
-class testStocks {
+class testStocks
+{
 public:
     testStocks();
     void run();

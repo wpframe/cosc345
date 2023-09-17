@@ -12,72 +12,52 @@ body {
   grid-template-rows: 70px 1fr 1fr 1fr 50px;
   grid-template-columns: 1fr 1fr;
   background: #446ef8;
-
-
 }
 
 header {
-
   width: 100%;
-  /* Ensure full width */
   display: flex;
   justify-content: space-between;
   background: white;
-  /* Align items to the left and right */
   align-items: center;
-  /* Center vertically */
   text-align: center;
   padding: 0 20px;
-  /* Add horizontal padding to the header */
   grid-column: span 2;
 }
 
 header h1 {
-  /* font-family: 'Orbitron', sans-serif; */
-  /* font-size: 58px; */
-  /* Your h1 styles remain the same */
-  /* position: absolute; */
   left: 50%;
   color: #040568;
-
 }
 
 #button-container {
   display: flex;
   flex-direction: row;
-  /* Arrange buttons vertically */
 }
 
 /* Style the buttons */
 #home {
   display: block;
   width: auto;
-  /* Let the button size adjust to content */
   padding: 10px 20px;
-  /* Reduce padding to make the buttons smaller */
   background-color: #040568;
   color: #fff;
   border: none;
   border-radius: 20px;
-  /* Increase border-radius for rounded edges */
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-left: 50px;
-
 }
 
 #hundyyears {
   display: block;
   width: auto;
-  /* Let the button size adjust to content */
   padding: 10px 20px;
-  /* Reduce padding to make the buttons smaller */
   background-color: #040568;
   color: #fff;
   border: none;
   border-radius: 20px;
-  /* Increase border-radius for rounded edges */
   font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -97,7 +77,6 @@ header h1 {
   grid-row: 2;
   background-color: #040568;
   color: white;
-
   border-radius: 10px;
   margin: 20px;
   max-width: 85%;
@@ -108,10 +87,8 @@ header h1 {
 
 .summary-tile {
   align-self: flex-start;
-
   background-color: #040568;
   color: white;
-
 }
 
 .tiles-container {
@@ -120,8 +97,6 @@ header h1 {
   grid-row: 2 / span 3;
   max-height: 100%;
   margin: 20px;
-
-
 }
 
 .stock-tile {
@@ -131,21 +106,17 @@ header h1 {
   background-color: #040568;
   color: white;
   border-radius: 10px;
-
 }
 
 .sell-button {
   position: absolute;
   top: 10px;
-  /* Adjust this value to position the button as desired */
   right: 10px;
-  /* Adjust this value to position the button as desired */
   background-color: #007bff;
   color: #fff;
   padding: 5px 10px;
   border: none;
   cursor: pointer;
-  /* Add any other styling for the button */
 }
 
 .modal {
@@ -156,7 +127,6 @@ header h1 {
   top: 0;
   width: 100%;
   height: 100%;
-
   overflow: auto;
 }
 
@@ -172,7 +142,6 @@ header h1 {
   overflow-y: auto;
   border-radius: 8px;
   position: relative;
-
   border-style: solid;
   border-color: #446ef8;
   border-radius: 10px;
@@ -182,22 +151,15 @@ header h1 {
 
 #arrows {
   max-width: 100%;
-  /* Limit the width to the container's width */
   max-height: 100%;
-  /* Limit the height to the container's height */
-
-  /* Position the element in column 2 and rows 3 and 4 */
   grid-column: 2;
   grid-row: 3 / span 2;
 }
 
-
 .close {
   position: absolute;
   top: 10px;
-  /* Adjust this value to position the button as desired */
   right: 10px;
-  /* Adjust this value to position the button as desired */
   background-color: #040568;
   color: white;
   padding: 5px 10px;
@@ -207,9 +169,7 @@ header h1 {
 
 .close:hover {
   color: #007bff;
-  /* Change color on hover */
 }
-
 
 .headlineParagraph,
 .multiplier {
