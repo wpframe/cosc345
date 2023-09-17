@@ -96,7 +96,7 @@ MyApp::MyApp()
   overlay_->view()->set_view_listener(this);
 
   std::string pathPrefix = PathUtil::findPathFromApp();
-  std::string filename = pathPrefix + "src/data/nasdaq_screener_filtered.csv";
+  std::string filename = pathPrefix + "src/data/nasdaq.csv";
 
   stocks = parseCSV(filename);
 
