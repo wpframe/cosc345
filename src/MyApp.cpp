@@ -295,7 +295,7 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
 
     if (quantity > 0 && portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity >= 0)
     {
-      portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar);
+      portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar, buyOrSell);
     }
     // portfolio.summarizePortfolio(TIMECOUNT);
   }
@@ -309,15 +309,28 @@ JSValueRef commitSale(JSContextRef ctx, JSObjectRef function,
   if (argumentCount >= 3)
   {
 
-    JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
-    int amountToSell = static_cast<int>(JSValueToNumber(ctx, arguments[1], nullptr));
-    int quantity = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
+    JSStringRef jsHoldingType = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[1], nullptr);
+    int amountToSell = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
+    int quantity = static_cast<int>(JSValueToNumber(ctx, arguments[3], nullptr));
 
     // Convert JSStringRef to C++ std::string
+    std::string holdingTypeStr = JSStringToStdString(jsHoldingType);
     std::string symbol = JSStringToStdString(jsSymbol);
 
     // Release JSStringRef
+    JSStringRelease(jsHoldingType);
     JSStringRelease(jsSymbol);
+
+    PositionType holdingType;
+    if (holdingTypeStr == "Short")
+    {
+      holdingType = PositionType::Short;
+    }
+    else
+    {
+      holdingType = PositionType::Long;
+    }
 
     std::vector<Purchase> purchases;
 
@@ -327,7 +340,7 @@ JSValueRef commitSale(JSContextRef ctx, JSObjectRef function,
 
     if (quantity > 0)
     {
-      portfolio.sellPurchase(selectedStock, amountToSell, selectedStock.history[TIMECOUNT].closePrice);
+      portfolio.sellPurchase(selectedStock, amountToSell, selectedStock.history[TIMECOUNT].closePrice, holdingType);
     }
 
     // portfolio.summarizePortfolio(TIMECOUNT);
@@ -480,6 +493,18 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       float totalProfit = portfolioValue - totalInvestment;
       float totalProfitPercentage = (totalProfit / totalInvestment) * 100;
 
+      std::string holdingTypeStr;
+      PositionType type = purchase.getPositionType();
+      if (type == PositionType::Short)
+      {
+        holdingTypeStr = "Short";
+      }
+      else
+      {
+        holdingTypeStr = "Long";
+      }
+
+      ultralight::String holdingType = holdingTypeStr.c_str();
       ultralight::String symbol = purchase.getStockSymbol().c_str();
       ultralight::String purchasePrice = std::to_string(purchase.getPurchasePrice()).c_str();
       ultralight::String currentPrice = std::to_string(currentPriceFloat).c_str();
@@ -495,14 +520,11 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       ultralight::String totalProfitStr = std::to_string(totalProfit).c_str();
       ultralight::String totalProfitPercentageStr = std::to_string(totalProfitPercentage).c_str();
 
-      caller->EvaluateScript("addStockTile('" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "', '" + headline + "', '" + headlineMultiplier + "')");
-      // caller->EvaluateScript("addStockTile('" + symbol + "', '" + currentPrice + "', '" + quantity + "')");
+      caller->EvaluateScript("addStockTile('" + holdingType + "', '" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "', '" + headline + "', '" + headlineMultiplier + "')");
 
       caller->EvaluateScript("updateBalance('" + totalBalance + "')");
 
       caller->EvaluateScript("updateInvestmentSummary('" + totalInvestmentStr + "', '" + portfolioValueStr + "', '" + totalProfitStr + "', '" + totalProfitPercentageStr + "')");
-      // addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, totalProfitPercentage)
-      //  ultralight::String totalBalance = std::to_string(portfolio.getTotalBalance()).c_str();
     }
 
     // ultralight::String script = jsScript.c_str();

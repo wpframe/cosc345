@@ -17,17 +17,28 @@
     @brief The constructor for the Purchase class.
     @details Takes and initializes the stock, quantity, purchase price, and purchase timestamp.
 */
-Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp)
-    : stock(s), quantity(q), purchasePrice(purchasePrice), purchaseTimestamp(timestamp)
+Purchase::Purchase(const Stock &s, int q, float purchasePrice, const std::string &timestamp, PositionType holdType)
+    : stock(s), quantity(q), purchasePrice(purchasePrice), purchaseTimestamp(timestamp), holdType(holdType)
 {
+}
+
+PositionType Purchase::getPositionType() const
+{
+    return holdType;
 }
 
 float Purchase::getCurrentPurchaseValue(float currentPrice) const
 {
-    // float currentPrice = getStock().history[time].closePrice;
     float currentValue = 0.0;
+
+    // For a long position, calculate normally
     float currentPurchaseValue = getQuantity() * currentPrice;
     currentValue += currentPurchaseValue;
+
+    // For a short position, calculate the value of the borrowed shares
+    // minus the value of repurchased shares
+    // float currentPurchaseValue = getQuantity() * getPurchasePrice() - getQuantity() * currentPrice;
+
     return currentValue;
 }
 
@@ -39,7 +50,18 @@ float Purchase::getPurchaseValue() const
 
 float Purchase::getProfitLoss(float currentPrice) const
 {
-    float profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
+    float profitLoss = 0.0;
+    if (holdType == PositionType::Long)
+    {
+        // For a long position, calculate normally
+        profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
+    }
+    else if (holdType == PositionType::Short)
+    {
+        // For a short position, calculate the value of the borrowed shares
+        // minus the value of repurchased shares
+        profitLoss = getPurchaseValue() - getCurrentPurchaseValue(currentPrice);
+    }
     return profitLoss;
 }
 

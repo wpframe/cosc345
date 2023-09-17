@@ -77,7 +77,7 @@ function updateInvestmentSummary(totalInvestment, portfolioValue, totalProfit, t
 }
 
 
-function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, headline, multiplier) {
+function addStockTile(type, symbol, purchasePrice, currentPrice, quantity, profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, headline, multiplier) {
     var tileContainer = document.getElementsByClassName("tiles-container")[0]; // Assuming there's only one container
 
     // Create the main container div
@@ -89,6 +89,7 @@ function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss,
     sellButton.innerText = 'Sell';
 
     // Add data attributes to store stock information
+    sellButton.setAttribute("data-type", type);
     sellButton.setAttribute("data-symbol", symbol);
     sellButton.setAttribute("data-purchasePrice", purchasePrice);
     sellButton.setAttribute("data-currentPrice", currentPrice);
@@ -100,17 +101,22 @@ function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss,
 
     sellButton.addEventListener('click', function () {
         // Extract data attributes when the button is clicked
+        var type = this.getAttribute("data-type");
         var symbol = this.getAttribute("data-symbol");
         var purchasePrice = this.getAttribute("data-purchasePrice");
         var currentPrice = this.getAttribute("data-currentPrice");
         var quantity = this.getAttribute("data-quantity");
 
-        showSellTile(symbol, quantity, purchasePrice, currentPrice);
+        showSellTile(type, symbol, quantity, purchasePrice, currentPrice);
 
     });
 
     stockTile.appendChild(sellButton);
     // Create and add stock name 
+    var typeParagraph = document.createElement("p");
+    typeParagraph.textContent = "Holding: " + type; // Change this to the holding type (long or short)
+    stockTile.appendChild(typeParagraph);
+
     var stockNameParagraph = document.createElement("p");
     stockNameParagraph.textContent = "Stock: " + symbol; // Change this to the actual stock name
     stockTile.appendChild(stockNameParagraph);
@@ -167,7 +173,7 @@ function addStockTile(symbol, purchasePrice, currentPrice, quantity, profitLoss,
     tileContainer.appendChild(stockTile);
 }
 
-function showSellTile(symbol, quantity, purchasePrice, currentPrice) {
+function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     // Show the custom modal with instructions
     var sellTileModal = document.getElementById("sellTileModal");
     sellTileModal.style.display = "block";
@@ -177,6 +183,10 @@ function showSellTile(symbol, quantity, purchasePrice, currentPrice) {
     modalContent.innerHTML = ""; // Clear existing content
 
     // Create and add stock information to the modal
+    var typeParagraph = document.createElement("p");
+    typeParagraph.textContent = "holding type: " + type;
+    modalContent.appendChild(typeParagraph);
+
     var stockInfoParagraph = document.createElement("p");
     stockInfoParagraph.textContent = "Stock: " + symbol;
     modalContent.appendChild(stockInfoParagraph);
@@ -204,6 +214,7 @@ function showSellTile(symbol, quantity, purchasePrice, currentPrice) {
     sellButton.innerText = 'Sell';
 
     // Add data attributes to store stock information
+    sellButton.setAttribute("data-type", type);
     sellButton.setAttribute("data-symbol", symbol);
     sellButton.setAttribute("data-currentPrice", currentPrice);
     sellButton.setAttribute("data-quantity", quantity);
@@ -211,13 +222,14 @@ function showSellTile(symbol, quantity, purchasePrice, currentPrice) {
 
     sellButton.addEventListener('click', function () {
         // Extract data attributes when the button is clicked
+        var type = this.getAttribute("data-type");
         var symbol = this.getAttribute("data-symbol");
         var amountToSell = parseFloat(sellAmountInput.value);
         var currentPrice = this.getAttribute("data-currentPrice");
         var quantity = this.getAttribute("data-quantity");
 
         // showSellTile(symbol, quantity, purchasePrice, currentPrice);
-        commitSaleJS(symbol, amountToSell, quantity, currentPrice);
+        commitSaleJS(type, symbol, amountToSell, quantity, currentPrice);
 
         // Close the modal
         sellTileModal.style.display = "none";

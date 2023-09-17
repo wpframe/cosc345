@@ -13,14 +13,14 @@ private:
 
 public:
     Portfolio(float initialBalance) : totalBalance(initialBalance) {} // Initialize totalBalance in the constructor
-    void addPurchase(Purchase purchase);
+    void addPurchase(Purchase purchase, PositionType holdType);
     void printPortfolio() const;
-    Purchase *getPurchase(const std::string &stockSymbol);
+    Purchase *getPurchase(const std::string &stockSymbol, PositionType holdType);
     float getTotalBalance() const;
     const std::vector<Purchase> getPurchases() const;
     void summarizePortfolio(int time) const;
-    void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar);
-    void sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice);
+    void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, std::string type);
+    void sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice, PositionType holdType);
 };
 
 #endif // PORTFOLIO_H

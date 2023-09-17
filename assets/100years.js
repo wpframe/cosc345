@@ -13,13 +13,13 @@ function showStockInfo(currentPrice, stocksAvailable) {
 
 function switchBuySell() {
     var button = document.getElementById("buySell");
-    if (button.innerHTML === "Buy") {
+    if (button.innerHTML === "Long") {
         // Change the content to "Sell" if it's currently "Buy"
-        button.innerHTML = "Sell";
+        button.innerHTML = "Short";
         // send this information to c++ 
     } else {
         // Change the content to "Buy" if it's currently "Sell" or any other text
-        button.innerHTML = "Buy";
+        button.innerHTML = "Long";
         // send this information to c++ 
     }
 }

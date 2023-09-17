@@ -15,9 +15,9 @@
     @details If the stock is already in the portfolio, it updates the quantity and purchase price.
     @param purchase The purchase to add.
 */
-void Portfolio::addPurchase(Purchase purchase)
+void Portfolio::addPurchase(Purchase purchase, PositionType holdType)
 {
-    Purchase *existingPurchase = getPurchase(purchase.getStockSymbol());
+    Purchase *existingPurchase = getPurchase(purchase.getStockSymbol(), holdType);
     float totalCost = purchase.calculateTotalCost();
 
     // Check if adding the purchase will result in a negative total balance
@@ -33,17 +33,31 @@ void Portfolio::addPurchase(Purchase purchase)
         int firstQuant = existingPurchase->getQuantity();
         float firstPrice = existingPurchase->getPurchasePrice();
         float updatedPurchasePrice = purchase.getQuantity() * purchase.getPurchasePrice();
-
         existingPurchase->setQuantity(newQuant);
-
         float byHandTotal = firstPurchasePrice + updatedPurchasePrice;
         existingPurchase->setPurchasePrice(byHandTotal / newQuant);
-        totalBalance -= purchase.calculateTotalCost();
+
+        if (holdType == PositionType::Short)
+        {
+            totalBalance += purchase.calculateTotalCost();
+        }
+        else
+        {
+            totalBalance -= purchase.calculateTotalCost();
+        }
     }
     else
     {
-        totalBalance -= purchase.calculateTotalCost();
-        purchases.push_back(purchase);
+        if (holdType == PositionType::Short)
+        {
+            totalBalance += purchase.calculateTotalCost();
+            purchases.push_back(purchase);
+        }
+        else
+        {
+            totalBalance -= purchase.calculateTotalCost();
+            purchases.push_back(purchase);
+        }
     }
 }
 
@@ -56,10 +70,19 @@ void Portfolio::addPurchase(Purchase purchase)
     @param purchasePrice The purchase price of the stock.
     @param calendar The calendar to use for the purchase timestamp.
 */
-void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar)
+void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, std::string purchaseType)
 {
-    Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate());
-    portfolio.addPurchase(purchase);
+    PositionType type;
+    if (purchaseType == "Short")
+    {
+        type = PositionType::Short;
+    }
+    else
+    {
+        type = PositionType::Long;
+    }
+    Purchase purchase(selectedStock, quantity, purchasePrice, calendar.getDate(), type);
+    portfolio.addPurchase(purchase, type);
 }
 
 /*!
@@ -69,32 +92,134 @@ void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &select
     @param currentPrice The current price of the stock.
     @return True if the sale was successful, false otherwise.
 */
-void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice)
+// void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice, PositionType holdType)
+// {
+//     Purchase *purchaseToSell = getPurchase(selectedStock.getSymbol(), holdType);
+
+//     if (!purchaseToSell)
+//     {
+//         std::cout << "No purchase found for " << selectedStock.getSymbol() << std::endl;
+//         return;
+//     }
+
+//     if (holdType == PositionType::Long)
+//     {
+//         // If the position is Long, sell as usual
+//         if (purchaseToSell->getQuantity() >= quantityToSell)
+//         {
+//             int remainingQuantity = purchaseToSell->getQuantity() - quantityToSell;
+//             float saleValue = quantityToSell * currentPrice;
+//             totalBalance += saleValue;
+
+//             if (remainingQuantity > 0)
+//             {
+//                 purchaseToSell->setQuantity(remainingQuantity);
+//             }
+
+//             if (remainingQuantity == 0)
+//             {
+//                 purchases.erase(
+//                     std::remove_if(purchases.begin(), purchases.end(),
+//                                    [&](const Purchase &purchase)
+//                                    {
+//                                        return purchase.getStockSymbol() == selectedStock.getSymbol();
+//                                    }),
+//                     purchases.end());
+//             }
+
+//             std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
+//         }
+//         else
+//         {
+//             std::cout << "Insufficient quantity to sell." << std::endl;
+//         }
+//     }
+//     else if (holdType == PositionType::Short)
+//     {
+//         // If the position is Short, buy back shorts (cover the short position)
+//         int shortQuantity = purchaseToSell->getQuantity(); // Quantity of shorts to buy back
+//         float purchaseValue = shortQuantity * currentPrice;
+//         totalBalance -= purchaseValue; // Deduct the cost of buying back shorts
+
+//         // Remove the short position from the portfolio
+//         purchases.erase(
+//             std::remove_if(purchases.begin(), purchases.end(),
+//                            [&](const Purchase &purchase)
+//                            {
+//                                return purchase.getStockSymbol() == selectedStock.getSymbol();
+//                            }),
+//             purchases.end());
+
+//         std::cout << "Bought back " << shortQuantity << " shares of " << selectedStock.getSymbol() << " (Short Cover) at $" << currentPrice << " each." << std::endl;
+//     }
+//     else
+//     {
+//         std::cout << "Invalid PositionType." << std::endl;
+//     }
+// }
+void Portfolio::sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice, PositionType holdType)
 {
+    // Find the purchase with the selected stock and holdType
+    auto purchaseToSell = std::find_if(purchases.begin(), purchases.end(), [&](const Purchase &purchase)
+                                       { return purchase.getStockSymbol() == selectedStock.getSymbol() && purchase.getPositionType() == holdType; });
 
-    Purchase *purchaseToSell = getPurchase(selectedStock.getSymbol());
-
-    if (purchaseToSell && purchaseToSell->getQuantity() >= quantityToSell)
+    if (purchaseToSell == purchases.end())
     {
-        int remainingQuantity = purchaseToSell->getQuantity() - quantityToSell;
-        float saleValue = quantityToSell * currentPrice;
-        totalBalance += saleValue;
+        std::string holdTypeStr;
+        if (holdType == PositionType::Short)
+        {
+            holdTypeStr = "short";
+        }
+        else
+        {
+            holdTypeStr = "long";
+        }
 
-        if (remainingQuantity > 0)
+        std::cout << "No purchase found for " << selectedStock.getSymbol() << " with PositionType " << holdTypeStr << std::endl;
+        return;
+    }
+
+    if (holdType == PositionType::Long)
+    {
+        // If the position is Long, sell as usual
+        if (purchaseToSell->getQuantity() >= quantityToSell)
         {
-            purchaseToSell->setQuantity(remainingQuantity);
+            int remainingQuantity = purchaseToSell->getQuantity() - quantityToSell;
+            float saleValue = quantityToSell * currentPrice;
+            totalBalance += saleValue;
+
+            if (remainingQuantity > 0)
+            {
+                purchaseToSell->setQuantity(remainingQuantity);
+            }
+            else
+            {
+                // Remove the purchase if the quantity becomes zero
+                purchases.erase(purchaseToSell);
+            }
+
+            std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
         }
-        if (remainingQuantity == 0)
+        else
         {
-            purchases.erase(
-                std::remove_if(purchases.begin(), purchases.end(),
-                               [&](const Purchase &purchase)
-                               {
-                                   return purchase.getStockSymbol() == selectedStock.getSymbol();
-                               }),
-                purchases.end());
+            std::cout << "Insufficient quantity to sell." << std::endl;
         }
-        std::cout << "Sold " << quantityToSell << " shares of " << selectedStock.getSymbol() << " at $" << currentPrice << " each." << std::endl;
+    }
+    else if (holdType == PositionType::Short)
+    {
+        // If the position is Short, buy back shorts (cover the short position)
+        int shortQuantity = purchaseToSell->getQuantity(); // Quantity of shorts to buy back
+        float purchaseValue = shortQuantity * currentPrice;
+        totalBalance -= purchaseValue; // Deduct the cost of buying back shorts
+
+        // Remove the short position from the portfolio
+        purchases.erase(purchaseToSell);
+
+        std::cout << "Bought back " << shortQuantity << " shares of " << selectedStock.getSymbol() << " (Short Cover) at $" << currentPrice << " each." << std::endl;
+    }
+    else
+    {
+        std::cout << "Invalid PositionType." << std::endl;
     }
 }
 
@@ -120,11 +245,11 @@ void Portfolio::printPortfolio() const
     @param stockSymbol The stock symbol of the purchase to get.
     @return A pointer to the purchase if it exists, nullptr otherwise.
 */
-Purchase *Portfolio::getPurchase(const std::string &stockSymbol)
+Purchase *Portfolio::getPurchase(const std::string &stockSymbol, PositionType holdType)
 {
     for (Purchase &purchase : purchases)
     {
-        if (purchase.getStockSymbol() == stockSymbol)
+        if (purchase.getStockSymbol() == stockSymbol && holdType == purchase.getPositionType())
         {
             return &purchase;
         }

@@ -29,8 +29,12 @@ Stock::Stock(const std::string &symbol, const std::string &name, int outstanding
 
 Stock Stock::updateStockHistory(Stock &selectedStock)
 {
-    selectedStock.parseHistory();
-    selectedStock.predictNextX(2600);
+    if (selectedStock.history.size() < 1)
+    {
+        selectedStock.parseHistory();
+        selectedStock.predictNextX(5200);
+    }
+
     return selectedStock;
 }
 
