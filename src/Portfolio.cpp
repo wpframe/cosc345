@@ -24,7 +24,7 @@ void Portfolio::addPurchase(Purchase purchase, PositionType holdType)
     {
         int newQuant = existingPurchase->getQuantity() + purchase.getQuantity();
         float firstPurchasePrice = existingPurchase->getQuantity() * existingPurchase->getPurchasePrice();
-        int firstQuant = existingPurchase->getQuantity();
+        
         float firstPrice = existingPurchase->getPurchasePrice();
         float updatedPurchasePrice = purchase.getQuantity() * purchase.getPurchasePrice();
         existingPurchase->setQuantity(newQuant);
