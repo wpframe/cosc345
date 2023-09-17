@@ -1,8 +1,8 @@
-
 function goToHome() {
     document.getElementById("home").innerHTML;
     window.location.href = "homepage.html";
 }
+
 function goToPortfolio() {
     window.location.href = "portfolio.html";
 }
@@ -32,9 +32,10 @@ function switchBuySell() {
         // send this information to c++ 
     }
 }
+
 function updateTotalPrice() {
     var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(18));
-    var quantity = parseInt(document.getElementById("quantity").value);
+    var quantity = parseInt(document.getElementById("quantity").value, 10);
 
     var totalPrice = currentPrice * quantity;
 
@@ -143,6 +144,7 @@ function commitPurchaseJS() {
 
     commitPurchase(symbol, buyOrSell, quantity)
 }
+
 function commitPurchase() {
 
 }

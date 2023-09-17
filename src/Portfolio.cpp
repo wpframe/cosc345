@@ -64,7 +64,7 @@ void Portfolio::addPurchase(Purchase purchase, PositionType holdType)
     @param purchasePrice The purchase price of the stock.
     @param calendar The calendar to use for the purchase timestamp.
 */
-void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, const std::string purchaseType)
+void Portfolio::addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, const std::string &purchaseType)
 {
     PositionType type;
     if (purchaseType == "Short")

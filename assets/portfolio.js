@@ -57,7 +57,8 @@ function addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, tota
     summaryTile.appendChild(totalProfitParagraph);
 
     var totalProfitPercentageParagraph = document.createElement("p");
-    totalProfitPercentageParagraph.textContent = "Total Profit/Loss Percentage: " + totalProfitPercentage + "%";
+    totalProfitPercentageParagraph.textContent =
+        "Total Profit/Loss Percentage: " + totalProfitPercentage + "%";
     summaryTile.appendChild(totalProfitPercentageParagraph);
 
     // Append the main container div to the tile container
@@ -77,7 +78,8 @@ function updateInvestmentSummary(totalInvestment, portfolioValue, totalProfit, t
 }
 
 
-function addStockTile(type, symbol, purchasePrice, currentPrice, quantity, profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, headline, multiplier) {
+function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
+    profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, headline, multiplier) {
     var tileContainer = document.getElementsByClassName("tiles-container")[0]; // Assuming there's only one container
 
     // Create the main container div
@@ -142,7 +144,8 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity, profi
 
     // Create and add how much the investment is now
     var currentPurchaseValueParagraph = document.createElement("p");
-    currentPurchaseValueParagraph.textContent = "Investment Total Now: " + currentPurchaseValue; // Change this to the actual price
+    currentPurchaseValueParagraph.textContent =
+        "Investment Total Now: " + currentPurchaseValue; // Change this to the actual price
     stockTile.appendChild(currentPurchaseValueParagraph);
 
     var profitLossParagraph = document.createElement("p");
@@ -150,7 +153,8 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity, profi
     stockTile.appendChild(profitLossParagraph);
 
     var profitLossPercentParagraph = document.createElement("p");
-    profitLossPercentParagraph.textContent = "Profit/Loss Percentage: " + profitLossPercent + "%"; // Change this to the actual price
+    profitLossPercentParagraph.textContent =
+        "Profit/Loss Percentage: " + profitLossPercent + "%"; // Change this to the actual price
     stockTile.appendChild(profitLossPercentParagraph);
 
     var headlineString = headline.toString();
@@ -166,8 +170,6 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity, profi
         multiplierParagraph.textContent = "changed total stock value by: " + multiplier; // Change this to the actual price
         stockTile.appendChild(multiplierParagraph);
     }
-
-
 
     // Append the stock tile to the container
     tileContainer.appendChild(stockTile);
@@ -219,8 +221,6 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     sellButton.type = "button";
     sellButton.innerText = 'Sell';
 
-
-
     // Add data attributes to store stock information
     sellButton.setAttribute("data-type", type);
     sellButton.setAttribute("data-symbol", symbol);
@@ -249,20 +249,14 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     modalContent.appendChild(closeButton);
 }
 
-
-
-
 function closeSellTile() {
     // Close the custom modal
     document.getElementById("sellTileModal").style.display = "none";
 }
 
 function commitSaleJS(symbol, amountToSell, stockQuantity, stockCurrentPrice) {
-
-
     commitSale(symbol, amountToSell, stockQuantity, stockCurrentPrice);
 
 }
 
 function commitSale() { }
-
