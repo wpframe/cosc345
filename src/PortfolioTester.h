@@ -10,7 +10,9 @@ class PortfolioTester
 public:
     PortfolioTester();
     int testAddPurchase();
+    int testAddShortPurchase();
     int testAddPurchaseFunctionality();
+    int testAddShortFunctionality();
     int testGetTotalBalance();
     int testAddMultiplePurchases();
     void runAllTests();

@@ -48,6 +48,38 @@ int PortfolioTester::testAddPurchase()
         return 1;
     }
 }
+/**
+ * @brief Test the functionality of adding a single short purchase to the portfolio.
+ */
+int PortfolioTester::testAddShortPurchase()
+{
+    std::cout << "TESTING ADDING SHORT FUNCTIONALITY" << std::endl;
+    Calendar calendar;
+    Portfolio portfolio(100000);
+    Stock testStock("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
+    PositionType holdingType = PositionType::Short;
+    std::string holdingTypeStr = "Short";
+
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar, holdingTypeStr);
+
+    Purchase *purchase = portfolio.getPurchase("AAPL", holdingType);
+
+    purchase->printPurchaseDetails();
+    std::cout << "Total Cost of Purchase: " << purchase->getQuantity() << " * " << purchase->getPurchasePrice() << " = " << purchase->getQuantity() * purchase->getPurchasePrice() << std::endl;
+
+    if (purchase->getPurchasePrice() == 150.0 && purchase->getQuantity() == 10 && purchase->getQuantity() * purchase->getPurchasePrice() == 150.0 * 10)
+    {
+        std::cout << "Test Passed: Purchase price, quantity and total cost are correct." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 0;
+    }
+    else
+    {
+        std::cout << "Test Failed" << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
+    }
+}
 
 /**
  * @brief Test stock functionality.
@@ -165,6 +197,67 @@ int PortfolioTester::testAddPurchaseFunctionality()
 
         if (addedPurchase->getQuantity() == expectedTotalQuantity &&
             addedPurchase->getPurchasePrice() == expectedAveragePrice)
+        {
+            std::cout << "Test Passed: Purchases were correctly added and updated." << std::endl;
+            std::cout << "#######################################################" << std::endl;
+            return 0;
+        }
+        else
+        {
+            std::cout << "Test Failed: Purchases were not updated correctly." << std::endl;
+            std::cout << "#######################################################" << std::endl;
+            return 1;
+        }
+    }
+    else
+    {
+        std::cout << "Test Failed: Unable to retrieve added purchase." << std::endl;
+        std::cout << "#######################################################" << std::endl;
+        return 1;
+    }
+}
+
+/**
+ * @brief Test the functionality of adding shorts of the same stock to the portfolio.
+ */
+int PortfolioTester::testAddShortFunctionality()
+{
+    std::cout << "TESTING ADDING PURCHASE OF SAME STOCK FUNCTIONALITY" << std::endl;
+    Calendar calendar;
+    Portfolio portfolio(100000);
+    PositionType holdingType = PositionType::Short;
+    std::string holdingTypeStr = "Short";
+
+    Stock testStock("AAPL", "Apple Inc.", 1000000, 1980, "Technology", "Consumer Electronics");
+
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 10, 150.0, calendar, holdingTypeStr);
+    portfolio.addPurchaseToPortfolio(portfolio, testStock, 5, 160.0, calendar, holdingTypeStr);
+
+    Purchase *addedPurchase = portfolio.getPurchase("AAPL", holdingType);
+
+    if (addedPurchase)
+    {
+        int expectedTotalQuantity = 10 + 5;
+        float expectedTotalCost = 10 * 150.0 + 5 * 160.0;
+        float expectedAveragePrice = expectedTotalCost / expectedTotalQuantity;
+
+        std::cout << "Expected Total Quantity: " << expectedTotalQuantity << std::endl;
+        std::cout << "Expected Total Cost: " << expectedTotalCost << std::endl;
+        std::cout << "Expected Average Price: " << expectedAveragePrice << std::endl;
+
+        std::cout << "Added Purchase Quantity: " << addedPurchase->getQuantity() << std::endl;
+        std::cout << "Added Purchase Average Price: " << addedPurchase->getPurchasePrice() << std::endl;
+        std::cout << "Added Purchase Total Cost: " << addedPurchase->getQuantity() * addedPurchase->getPurchasePrice() << std::endl;
+
+        bool addedToTotalBalance = false;
+        if ((addedPurchase->getQuantity() * addedPurchase->getPurchasePrice()) + 100000 == portfolio.getTotalBalance())
+        {
+            addedToTotalBalance = true;
+        }
+
+        if (addedPurchase->getQuantity() == expectedTotalQuantity &&
+            addedPurchase->getPurchasePrice() == expectedAveragePrice &&
+            addedToTotalBalance)
         {
             std::cout << "Test Passed: Purchases were correctly added and updated." << std::endl;
             std::cout << "#######################################################" << std::endl;
