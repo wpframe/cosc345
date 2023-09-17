@@ -1,106 +1,137 @@
-@font-face {
-  font-family: Evil;
-  src: url(fonts/EvilEmpire-4BBVK.ttf);
-}
-
-/* Reset some default styles */
-* {
+html,
+body {
+  overflow: hidden;
+  height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
-  /* font-family: -apple-system, 'Segoe UI Light', Ubuntu, Arial, sans-serif; */
-  font-family: Arial, sans-serif;
-  overflow-x: hidden;
-  background-color: #caeebf;
+  font-family: 'Roboto', sans-serif;
+  display: grid;
+  grid-template-rows: 70px 1fr 1fr 1fr 50px;
+  grid-template-columns: 1fr 1fr;
+  background: #446ef8;
+
+
 }
 
 header {
-  background-color: #caeebf;
-  border-bottom: 2px solid #2BAE66;
-  color: #2BAE66;
-  font-family: Arial, sans-serif;
+
+  width: 100%;
+  /* Ensure full width */
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  background: white;
+  /* Align items to the left and right */
+  align-items: center;
+  /* Center vertically */
+  text-align: center;
+  padding: 0 20px;
+  /* Add horizontal padding to the header */
+  grid-column: span 2;
 }
 
-nav ul {
-  list-style: none;
+header h1 {
+  /* font-family: 'Orbitron', sans-serif; */
+  /* font-size: 58px; */
+  /* Your h1 styles remain the same */
+  /* position: absolute; */
+  left: 50%;
+  color: #040568;
+
+}
+
+#button-container {
   display: flex;
+  flex-direction: row;
+  /* Arrange buttons vertically */
 }
 
-nav ul li {
-  margin-right: 20px;
-  margin-left: 20px;
-}
-
-nav ul li button {
-  background: none;
+/* Style the buttons */
+#home {
+  display: block;
+  width: auto;
+  /* Let the button size adjust to content */
+  padding: 10px 20px;
+  /* Reduce padding to make the buttons smaller */
+  background-color: #040568;
+  color: #fff;
   border: none;
-  border-radius: 0;
-  font-family: 'Evil', sans-serif;
-  color: #2BAE66;
+  border-radius: 20px;
+  /* Increase border-radius for rounded edges */
+  font-size: 18px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 50px;
+
 }
 
-.game-name h2 {
-  font-size: 24px;
+#hundyyears {
+  display: block;
+  width: auto;
+  /* Let the button size adjust to content */
+  padding: 10px 20px;
+  /* Reduce padding to make the buttons smaller */
+  background-color: #040568;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  /* Increase border-radius for rounded edges */
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 50px;
+  margin-right: 70px;
 }
 
-.tiles-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+/* Hover effect for buttons */
+#hundyyears:hover,
+#home:hover {
+  background-color: #0e12db;
+}
+
+.investment-summary {
+  display: flex;
+  grid-column: 2;
+  grid-row: 2;
+  background-color: #040568;
+  color: white;
+
+  border-radius: 10px;
+  margin: 20px;
   max-width: 85%;
   gap: 20px;
   padding: 20px;
+  overflow-y: hidden;
 }
 
-.modal {
-  display: none;
-  /* Hidden by default */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  overflow: auto;
-  /* Enable vertical scrolling */
+.summary-tile {
+  align-self: flex-start;
+
+  background-color: #040568;
+  color: white;
+
 }
 
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 33%;
-  height: 50%;
-  border-style: ridge;
-  border-color: #2BAE66;
-  border-width: 20px;
-  background: #caeebf;
-  /* Use the desired value */
-  box-sizing: border-box;
-  /* Ensure padding and border are included in the width */
+.tiles-container {
   overflow-y: auto;
-  /* Enable vertical scrolling */
-  border-radius: 8px;
-  position: relative;
-  /* Add relative positioning to the modal content */
-}
+  grid-column: 1;
+  grid-row: 2 / span 3;
+  max-height: 100%;
+  margin: 20px;
 
+
+}
 
 .stock-tile {
   position: relative;
-  background-color: #f0f0f0;
-  border-radius: 10px;
   padding: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  background-color: #040568;
+  color: white;
+  border-radius: 10px;
+
 }
 
 .sell-button {
@@ -117,25 +148,71 @@ nav ul li button {
   /* Add any other styling for the button */
 }
 
-
-.investment-summary {
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+.modal {
+  display: none;
   position: fixed;
-  top: 160px;
-  margin-top: 40px;
-  right: 25px;
-  transform: translateY(-50%);
-  width: calc(15vw - 40px);
-  /* 90vw for 90% of viewport width, subtract 40px for padding */
-  margin-right: 0px;
-  /* Add a margin for spacing */
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  overflow: auto;
 }
+
+.modal-content {
+  background-color: #040568;
+  color: white;
+  margin: 15% auto;
+  padding: 20px;
+  width: 33%;
+  height: 50%;
+  border-width: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 8px;
+  position: relative;
+
+  border-style: solid;
+  border-color: 446ef8;
+  border-radius: 10px;
+  border-width: 5px;
+  box-sizing: border-box;
+}
+
+#arrows {
+  max-width: 100%;
+  /* Limit the width to the container's width */
+  max-height: 100%;
+  /* Limit the height to the container's height */
+
+  /* Position the element in column 2 and rows 3 and 4 */
+  grid-column: 2;
+  grid-row: 3 / span 2;
+}
+
+
+.close {
+  position: absolute;
+  top: 10px;
+  /* Adjust this value to position the button as desired */
+  right: 10px;
+  /* Adjust this value to position the button as desired */
+  background-color: #040568;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #007bff;
+  /* Change color on hover */
+}
+
 
 .headlineParagraph,
 .multiplier {
   margin-top: 10px;
-  background-color: #888;
+  background-color: #040568;
 }
