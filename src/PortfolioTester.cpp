@@ -373,7 +373,9 @@ void PortfolioTester::runAllTests()
     std::cout << "Running Portfolio Tests..." << std::endl;
     int failedCount = 0;
     failedCount += testAddPurchase();
+    failedCount += testAddShortPurchase();
     failedCount += testAddPurchaseFunctionality();
+    failedCount += testAddShortFunctionality();
     failedCount += testGetTotalBalance();
     failedCount += testAddMultiplePurchases();
     failedCount += testStock();

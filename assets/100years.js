@@ -56,7 +56,8 @@ function filterFunction() {
     div = document.getElementById("myDropdown");
     button = div.getElementsByTagName("button");
     for (i = 0; i < button.length; i++) {
-        txtValue = button[i].textContent || button[i].innerText;
+        txtValue = button[i].innerText;
+        // txtValue = button[i].textContent || button[i].innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             button[i].style.display = "";
         } else {

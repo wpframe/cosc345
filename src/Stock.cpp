@@ -38,6 +38,12 @@ Stock Stock::updateStockHistory(Stock &selectedStock)
     return selectedStock;
 }
 
+/*!
+    @brief Searches for a stock based on the given symbol.
+    @param symbol the stock symbol to search with
+    @param stocks the vector of all stocks
+    @return The stock.
+*/
 Stock Stock::findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks)
 {
     for (const Stock &stock : stocks)
@@ -158,6 +164,8 @@ void Stock::parseHistory()
         std::string closePriceStr;
         std::getline(ss, closePriceStr, ',');
         entry.closePrice = std::stod(closePriceStr);
+        entry.headline = "";
+        entry.multiplier = 1;
 
         history.push_back(entry);
     }
