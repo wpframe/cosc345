@@ -15,7 +15,6 @@ function addStock() {
 
 function initBalance(totalBalance) {
     var balanceContainer = document.getElementsByClassName("totalBalance")[0];
-
     var balanceParagraph = document.createElement("p");
     balanceParagraph.textContent = "Total Balance: " + totalBalance; // Change this to the actual stock name
     balanceContainer.appendChild(balanceParagraph);
