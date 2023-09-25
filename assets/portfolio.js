@@ -236,10 +236,11 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
         var currentPrice = this.getAttribute("data-currentPrice");
         var quantity = this.getAttribute("data-quantity");
 
-        // showSellTile(symbol, quantity, purchasePrice, currentPrice);
-        commitSaleJS(type, symbol, amountToSell, quantity, currentPrice);
+        if (amountToSell > 0) {
 
-        // Close the modal
+            commitSaleJS(type, symbol, amountToSell, quantity, currentPrice);
+        }
+
         sellTileModal.style.display = "none";
         window.location.reload()
 
