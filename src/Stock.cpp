@@ -230,6 +230,8 @@ void Stock::predictNextX(int numWeeks)
 
     for (int i = 0; i < numWeeks; i++)
     {
+        StockHistory historyPlusHeadline;
+
         std::string nextDate = getNextDate(history.back().date);
         double predictedPrice = slope * (n + i) + intercept;
 
@@ -244,15 +246,37 @@ void Stock::predictNextX(int numWeeks)
         predictedPrice *= randomFactor;
 
         // Sporadically apply headline impact.
-        if (std::rand() % 10 > 7) // 30% chance of headline impacting stock.
+        if (std::rand() % 10 >= 7) // 30% chance of headline impacting stock.
         {
             auto headlineEvent = Headline::generateHeadline(*this, n + i);
             predictedPrice *= headlineEvent.second;
+            historyPlusHeadline.headline = headlineEvent.first;
+            historyPlusHeadline.multiplier = headlineEvent.second;
+        }
+        else
+        {
+            historyPlusHeadline.headline = "";
+            historyPlusHeadline.multiplier = 1.0;
         }
 
         // Ensure the price doesn't go negative
         predictedPrice = std::max(predictedPrice, 0.01);
 
-        history.push_back({nextDate, predictedPrice});
+        historyPlusHeadline.date = nextDate;
+        historyPlusHeadline.closePrice = predictedPrice;
+
+        // history.push_back({nextDate, predictedPrice});
+
+        if (i + 1 < history.size())
+        {
+            history[i].date = historyPlusHeadline.date;
+            history[i].closePrice = historyPlusHeadline.closePrice;
+            history[i].headline = historyPlusHeadline.headline;
+            history[i].multiplier = historyPlusHeadline.multiplier;
+        }
+        else
+        {
+            history.push_back(historyPlusHeadline);
+        }
     }
 }

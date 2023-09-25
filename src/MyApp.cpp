@@ -97,7 +97,6 @@ MyApp::MyApp()
 
   std::string pathPrefix = PathUtil::findPathFromApp();
   std::string filename = pathPrefix + "src/data/nasdaq.csv";
-
   stocks = parseCSV(filename);
 
   std::string prefix = PathUtil::findPathFromApp();
