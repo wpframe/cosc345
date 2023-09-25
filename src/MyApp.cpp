@@ -123,17 +123,10 @@ void MyApp::OnUpdate()
   ///
   /// OnUpdate is called constantly by the app so anything that needs to be updated on the page goes in here
   ///
-
-  if (!calendar.isCounting())
-  {
-    // calendar.update();
-    return;
-  }
-  ultralight::String date = calendar.getDate().c_str();
-  latestDate = date;
-  view_->EvaluateScript("showDate('" + date + "')"); // view_ is an instance of View so can be called upon as you would 'caller'
+  // view_ is an instance of View so can be called upon as you would 'caller'
+  latestDate = calendar.getDate().c_str();
   TIMECOUNT = calendar.getWeeks();
-  calendar.update();
+  // calendar.update();
 }
 
 /*!
@@ -199,48 +192,6 @@ std::string JSStringToStdString(JSStringRef jsString)
 }
 
 /*!
-  @brief startTimer is a function which starts the in-game calendar
-  @details startTimer is a function which is called from javascript, and will perform cpp operations.
-  @param ctx Javascript context
-  @param function Object reference
-  @param thisObject Object reference
-  @param argumentCount number of arguments which are passed in from javascript
-  @param arguments list of arguments
-  @param exception value reference
-**/
-JSValueRef startTimer(JSContextRef ctx, JSObjectRef function,
-                      JSObjectRef thisObject, size_t argumentCount,
-                      const JSValueRef arguments[], JSValueRef *exception)
-{
-  ///
-  /// startTimer is a javascript function, when called will perform the following c++ operations
-  ///
-  calendar.startCounting();
-  return JSValueMakeNull(ctx);
-}
-
-/*!
-  @brief stopTimer is a function which stops the in-game calendar
-  @details stopTimer is a function which is called from javascript, and will perform cpp operations.
-  @param ctx Javascript context
-  @param function Object reference
-  @param thisObject Object reference
-  @param argumentCount number of arguments which are passed in from javascript
-  @param arguments list of arguments
-  @param exception value reference
-**/
-JSValueRef stopTimer(JSContextRef ctx, JSObjectRef function,
-                     JSObjectRef thisObject, size_t argumentCount,
-                     const JSValueRef arguments[], JSValueRef *exception)
-{
-  ///
-  /// stopTimer is a javascript function, when called will perform the following c++ operations
-  ///
-  calendar.pauseCounting();
-  return JSValueMakeNull(ctx);
-}
-
-/*!
   @brief fastForward is a function which fast forwards the in-game calendar
   @details fastForward is a function which is called from javascript, and will perform cpp operations to
   fast forward the game time by given amount of time.
@@ -265,6 +216,22 @@ JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
     int days = static_cast<int>(JSValueToNumber(ctx, arguments[2], nullptr));
 
     calendar.skipTime(years, months, days);
+
+    std::string date = calendar.getDate();
+
+    std::string jscode =
+        "document.getElementById('dateTime').innerText = '" + date + "'";
+
+    const char *str = jscode.c_str();
+
+    // Create our string of JavaScript
+    JSStringRef script = JSStringCreateWithUTF8CString(str);
+
+    // Execute it with JSEvaluateScript, ignoring other parameters for now
+    JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+
+    // Release our string (we only Release what we Create)
+    JSStringRelease(script);
   }
   return JSValueMakeNull(ctx);
 }
@@ -466,7 +433,7 @@ JSValueRef toggleDropdown(JSContextRef ctx, JSObjectRef function,
                           JSObjectRef thisObject, size_t argumentCount,
                           const JSValueRef arguments[], JSValueRef *exception)
 {
-  calendar.pauseCounting();
+  // calendar.pauseCounting();
   return JSValueMakeNull(ctx);
 }
 
@@ -493,8 +460,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   // Typecast to the underlying JSContextRef.
   JSContextRef ctx = (*scoped_context);
   // Create a JavaScript String containing the name of our callback.
-  JSStringRef startTimerRef = JSStringCreateWithUTF8CString("startTimer");
-  JSStringRef stopTimerRef = JSStringCreateWithUTF8CString("stopTimer");
   JSStringRef fastForwardRef = JSStringCreateWithUTF8CString("fastForward");
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
   JSStringRef commitSaleRef = JSStringCreateWithUTF8CString("commitSale");
@@ -502,8 +467,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
   // JSStringRef toggleDropdownRef = JSStringCreateWithUTF8CString("toggleDropdown");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
-  JSObjectRef startTimerFunc = JSObjectMakeFunctionWithCallback(ctx, startTimerRef, startTimer);
-  JSObjectRef stopTimerFunc = JSObjectMakeFunctionWithCallback(ctx, stopTimerRef, stopTimer);
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
   JSObjectRef commitSaleFunc = JSObjectMakeFunctionWithCallback(ctx, commitSaleRef, commitSale);
@@ -514,8 +477,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
   // Store our function in the page's global JavaScript object so that it accessible from the page as 'startTimer()'.
-  JSObjectSetProperty(ctx, globalObj, startTimerRef, startTimerFunc, 0, 0);
-  JSObjectSetProperty(ctx, globalObj, stopTimerRef, stopTimerFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, fastForwardRef, fastForwardFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, commitSaleRef, commitSaleFunc, 0, 0);
@@ -523,8 +484,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, loadPortfolioRef, loadPortfolioFunc, 0, 0);
   // JSObjectSetProperty(ctx, globalObj, toggleDropdownRef, toggleDropdownFunc, 0, 0);
   // Release the JavaScript String we created earlier.
-  JSStringRelease(startTimerRef);
-  JSStringRelease(stopTimerRef);
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
   JSStringRelease(commitSaleRef);

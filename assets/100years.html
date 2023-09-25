@@ -34,9 +34,7 @@
     </div>
     <div id="dateTime"></div>
     <div id="dates-container">
-      <button id="playPauseButton" onclick="switchPlayPause()">
-        <i class="fa-solid fa-play" style="color: #040568;"></i>
-      </button>
+      
       <div class="ff-dropdown-container">
         <button onclick="fastForwardDropdown()" id="ffDropbtn">
           <i class="fa-solid fa-forward" style="color: #040568;"></i>
@@ -51,7 +49,7 @@
     </div>
     <div id="button-container">
       <button id="home" onclick="goToHome()">Home</button>
-      <button id="portfolio" onclick="goToPortfolio();stopTimer();loadPortfolio()">Portfolio</button>
+      <button id="portfolio" onclick="goToPortfolio();loadPortfolio()">Portfolio</button>
     </div>
   </header>
 
@@ -60,7 +58,7 @@
     <!-- buy/sell -->
     <div class="left-container">
       <div class="dropdown">
-        <button onclick="toggleDropdown();stopTimer();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
+        <button onclick="toggleDropdown();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
           Stock</button>
         <div id="myDropdown" class="dropdown-content">
           <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
