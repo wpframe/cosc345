@@ -13,10 +13,12 @@
 #include "Portfolio.h"
 #include "PathUtil.h"
 #include "Headline.h"
+#include "College.h"
 #include <iostream>
 #include <string>
 #include <vector>
 #include <chrono>
+#include <algorithm>
 
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
@@ -26,7 +28,15 @@ int TIMECOUNT;
 float TOTALBALANCE;
 bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
+std::vector<College> colleges;
 ultralight::String latestDate = "01/01/2023";
+ultralight::String studyStart;
+int careerStage;
+std::string college_name;
+int tuitionNeedsPaid = 0;
+int currentMonth;
+int currentYear;
+int lastPaidYear;
 
 /*
 TODO:
@@ -96,12 +106,16 @@ MyApp::MyApp()
   overlay_->view()->set_view_listener(this);
 
   std::string pathPrefix = PathUtil::findPathFromApp();
-  std::string filename = pathPrefix + "src/data/nasdaq.csv";
-  stocks = parseCSV(filename);
+  std::string nasdaqPath = pathPrefix + "src/data/nasdaq.csv";
+  stocks = parseCSV(nasdaqPath);
 
-  std::string prefix = PathUtil::findPathFromApp();
-  std::string filename2 = prefix + "src/data/headlines.csv";
-  Headline::readFromCSV(filename2);
+  std::string headlinesPath = pathPrefix + "src/data/headlines.csv";
+  Headline::readFromCSV(headlinesPath);
+
+  std::string collegesPath = pathPrefix + "src/data/colleges/college_tuition.csv";
+  colleges = parseCollegeCSV(collegesPath);
+
+  careerStage = 0;
 }
 
 MyApp::~MyApp()
@@ -126,6 +140,19 @@ void MyApp::OnUpdate()
   // view_ is an instance of View so can be called upon as you would 'caller'
   latestDate = calendar.getDate().c_str();
   TIMECOUNT = calendar.getWeeks();
+  currentYear = calendar.getYear();
+  currentMonth = calendar.getMonth();
+
+  std::string studyEnd = calendar.calculateStudyEnd(studyStart.utf8().data());
+  std::string timeLeft = calendar.calculateDateDifference(latestDate.utf8().data(), studyEnd);
+  if (timeLeft != "none")
+  {
+    if (currentMonth == 11 && lastPaidYear != currentYear)
+    {
+      tuitionNeedsPaid += 1;
+      lastPaidYear = currentYear;
+    }
+  }
   // calendar.update();
 }
 
@@ -402,6 +429,53 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 }
 
 /*!
+  @brief cppSelectCollege is a function which loads the selected college.
+  @details loads the selected college.
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+  @param jsSymbol (arguments[0]), the stocks ticker symbol
+**/
+JSValueRef cppSelectCollege(JSContextRef ctx, JSObjectRef function,
+                            JSObjectRef thisObject, size_t argumentCount,
+                            const JSValueRef arguments[], JSValueRef *exception)
+{
+  if (argumentCount >= 1)
+  {
+
+    JSStringRef jsName = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    std::string name = JSStringToStdString(jsName);
+
+    JSStringRelease(jsName);
+
+    if (colleges.size() >= 1)
+    {
+      College selectedCollege = colleges[0];
+      for (const College &college : colleges)
+      {
+        if (college.collegeName == name)
+        {
+          selectedCollege = college;
+        }
+      }
+
+      std::string response = calculateResponse(selectedCollege, portfolio);
+
+      std::string jscode =
+          "document.getElementById('result').innerText = '" + response + "'";
+      const char *str = jscode.c_str();
+      JSStringRef script = JSStringCreateWithUTF8CString(str);
+      JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+      JSStringRelease(script);
+    }
+  }
+  return JSValueMakeNull(ctx);
+}
+
+/*!
   @brief loadPortfolio is a function which sets a boolean to true.
   @details sets the boolean to true so that in the OnDOMReady function, the portfolio can be filled with purchases.
   @param ctx Javascript context
@@ -420,8 +494,7 @@ JSValueRef loadPortfolio(JSContextRef ctx, JSObjectRef function,
 }
 
 /*!
-  @brief toggleDropdown is a function which stops the calendar from counting when the dropdown is selected.
-  @details stops the calendar so that stock prices arent continuosly changing when trying to purchase a stock.
+  @brief accept offer is a function which performs cpp operations after an education offer is made
   @param ctx Javascript context
   @param function Object reference
   @param thisObject Object reference
@@ -429,11 +502,59 @@ JSValueRef loadPortfolio(JSContextRef ctx, JSObjectRef function,
   @param arguments list of arguments
   @param exception value reference
 **/
-JSValueRef toggleDropdown(JSContextRef ctx, JSObjectRef function,
-                          JSObjectRef thisObject, size_t argumentCount,
-                          const JSValueRef arguments[], JSValueRef *exception)
+JSValueRef acceptOffer(JSContextRef ctx, JSObjectRef function,
+                       JSObjectRef thisObject, size_t argumentCount,
+                       const JSValueRef arguments[], JSValueRef *exception)
 {
-  // calendar.pauseCounting();
+  if (argumentCount >= 1)
+  {
+    JSStringRef jsName = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    std::string name = JSStringToStdString(jsName);
+
+    JSStringRelease(jsName);
+
+    college_name = name;
+    careerStage = 1;
+    studyStart = latestDate;
+  }
+  return JSValueMakeNull(ctx);
+}
+
+/*!
+  @brief decline offer is a function which performs cpp operations after an education offer is made
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+**/
+JSValueRef declineOffer(JSContextRef ctx, JSObjectRef function,
+                        JSObjectRef thisObject, size_t argumentCount,
+                        const JSValueRef arguments[], JSValueRef *exception)
+{
+  if (argumentCount >= 1)
+  {
+    JSStringRef jsName = JSValueToStringCopy(ctx, arguments[0], nullptr);
+    std::string name = JSStringToStdString(jsName);
+
+    JSStringRelease(jsName);
+    if (!colleges.empty())
+    {
+      // Suppose 'name' is the name you want to match and remove
+      for (auto it = colleges.begin(); it != colleges.end(); /* no increment here */)
+      {
+        if (it->collegeName == name)
+        {
+          it = colleges.erase(it); // Remove the element that matches 'name'
+        }
+        else
+        {
+          ++it; // Move to the next element
+        }
+      }
+    }
+  }
   return JSValueMakeNull(ctx);
 }
 
@@ -464,15 +585,19 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef commitPurchaseRef = JSStringCreateWithUTF8CString("commitPurchase");
   JSStringRef commitSaleRef = JSStringCreateWithUTF8CString("commitSale");
   JSStringRef cppSelectStockRef = JSStringCreateWithUTF8CString("cppSelectStock");
+  JSStringRef cppSelectCollegeRef = JSStringCreateWithUTF8CString("cppSelectCollege");
   JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
-  // JSStringRef toggleDropdownRef = JSStringCreateWithUTF8CString("toggleDropdown");
+  JSStringRef acceptOfferRef = JSStringCreateWithUTF8CString("acceptOffer");
+  JSStringRef declineOfferRef = JSStringCreateWithUTF8CString("declineOffer");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
   JSObjectRef commitSaleFunc = JSObjectMakeFunctionWithCallback(ctx, commitSaleRef, commitSale);
   JSObjectRef cppSelectStockFunc = JSObjectMakeFunctionWithCallback(ctx, cppSelectStockRef, cppSelectStock);
+  JSObjectRef cppSelectCollegeFunc = JSObjectMakeFunctionWithCallback(ctx, cppSelectCollegeRef, cppSelectCollege);
   JSObjectRef loadPortfolioFunc = JSObjectMakeFunctionWithCallback(ctx, loadPortfolioRef, loadPortfolio);
-  // JSObjectRef toggleDropdownFunc = JSObjectMakeFunctionWithCallback(ctx, toggleDropdownRef, toggleDropdown);
+  JSObjectRef acceptOfferFunc = JSObjectMakeFunctionWithCallback(ctx, acceptOfferRef, acceptOffer);
+  JSObjectRef declineOfferFunc = JSObjectMakeFunctionWithCallback(ctx, declineOfferRef, declineOffer);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -481,15 +606,19 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, commitPurchaseRef, commitPurchaseFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, commitSaleRef, commitSaleFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, cppSelectStockRef, cppSelectStockFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, cppSelectCollegeRef, cppSelectCollegeFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, loadPortfolioRef, loadPortfolioFunc, 0, 0);
-  // JSObjectSetProperty(ctx, globalObj, toggleDropdownRef, toggleDropdownFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, acceptOfferRef, acceptOfferFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, declineOfferRef, declineOfferFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
   JSStringRelease(commitSaleRef);
   JSStringRelease(cppSelectStockRef);
+  JSStringRelease(cppSelectCollegeRef);
   JSStringRelease(loadPortfolioRef);
-  // JSStringRelease(toggleDropdownRef);
+  JSStringRelease(acceptOfferRef);
+  JSStringRelease(declineOfferRef);
 
   caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
   caller->EvaluateScript("showDate('" + latestDate + "')");
@@ -516,8 +645,9 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       std::string headlineStr = selectedStock.history[TIMECOUNT].headline;
       float headlineMultiplierStr = selectedStock.history[TIMECOUNT].multiplier;
 
-      float totalProfit = portfolioValue - totalInvestment;
-      float totalProfitPercentage = (totalProfit / totalInvestment) * 100;
+      float totalProfit = purchase.getProfitLoss(currentPriceFloat);
+      std::cout << "############# MyApp - totalProfit: " << totalProfit << std::endl;
+      float totalProfitPercentage = purchase.getProfitLossPercentage(currentPriceFloat);
       totalInvestment += purchase.getPurchaseValue();
       portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
 
@@ -576,6 +706,50 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   else
   {
     std::cout << "No stocks found in the CSV.  MyApp.cpp - MyApp::OnDOMReady method" << std::endl;
+  }
+  if (!colleges.empty())
+  {
+    for (const College &college : colleges)
+    {
+      ultralight::String name(college.collegeName.c_str());
+      ultralight::String rank(std::to_string(college.rank).c_str());
+      caller->EvaluateScript("addCollegeDropdown('" + name + "', '" + rank + "')");
+    }
+  }
+
+  ultralight::String careerStageStr = std::to_string(careerStage).c_str();
+  caller->EvaluateScript("showCareerStage('" + careerStageStr + "')");
+  ultralight::String college_name_str = college_name.c_str();
+
+  College selectedCollege = getCollege(college_name, colleges);
+  std::string tuition = std::to_string(selectedCollege.tuition);
+  ultralight::String tuitionStr = tuition.c_str();
+
+  /** NEED TO UPDATE TOTAL BALANCE FOR THE USER!!!!!!!!!
+   **/
+  if (tuitionNeedsPaid >= 1)
+  {
+    TOTALBALANCE -= selectedCollege.tuition;
+  }
+  // caller->EvaluateScript("updateBalance('')");
+
+  std::string studyEnd = calendar.calculateStudyEnd(studyStart.utf8().data());
+  std::string timeLeft = calendar.calculateDateDifference(latestDate.utf8().data(), studyEnd);
+  ultralight ::String timeLeftStr = timeLeft.c_str();
+
+  if (careerStage == 1 && timeLeft == "none")
+  {
+    careerStage = 2;
+  }
+
+  if (careerStage == 1)
+  {
+    caller->EvaluateScript("showTuitionDetails('" + college_name_str + "', '" + timeLeftStr + "', '" + tuitionStr + "')");
+  }
+
+  if (careerStage == 2)
+  {
+    // caller->EvaluateScript("showJobDetails()");
   }
 }
 

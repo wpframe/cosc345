@@ -9,7 +9,6 @@ class Calendar
 public:
     Calendar();
 
-    void update();
     int getYear() const;
     int getMonth() const;
     int getDay() const;
@@ -17,11 +16,11 @@ public:
     std::string getDate() const;
     int getWeeks() const;
 
-    void startCounting();
-    void pauseCounting();
     void reset();
     void skipTime(int weeks, int months, int years);
     bool isCounting() const;
+    std::string calculateDateDifference(const std::string &date1, const std::string &date2);
+    std::string calculateStudyEnd(const std::string &date);
 
 private:
     bool countingStarted = false;
@@ -33,11 +32,6 @@ private:
     int year = 2020;
     double timeMultiplier = 1.0;
     const int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    std::chrono::time_point<std::chrono::high_resolution_clock> lastUpdateTime =
-        std::chrono::high_resolution_clock::now();
-    std::chrono::time_point<std::chrono::high_resolution_clock> pauseStartTime =
-        std::chrono::high_resolution_clock::now();
 };
 
 #endif // CALENDAR_H

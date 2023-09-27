@@ -40,13 +40,20 @@ float Purchase::getCurrentPurchaseValue(float currentPrice) const
 {
     float currentValue = 0.0;
 
+    float currentPurchaseValue;
+    if (holdType == PositionType::Long)
+    {
+        currentPurchaseValue = getQuantity() * currentPrice;
+    }
+    else
+    {
+        currentPurchaseValue = getQuantity() * getPurchasePrice() - getQuantity() * currentPrice;
+    }
     // For a long position, calculate normally
-    float currentPurchaseValue = getQuantity() * currentPrice;
     currentValue += currentPurchaseValue;
 
     // For a short position, calculate the value of the borrowed shares
     // minus the value of repurchased shares
-    // float currentPurchaseValue = getQuantity() * getPurchasePrice() - getQuantity() * currentPrice;
 
     return currentValue;
 }
@@ -57,7 +64,15 @@ float Purchase::getCurrentPurchaseValue(float currentPrice) const
 */
 float Purchase::getPurchaseValue() const
 {
-    float purchaseValue = getQuantity() * getPurchasePrice();
+    float purchaseValue;
+    if (holdType == PositionType::Long)
+    {
+        purchaseValue = getQuantity() * getPurchasePrice();
+    }
+    else
+    {
+        purchaseValue = 0.0;
+    }
     return purchaseValue;
 }
 
@@ -69,18 +84,22 @@ float Purchase::getPurchaseValue() const
 */
 float Purchase::getProfitLoss(float currentPrice) const
 {
-    float profitLoss = 0.0;
-    if (holdType == PositionType::Long)
-    {
-        // For a long position, calculate normally
-        profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
-    }
-    else if (holdType == PositionType::Short)
-    {
-        // For a short position, calculate the value of the borrowed shares
-        // minus the value of repurchased shares
-        profitLoss = getPurchaseValue() - getCurrentPurchaseValue(currentPrice);
-    }
+
+    float profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
+
+    // float profitLoss = 0.0;
+    // if (holdType == PositionType::Long)
+    // {
+    //     // For a long position, calculate normally
+    //     profitLoss = getCurrentPurchaseValue(currentPrice) - getPurchaseValue();
+    // }
+    // else
+    // {
+    //     // For a short position, calculate the value of the borrowed shares
+    //     // minus the value of repurchased shares
+    //     profitLoss = getPurchaseValue() - getCurrentPurchaseValue(currentPrice);
+    // }
+
     return profitLoss;
 }
 
@@ -91,7 +110,15 @@ float Purchase::getProfitLoss(float currentPrice) const
 */
 float Purchase::getProfitLossPercentage(float currentPrice) const
 {
-    float profitLossPercentage = getProfitLoss(currentPrice) / getPurchaseValue();
+    float profitLossPercentage;
+    if (holdType == PositionType::Long)
+    {
+        profitLossPercentage = getProfitLoss(currentPrice) / getPurchaseValue();
+    }
+    else
+    {
+        profitLossPercentage = ((getPurchasePrice() * getQuantity()) + getProfitLoss(currentPrice)) / getQuantity() * getPurchasePrice();
+    }
     return profitLossPercentage * 100;
 }
 

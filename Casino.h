@@ -5,7 +5,8 @@
 #include <tuple>
 #include <vector>
 
-class Casino {
+class Casino
+{
 public:
     Casino();
 
@@ -13,6 +14,7 @@ public:
     double rouletteMultiplier(int result);
 
     std::vector<std::string> slotMachineSpin();
-    double slotMachineMultiplier(const std::vector<std::string>& result);
+    double slotMachineMultiplier(const std::vector<std::string> &result);
+};
 
 #endif
