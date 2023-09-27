@@ -34,7 +34,7 @@
     </div>
     <div id="dateTime"></div>
     <div id="dates-container">
-      
+
       <div class="ff-dropdown-container">
         <button onclick="fastForwardDropdown()" id="ffDropbtn">
           <i class="fa-solid fa-forward" style="color: #040568;"></i>
@@ -53,181 +53,187 @@
     </div>
   </header>
 
-  <div class="container">
 
-    <!-- buy/sell -->
-    <div class="left-container">
-      <div class="dropdown">
-        <button onclick="toggleDropdown();swapPlayAndPause()" class="dropbtn" id="dropbtn">Choose
-          Stock</button>
-        <div id="myDropdown" class="dropdown-content">
-          <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+
+  <!-- buy/sell -->
+  <div class="left-container">
+
+    <div class="row">
+      <div class="title">Stock Symbol:</div>
+      <div class="bar">
+        <div class="dropdown">
+          <input type="text" placeholder="Search.." id="myInput" onclick="toggleDropdown();swapPlayAndPause()"
+            onkeyup="filterFunction()">
+          <div id="myDropdown" class="dropdown-content">
+          </div>
         </div>
       </div>
+    </div>
 
-
-      <div id="buySellContainer">
-
-        <label class="switch">
-          <input type="checkbox" checked onclick="switchBuySell()">
-          <span class="slider round"></span>
-        </label>
-
-        <p id="buySell">Long</p>
-      </div>
-
-      <div id="currentPrice">$21.15</div>
-
-      <div id="stocksAvailable">11,346</div>
-
-      <label for="quantity">Quantity needed:</label>
-      <input type="number" id="quantity" name="quantity" min="1">
-
-      <div id="totalPrice"></div>
-
-      <div id="commitTransaction">
-        <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
+    <div class="row">
+      <div class="title">Action:</div>
+      <div class="bar">
+        <select id="actionDropdown">
+          <option value="buy">Buy</option>
+          <option value="short">Short</option>
+        </select>
       </div>
 
     </div>
+    <div class="row">
+      <div class="title">Current Price:</div>
+      <div class="bar">
+        <div id="currentPrice"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="title">Quantity Needed:</div>
+      <div class="bar">
+        <input type="number" id="quantity" name="quantity" min="1">
+      </div>
+    </div>
 
 
+    <div id="totalPrice"></div>
+
+    <div id="commitTransaction">
+      <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
+    </div>
+
+  </div>
+
+  <!-- graph -->
+  <div class="right-container">
+    <script>
+      function getFilePath(file) {
+        var filepath = file.toString();
+
+        anychart.onDocumentReady(function () {
+          // The data used in this sample can be obtained from the CDN
+          // https://cdn.anychart.com/samples/stock-event-markers/stock-chart-with-event-markers/data.csv
 
 
+          /** 
+           * ***************** NOTE ********************
+           * 'filepath' is a string representing relative file path to the graph data,
+           * look in MyApp.cpp at line 478 - 481 for the call to getFilePath method above.
+          */
+          // JUST PRINTS THE FILE PATH ONTO THE SCREEN IN A PARAGRAPH ELEMENT
+          var para = document.getElementById("filepath");
+          para.innerHTML = filepath;
 
-    <!-- graph -->
-    <div class="right-container" id="container">
-      <script>
-        function getFilePath(file) {
-          var filepath = file.toString();
+          anychart.data.loadCsvFile(
+            'https://cdn.anychart.com/samples/stock-event-markers/stock-chart-with-event-markers/data.csv',
+            function (data) {
+              // create data table on loaded data
+              var dataTable = anychart.data.table();
+              dataTable.addData(data);
 
-          anychart.onDocumentReady(function () {
-            // The data used in this sample can be obtained from the CDN
-            // https://cdn.anychart.com/samples/stock-event-markers/stock-chart-with-event-markers/data.csv
+              // map loaded data for the ohlc series
+              var mapping = dataTable.mapAs({
+                open: 1,
+                high: 2,
+                low: 3,
+                close: 4,
+                value: 7
+              });
 
+              // create stock chart
+              var chart = anychart.stock();
 
-            /** 
-             * ***************** NOTE ********************
-             * 'filepath' is a string representing relative file path to the graph data,
-             * look in MyApp.cpp at line 478 - 481 for the call to getFilePath method above.
-            */
-            // JUST PRINTS THE FILE PATH ONTO THE SCREEN IN A PARAGRAPH ELEMENT
-            var para = document.getElementById("filepath");
-            para.innerHTML = filepath;
+              // set chart title
+              chart.title('WTI Crude Oil Prices');
 
-            anychart.data.loadCsvFile(
-              'https://cdn.anychart.com/samples/stock-event-markers/stock-chart-with-event-markers/data.csv',
-              function (data) {
-                // create data table on loaded data
-                var dataTable = anychart.data.table();
-                dataTable.addData(data);
+              // create first plot on the chart and set settings
+              var plot = chart.plot(0);
+              plot
+                .height('75%')
+                .yGrid(true)
+                .xGrid(true)
+                .yMinorGrid(true)
+                .xMinorGrid(true);
 
-                // map loaded data for the ohlc series
-                var mapping = dataTable.mapAs({
-                  open: 1,
-                  high: 2,
-                  low: 3,
-                  close: 4,
-                  value: 7
-                });
+              // create candlestick series
+              var series = plot.candlestick(mapping);
+              series.name('NYMEX Crude Oil Futures');
+              series.legendItem().iconType('rising-falling');
 
-                // create stock chart
-                var chart = anychart.stock();
-
-                // set chart title
-                chart.title('WTI Crude Oil Prices');
-
-                // create first plot on the chart and set settings
-                var plot = chart.plot(0);
-                plot
-                  .height('75%')
-                  .yGrid(true)
-                  .xGrid(true)
-                  .yMinorGrid(true)
-                  .xMinorGrid(true);
-
-                // create candlestick series
-                var series = plot.candlestick(mapping);
-                series.name('NYMEX Crude Oil Futures');
-                series.legendItem().iconType('rising-falling');
-
-                // set settings for event markers
-                var eventMarkers = plot.eventMarkers();
-                // set markers data
-                eventMarkers.data([{
-                  date: '2001-09-11',
-                  description: '9-11 attacks'
-                },
-                {
-                  date: '2003-03-20',
-                  description: 'Iraq War'
-                },
-                {
-                  date: '2008-08-20',
-                  description: 'Global financial collapse'
-                },
-                {
-                  date: '2009-02-05',
-                  description: 'OPEC cuts production targets 4.2 mmbpd'
-                },
-                {
-                  date: '2009-11-15',
-                  description: 'Greece\'s debt crisis'
-                },
-                {
-                  date: '2011-03-11',
-                  description: 'Japan earthquake'
-                },
-                {
-                  date: '2014-12-01',
-                  description: 'Russian financial crisis'
-                },
-                {
-                  date: '2015-03-15',
-                  description: 'OPEC production quota unchanged'
-                }
-                ]);
-
-                // create second plot
-                var volumePlot = chart.plot(1);
-                // set yAxis labels formatter
-                volumePlot.yAxis().labels().format('{%Value}{scale:(1000)(1)|(k)}');
-                // set crosshair y-label formatter
-                volumePlot
-                  .crosshair()
-                  .yLabel()
-                  .format('{%Value}{scale:(1000)(1)|(k)}');
-
-                // create volume series on the plot
-                var volumeSeries = volumePlot.column(mapping);
-                // set series settings
-                volumeSeries.name('Volume');
-
-                // create scroller series with mapped data
-                chart.scroller().area(mapping);
-
-                // set container id for the chart
-                chart.container('container');
-                // initiate chart drawing
-                chart.draw();
-
-                // create range picker
-                var rangePicker = anychart.ui.rangePicker();
-                // init range picker
-                rangePicker.render(chart);
-
-                // create range selector
-                var rangeSelector = anychart.ui.rangeSelector();
-                // init range selector
-                rangeSelector.render(chart);
+              // set settings for event markers
+              var eventMarkers = plot.eventMarkers();
+              // set markers data
+              eventMarkers.data([{
+                date: '2001-09-11',
+                description: '9-11 attacks'
+              },
+              {
+                date: '2003-03-20',
+                description: 'Iraq War'
+              },
+              {
+                date: '2008-08-20',
+                description: 'Global financial collapse'
+              },
+              {
+                date: '2009-02-05',
+                description: 'OPEC cuts production targets 4.2 mmbpd'
+              },
+              {
+                date: '2009-11-15',
+                description: 'Greece\'s debt crisis'
+              },
+              {
+                date: '2011-03-11',
+                description: 'Japan earthquake'
+              },
+              {
+                date: '2014-12-01',
+                description: 'Russian financial crisis'
+              },
+              {
+                date: '2015-03-15',
+                description: 'OPEC production quota unchanged'
               }
-            );
-          });
+              ]);
 
-        }
-      </script>
-    </div>
+              // create second plot
+              var volumePlot = chart.plot(1);
+              // set yAxis labels formatter
+              volumePlot.yAxis().labels().format('{%Value}{scale:(1000)(1)|(k)}');
+              // set crosshair y-label formatter
+              volumePlot
+                .crosshair()
+                .yLabel()
+                .format('{%Value}{scale:(1000)(1)|(k)}');
 
+              // create volume series on the plot
+              var volumeSeries = volumePlot.column(mapping);
+              // set series settings
+              volumeSeries.name('Volume');
+
+              // create scroller series with mapped data
+              chart.scroller().area(mapping);
+
+              // set container id for the chart
+              chart.container('container');
+              // initiate chart drawing
+              chart.draw();
+
+              // create range picker
+              var rangePicker = anychart.ui.rangePicker();
+              // init range picker
+              rangePicker.render(chart);
+
+              // create range selector
+              var rangeSelector = anychart.ui.rangeSelector();
+              // init range selector
+              rangeSelector.render(chart);
+            }
+          );
+        });
+
+      }
+    </script>
   </div>
   </div>
   </section>

@@ -1,18 +1,19 @@
-tml,
 body {
   overflow: hidden;
 }
+
 
 body {
   font-family: Roboto, sans-serif;
   display: grid;
   grid-template-rows: 70px 1fr 100px;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 30% 70%;
   min-height: 100vh;
   margin: 0;
   padding: 0;
   background: #446ef8;
 }
+
 
 header {
   width: 100%;
@@ -89,33 +90,59 @@ button {
   min-width: 110px;
 }
 
-.container {
-  display: flex;
-}
+
 
 /* Container for both the background div and the graph */
 .right-container {
-  box-sizing: border-box;
-  width: 62%;
-  height: 70%;
-  background-color: #f0f0f0;
-  padding: 20px;
-  padding: 20px;
+  display: flex;
+  grid-column: 2;
+  grid-row: 2;
+  background-color: #040568;
+  color: white;
   border-radius: 10px;
-  position: absolute;
-  top: 110px;
-  right: 40px;
+  margin: 20px;
+  margin-left: 10px;
+  gap: 20px;
+  padding: 20px;
+  overflow-y: hidden;
 }
 
 .left-container {
-  box-sizing: border-box;
-  width: 28%;
-  background-color: #f0f0f0;
-  padding: 20px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-column: 1;
+  grid-row: 2;
+  background-color: #040568;
+  color: white;
   border-radius: 10px;
-  position: absolute;
-  top: 110px;
-  left: 40px;
+  margin: 20px;
+  margin-right: 10px;
+  padding: 20px;
+  overflow-y: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-rows: 30% 80%;
+  /* Two rows, 30% and 80% of the height */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.title {
+  font-weight: bold;
+  grid-row: 1;
+  /* Title takes the first row */
+}
+
+.bar {
+  /* Styling for the bar, e.g., input element */
+  grid-row: 2;
+  /* Bar takes the second row */
+}
+
+.container {
+  display: flex;
 }
 
 /* Styles for the background div */
@@ -158,29 +185,58 @@ button {
   bottom: 175px;
 }
 
+.dropdown-and-search {
+  grid-column: span 2;
+  grid-template-columns: 30% 70%;
+  display: grid;
+  width: 100%;
+}
+
+.stock-title {
+  color: #040568;
+  font-size: 24px;
+  margin: 10%;
+  left: 50%;
+  display: grid;
+  grid-column: 1;
+  width: 100%;
+}
+
+.dropdown {
+  display: grid;
+  grid-column: 2;
+  width: 100%;
+}
+
+#quantity-title {
+  grid-column: 1;
+}
+
+#quantity {
+  grid-column: 2;
+  width: 100%;
+  height: 60%;
+}
+
 /* Dropdown Button */
 .dropbtn {
-  background-color: #040568;
+
+  width: 100%;
+  background-color: transparent;
   color: white;
   padding: 16px;
   font-size: 16px;
   border: none;
   cursor: pointer;
+  z-index: 3;
 }
 
 /* The search field */
 #myInput {
-  box-sizing: border-box;
-  background-position: 14px 12px;
-  background-repeat: no-repeat;
+
+  width: 100%;
+  height: 60%;
   font-size: 16px;
-  padding: 14px 20px 12px 45px;
-  width: 230px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  height: 50px;
-  position: fixed;
-  top: 130px;
   z-index: 2;
 }
 
@@ -207,6 +263,7 @@ button {
   overflow-y: auto;
 }
 
+
 /* Links inside the dropdown */
 .dropdown-content button {
   color: black;
@@ -221,6 +278,16 @@ button {
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #f1f1f1
+}
+
+#currentPrice {
+  color: #ffffff;
+  font-size: 24px;
+  margin: 10%;
+  left: 50%;
+  display: grid;
+  grid-column: 1;
+  width: 100%;
 }
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
@@ -265,14 +332,7 @@ button {
   display: flex;
 }
 
-#buySellContainer button,
-#commitTransaction button {
-  border-radius: 20px;
-  border: 1px solid black;
-  margin: 4px;
-  padding: 4px;
-  cursor: pointer;
-}
+
 
 #buySellContainer {
   display: flex;
@@ -290,22 +350,34 @@ button {
   color: #040568;
 }
 
-/* The switch - the box around the slider */
+#actionDropdown {
+  width: 100%;
+  height: 60%;
+  font-size: 16px;
+}
+
+.row.bar {
+  width: 100%;
+  height: 60%;
+  font-size: 16px;
+}
+
+/* The switch - the box around the slider
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
-}
+} */
 
-/* Hide default HTML checkbox */
+/* Hide default HTML checkbox
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
-}
+} */
 
-/* The slider */
+/* The slider
 .slider {
   position: absolute;
   cursor: pointer;

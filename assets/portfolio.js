@@ -36,16 +36,22 @@ function updateBalance(newBalance) {
 }
 
 
-function addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, totalProfitPercentage) {
+function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, totalProfit, totalProfitPercentage) {
     var tileContainer = document.getElementsByClassName("investment-summary")[0]; // Assuming there's only one container
 
     // Create the main container div
     var summaryTile = document.createElement("div");
     summaryTile.className = "summary-tile";
 
-    var totalInvestmentParagraph = document.createElement("p");
-    totalInvestmentParagraph.textContent = "Total Investment: " + totalInvestment;
-    summaryTile.appendChild(totalInvestmentParagraph);
+    // Display "Amount Borrowed"
+    var amountBorrowedLabel = document.createElement("p");
+    amountBorrowedLabel.textContent = "Amount Borrowed: " + amountBorrowed;
+    summaryTile.appendChild(amountBorrowedLabel);
+
+    // Display "Total Investment"
+    var totalInvestmentLabel = document.createElement("p");
+    totalInvestmentLabel.textContent = "Total Investment: " + totalInvestment;
+    summaryTile.appendChild(totalInvestmentLabel);
 
     var portfolioValueParagraph = document.createElement("p");
     portfolioValueParagraph.textContent = "Current Portfolio Value: " + portfolioValue;
@@ -64,7 +70,7 @@ function addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, tota
     tileContainer.appendChild(summaryTile);
 }
 
-function updateInvestmentSummary(totalInvestment, portfolioValue, totalProfit, totalProfitPercentage) {
+function updateInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, totalProfit, totalProfitPercentage) {
     var tileContainer = document.getElementsByClassName("investment-summary")[0]; // Assuming there's only one container
 
     // Remove the existing summary (if any)
@@ -72,9 +78,9 @@ function updateInvestmentSummary(totalInvestment, portfolioValue, totalProfit, t
     if (existingSummaryTile) {
         tileContainer.removeChild(existingSummaryTile);
     }
-    addInvestmentSummary(totalInvestment, portfolioValue, totalProfit, totalProfitPercentage);
-
+    addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, totalProfit, totalProfitPercentage);
 }
+
 
 
 function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
@@ -136,10 +142,16 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     currentPriceParagraph.textContent = "Current Price: " + currentPrice; // Change this to the actual price
     stockTile.appendChild(currentPriceParagraph);
 
-    // Create and add total amount invested
+    var purchaseValueLabel = type === "Short" ? "Amount Borrowed" : "Amount Invested";
     var purchaseValueParagraph = document.createElement("p");
-    purchaseValueParagraph.textContent = "Amount Invested: " + purchaseValue; // Change this to the actual price
+    purchaseValueParagraph.textContent =
+        purchaseValueLabel + ": " + purchaseValue; // Change this to the actual price
     stockTile.appendChild(purchaseValueParagraph);
+
+    // // Create and add total amount invested
+    // var purchaseValueParagraph = document.createElement("p");
+    // purchaseValueParagraph.textContent = "Amount Invested: " + purchaseValue; // Change this to the actual price
+    // stockTile.appendChild(purchaseValueParagraph);
 
     // Create and add how much the investment is now
     var currentPurchaseValueParagraph = document.createElement("p");
@@ -191,7 +203,7 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     });
     // Create and add stock information to the modal
     var typeParagraph = document.createElement("p");
-    typeParagraph.textContent = "holding type: " + type;
+    typeParagraph.textContent = "Holding Type: " + type;
     modalContent.appendChild(typeParagraph);
 
     var stockInfoParagraph = document.createElement("p");
