@@ -156,45 +156,6 @@ int Calendar::getWeeks() const
     return totalWeeks;
 }
 
-std::string Calendar::calculateDateDifference(const std::string &date1, const std::string &date2)
-{
-    std::istringstream iss1(date1);
-    char delimiter1;
-    int day1, month1, year1;
-    if (!(iss1 >> day1 >> delimiter1 >> month1 >> delimiter1 >> year1) || delimiter1 != '/')
-    {
-        return "Invalid date format";
-    }
-
-    // Parse date2
-    std::istringstream iss2(date2);
-    char delimiter2;
-    int day2, month2, year2;
-    if (!(iss2 >> day2 >> delimiter2 >> month2 >> delimiter2 >> year2) || delimiter2 != '/')
-    {
-        return "Invalid date format";
-    }
-
-    // Calculate the difference in years and months
-    int years = year2 - year1;
-    int months = month2 - month1;
-    int days = day2 - day1;
-
-    if (months < 0)
-    {
-        years--;
-        months += 12;
-    }
-
-    if (years == 0 && months == 0)
-    {
-        return "done";
-    }
-
-    std::string result = std::to_string(years) + " years and " + std::to_string(months) + " months";
-    return result;
-}
-
 std::string Calendar::calculateStudyEnd(const std::string &date)
 {
     std::istringstream iss1(date);
@@ -205,10 +166,54 @@ std::string Calendar::calculateStudyEnd(const std::string &date)
         return "Invalid date format";
     }
 
-    years += 4;
+    years += 3;
 
     months = 11;
 
     std::string result = std::to_string(days) + "/" + std::to_string(months) + "/" + std::to_string(years);
+    return result;
+}
+
+DateDifference Calendar::calcDateDifference(const std::string &date1, const std::string &date2)
+{
+    DateDifference result = {0, 0};
+
+    std::istringstream iss1(date1);
+    char delimiter1;
+    int day1, month1, year1;
+    if (!(iss1 >> day1 >> delimiter1 >> month1 >> delimiter1 >> year1) || delimiter1 != '/')
+    {
+        // Handle invalid date format
+        result.years = -1;
+        result.months = -1;
+    }
+
+    // Parse date2
+    std::istringstream iss2(date2);
+    char delimiter2;
+    int day2, month2, year2;
+    if (!(iss2 >> day2 >> delimiter2 >> month2 >> delimiter2 >> year2) || delimiter2 != '/')
+    {
+        // Handle invalid date format
+        result.years = -1;
+        result.months = -1;
+    }
+
+    // Calculate the difference in years and months
+    result.years = year2 - year1;
+    result.months = month2 - month1;
+
+    if (result.months < 0)
+    {
+        result.years--;
+        result.months += 12;
+    }
+
+    if (result.years < 0)
+    {
+        result.months = 0;
+        result.years = 0;
+    }
+
     return result;
 }

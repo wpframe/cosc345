@@ -23,9 +23,8 @@
 #define WINDOW_WIDTH 1400
 #define WINDOW_HEIGHT 1000
 Calendar calendar;
-Portfolio portfolio(100000.0);
+Portfolio portfolio(250000.0);
 int TIMECOUNT;
-float TOTALBALANCE;
 bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
 std::vector<College> colleges;
@@ -34,9 +33,10 @@ ultralight::String studyStart;
 int careerStage;
 std::string college_name;
 int tuitionNeedsPaid = 0;
-int currentMonth;
-int currentYear;
-int lastPaidYear;
+int salaryNeedsPaid = 0;
+int lastTuitionPaidYear;
+int lastYearSalaryPaid;
+std::string lastPromotion = "";
 
 /*
 TODO:
@@ -140,18 +140,29 @@ void MyApp::OnUpdate()
   // view_ is an instance of View so can be called upon as you would 'caller'
   latestDate = calendar.getDate().c_str();
   TIMECOUNT = calendar.getWeeks();
-  currentYear = calendar.getYear();
-  currentMonth = calendar.getMonth();
+  int currentYear = calendar.getYear(); // 2022
+  int currentMonth = calendar.getMonth();
 
   std::string studyEnd = calendar.calculateStudyEnd(studyStart.utf8().data());
-  std::string timeLeft = calendar.calculateDateDifference(latestDate.utf8().data(), studyEnd);
-  if (timeLeft != "none")
+  DateDifference dateDiff = calendar.calcDateDifference(latestDate.utf8().data(), studyEnd);
+  if (!(dateDiff.years == 0 && dateDiff.months == 0) && careerStage == 1)
   {
-    if (currentMonth == 11 && lastPaidYear != currentYear)
+    if (currentYear > lastTuitionPaidYear)
     {
-      tuitionNeedsPaid += 1;
-      lastPaidYear = currentYear;
+      tuitionNeedsPaid += std::min(currentYear - lastTuitionPaidYear, 3);
+      lastTuitionPaidYear = currentYear;
     }
+  }
+  else if (careerStage == 1)
+  {
+    careerStage = 2;
+    lastYearSalaryPaid = currentYear;
+  }
+
+  if (careerStage == 2 && currentYear > lastYearSalaryPaid)
+  {
+    salaryNeedsPaid++;
+    lastYearSalaryPaid = currentYear;
   }
   // calendar.update();
 }
@@ -559,6 +570,81 @@ JSValueRef declineOffer(JSContextRef ctx, JSObjectRef function,
 }
 
 /*!
+  @brief accept offer is a function which performs cpp operations after an education offer is made
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+**/
+JSValueRef raiseRequested(JSContextRef ctx, JSObjectRef function,
+                          JSObjectRef thisObject, size_t argumentCount,
+                          const JSValueRef arguments[], JSValueRef *exception)
+{
+  std::string studyEnd = calendar.calculateStudyEnd(studyStart.utf8().data());
+  // DateDifference yearsExperience = calendar.calcDateDifference(studyEnd, latestDate.utf8().data());
+  int monthsSincePromotion;
+  DateDifference sinceLastPromotion;
+  if (lastPromotion == "")
+  {
+    sinceLastPromotion.years = 0;
+    sinceLastPromotion.months = 0;
+    lastPromotion = latestDate.utf8().data();
+  }
+  else
+  {
+    sinceLastPromotion = calendar.calcDateDifference(lastPromotion, latestDate.utf8().data());
+  }
+
+  monthsSincePromotion = sinceLastPromotion.years * 12 + sinceLastPromotion.months;
+  std::cout << "months since last promotion: " << monthsSincePromotion << std::endl;
+  int oldSalary = getSalary();
+  std::cout << "oldSalary:  " << oldSalary << std::endl;
+  calculateSalary(monthsSincePromotion);
+  int newSalary = getSalary();
+  std::cout << "newSalary:  " << newSalary << std::endl;
+
+  std::string salaryStr = std::to_string(newSalary);
+
+  if (oldSalary != newSalary)
+  {
+    // portfolio.updateTotalBalance(newSalary);
+    lastPromotion = latestDate.utf8().data();
+
+    std::string jscode =
+        "document.getElementById('raiseResult').innerText = 'Congratulations! Your request for a raise has been approved. Your new salary is as above.'";
+    std::string jscode2 =
+        "document.getElementById('income').innerText = 'Current salary: $" + salaryStr + "'";
+    const char *str = jscode.c_str();
+    const char *str2 = jscode2.c_str();
+    JSStringRef script = JSStringCreateWithUTF8CString(str);
+    JSStringRef script2 = JSStringCreateWithUTF8CString(str2);
+    JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+    JSEvaluateScript(ctx, script2, 0, 0, 0, 0);
+    JSStringRelease(script);
+    JSStringRelease(script2);
+  }
+  else
+  {
+    std::cout << "INSIDE THE ELSE STATEMENT" << std::endl;
+    std::string jscode =
+        "document.getElementById('raiseResult').innerText = 'We appreciate your request, but unfortunately, it has been denied this time.'";
+
+    const char *str = jscode.c_str();
+
+    JSStringRef script = JSStringCreateWithUTF8CString(str);
+
+    JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+
+    JSStringRelease(script);
+  }
+  std::cout << "#############################" << std::endl;
+
+  return JSValueMakeNull(ctx);
+}
+
+/*!
   @brief function which is called every time a new page is loaded onto the screen.
   @param caller instance of view
   @param frame_id the frame id
@@ -589,6 +675,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef loadPortfolioRef = JSStringCreateWithUTF8CString("loadPortfolio");
   JSStringRef acceptOfferRef = JSStringCreateWithUTF8CString("acceptOffer");
   JSStringRef declineOfferRef = JSStringCreateWithUTF8CString("declineOffer");
+  JSStringRef raiseRequestedRef = JSStringCreateWithUTF8CString("raiseRequested");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
@@ -598,6 +685,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectRef loadPortfolioFunc = JSObjectMakeFunctionWithCallback(ctx, loadPortfolioRef, loadPortfolio);
   JSObjectRef acceptOfferFunc = JSObjectMakeFunctionWithCallback(ctx, acceptOfferRef, acceptOffer);
   JSObjectRef declineOfferFunc = JSObjectMakeFunctionWithCallback(ctx, declineOfferRef, declineOffer);
+  JSObjectRef raiseRequestedFunc = JSObjectMakeFunctionWithCallback(ctx, raiseRequestedRef, raiseRequested);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -610,6 +698,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, loadPortfolioRef, loadPortfolioFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, acceptOfferRef, acceptOfferFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, declineOfferRef, declineOfferFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, raiseRequestedRef, raiseRequestedFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
@@ -619,6 +708,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(loadPortfolioRef);
   JSStringRelease(acceptOfferRef);
   JSStringRelease(declineOfferRef);
+  JSStringRelease(raiseRequestedRef);
 
   // caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
   caller->EvaluateScript("showDate('" + latestDate + "')");
@@ -734,20 +824,30 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
   /** NEED TO UPDATE TOTAL BALANCE FOR THE USER!!!!!!!!!
    **/
-  if (tuitionNeedsPaid >= 1)
+  while (tuitionNeedsPaid > 0)
   {
-    portfolio.updateTotalBalance(selectedCollege.tuition);
+    portfolio.updateTotalBalance(selectedCollege.tuition * -1);
+    tuitionNeedsPaid -= 1;
   }
+
+  while (salaryNeedsPaid > 0)
+  {
+    portfolio.updateTotalBalance(getSalary());
+    salaryNeedsPaid -= 1;
+  }
+
   // caller->EvaluateScript("updateBalance('')");
 
   std::string studyEnd = calendar.calculateStudyEnd(studyStart.utf8().data());
-  std::string timeLeft = calendar.calculateDateDifference(latestDate.utf8().data(), studyEnd);
-  ultralight ::String timeLeftStr = timeLeft.c_str();
+  DateDifference dateDiff = calendar.calcDateDifference(latestDate.utf8().data(), studyEnd);
+  ultralight ::String timeLeftStr = std::to_string(dateDiff.years).c_str() +
+                                    ultralight::String(" years, ") + std::to_string(dateDiff.months).c_str() +
+                                    ultralight::String(" months.");
 
-  if (careerStage == 1 && timeLeft == "none")
-  {
-    careerStage = 2;
-  }
+  // if (careerStage == 1 && (dateDiff.years == 0 && dateDiff.months == 0))
+  // {
+  //   careerStage = 2;
+  // }
 
   if (careerStage == 1)
   {
@@ -756,7 +856,27 @@ void MyApp::OnDOMReady(ultralight::View *caller,
 
   if (careerStage == 2)
   {
-    // caller->EvaluateScript("showJobDetails()");
+    std::string studyEnd = calendar.calculateStudyEnd(studyStart.utf8().data());
+    // DateDifference yearsExperience = calendar.calcDateDifference(studyEnd, latestDate.utf8().data());
+    int monthsSincePromotion;
+    DateDifference sinceLastPromotion;
+    if (lastPromotion == "")
+    {
+      sinceLastPromotion.years = 2;
+      sinceLastPromotion.months = 4;
+    }
+    else
+    {
+      sinceLastPromotion = calendar.calcDateDifference(lastPromotion, latestDate.utf8().data());
+    }
+
+    monthsSincePromotion = sinceLastPromotion.years * 12 + sinceLastPromotion.months;
+    // calculateSalary(monthsSincePromotion);
+    int newSalary = getSalary();
+    ultralight::String salaryStr = std::to_string(getSalary()).c_str();
+    // portfolio.updateTotalBalance(newSalary);
+
+    caller->EvaluateScript("showJobDetails('" + college_name_str + "', '" + salaryStr + "')");
   }
 }
 

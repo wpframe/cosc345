@@ -4,6 +4,12 @@
 #include <string>
 #include <chrono>
 
+struct DateDifference
+{
+    int years;
+    int months;
+};
+
 class Calendar
 {
 public:
@@ -20,6 +26,7 @@ public:
     void skipTime(int weeks, int months, int years);
     bool isCounting() const;
     std::string calculateDateDifference(const std::string &date1, const std::string &date2);
+    DateDifference calcDateDifference(const std::string &date1, const std::string &date2);
     std::string calculateStudyEnd(const std::string &date);
 
 private:

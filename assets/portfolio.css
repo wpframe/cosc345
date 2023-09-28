@@ -71,6 +71,23 @@ header h1 {
   background-color: #0e12db;
 }
 
+#requestRaise {
+  display: block;
+  width: auto;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #040568;
+  border: none;
+  border-radius: 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 50px;
+}
+#requestRaise:hover {
+  background-color: #446ef8;
+}
+
 .investment-summary {
   display: flex;
   grid-column: 2;
@@ -174,6 +191,7 @@ header h1 {
   max-height: 100%;
   grid-column: 2;
   grid-row: 3 / span 2;
+  z-index: -2;
 }
 
 .close {

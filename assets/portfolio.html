@@ -55,19 +55,20 @@
   <!-- Should be hidden until an offer is accepted then visible for 4 years, then hidden -->
   <section class="education-container">
 
-    <div id="remainingTime">Time remaining</div>
+    <div id="remainingTime"></div>
     
-    <div id="tuition">tuition per year</div>
+    <div id="tuition"></div>
     
   </section>
 
   <!-- Should be hidden until education has been completed -->
   <section class="job-container">
-    <div id="grad">Graduated from: </div>
+    <div id="grad"></div>
     
-    <div id="income">Current salary</div>
+    <div id="income"></div>
 
-    <button id="requestRaise">request raise</button>
+    <button id="requestRaise" onclick="raiseRequestedJS()">request raise</button>
+    <div id="raiseResult"></div>
   </section>
 
   <!-- Popup will only appear when an application has been successful to a university -->

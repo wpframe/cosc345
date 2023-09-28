@@ -15,6 +15,7 @@
 #include <cmath>
 
 int totalEnrolment = 0;
+int salary = 40000;
 /*!
     @brief The constructor for the College class.
     @details Takes and initializes the name, rank, tuition, and enrolmentNumber.
@@ -130,4 +131,33 @@ College getCollege(std::string &collegeName, std::vector<College> colleges)
         }
     }
     return colleges[0];
+}
+
+float randomFloat(float min, float max)
+{
+    return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
+}
+
+int randomInt(int min, int max)
+{
+    return min + static_cast<int>(rand()) / (static_cast<int>(RAND_MAX / (max - min)));
+}
+
+void calculateSalary(int monthsSincePromotion)
+{
+    bool promotionDue = monthsSincePromotion >= randomInt(7, 15);
+
+    float raisePercentage = 0.0;
+    if (promotionDue)
+    {
+        raisePercentage = randomFloat(0.04f, 0.20f);
+    }
+
+    int newSalary = static_cast<int>(salary * (1 + raisePercentage));
+    salary = newSalary;
+}
+
+int getSalary()
+{
+    return salary;
 }

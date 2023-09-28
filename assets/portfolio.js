@@ -453,3 +453,16 @@ function showTuitionDetails(collegeName, remainingTimeParam, tuitionParam) {
     var tuition = document.getElementById("tuition");
     tuition.textContent = "Tuition costs per year: " + tuitionParam;
 }
+
+function showJobDetails(collegeName, salary) {
+    var graduatedFrom = document.getElementById("grad");
+    graduatedFrom.textContent = "Graduated from: " + collegeName;
+
+    var currentSalary = document.getElementById("income");
+    currentSalary.textContent = "Current salary: $" + salary;
+}
+
+function raiseRequestedJS() {
+    var rasieRes = document.getElementById('raiseResult');
+    raiseRequested();
+}
