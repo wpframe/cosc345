@@ -27,72 +27,78 @@
   </header>
 
 
-  <section class="tiles-container">
-
-
-  </section>
-
-  <section class="investment-summary">
-
-  </section>
-
-  <!--   Should be visible until an offer is accepted then will be hidden for the remaining time of the game. -->
-  <section class="education-selection-container">
-    
-    <div class="dropdown">
-      <button onclick="toggleDropdown();" class="dropbtn" id="dropbtn">Choose
-        Education</button>
-      <div id="myDropdown" class="dropdown-content">
-        <!-- <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"> -->
+  <section class="tiles-container"></section>
+  <section class="right-side">
+    <section class="investment-summary">
+      <!-- <div id="summary-tile">
+        <p>Amount Borrowed: <span id="amountBorrowed">[Inse Value]</span></p>
+        <p>Total Investment: <span id="totalInvestment">[InserValue]</span></p>
+        <p>Current Portfolio Value: <span id="portfolioValue">[InsertValue]</span></p>
+        <p>Total Profit/Loss: <span id="totalProfit">[Inse Value]</span></p>
+        <p>Total Profit/Loss Percentage: <span id="totalProfitPercentage">[e]</span>
+        </p>
       </div>
-    </div>
+      </div> -->
+    </section>
 
-    <div id="result"></div>
-    
-    <span class="help">?</span>
-  </section>
+    <!--   Should be visible until an offer is accepted then will be hidden for the remaining time of the game. -->
+    <section class="education-selection-container">
 
-  <!-- Should be hidden until an offer is accepted then visible for 4 years, then hidden -->
-  <section class="education-container">
+      <div class="dropdown">
+        <button onclick="toggleDropdown();" class="dropbtn" id="dropbtn">Choose
+          Education</button>
+        <div id="myDropdown" class="dropdown-content">
+          <!-- <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"> -->
+        </div>
+      </div>
 
-    <div id="remainingTime"></div>
-    
-    <div id="tuition"></div>
-    
-  </section>
+      <div id="result"></div>
 
-  <!-- Should be hidden until education has been completed -->
-  <section class="job-container">
-    <div id="grad"></div>
-    
-    <div id="income"></div>
+      <span class="help">?</span>
+    </section>
 
-    <button id="requestRaise" onclick="raiseRequestedJS()">request raise</button>
-    <div id="raiseResult"></div>
-  </section>
+    <!-- Should be hidden until an offer is accepted then visible for 4 years, then hidden -->
+    <section class="education-container">
 
-  <!-- Popup will only appear when an application has been successful to a university -->
-  <div id="popup-success" class="popup-success">
-    <div class="popup-success-content">
+      <div id="remainingTime"></div>
+
+      <div id="tuition"></div>
+
+    </section>
+
+    <!-- Should be hidden until education has been completed -->
+    <section class="job-container">
+      <div id="grad"></div>
+
+      <div id="income"></div>
+
+      <button id="requestRaise" onclick="raiseRequestedJS()">request raise</button>
+      <div id="raiseResult"></div>
+    </section>
+
+    <!-- Popup will only appear when an application has been successful to a university -->
+    <div id="popup-success" class="popup-success">
+      <div class="popup-success-content">
         <span class="close" id="closeSuccessPopup">&times;</span>
         <h2>Success</h2>
         <p>You have been offered a spot.</p>
         <button id="acceptOffer" onclick="acceptOfferJS()">Accept</button>
         <button id="declineOffer" onclick="declineOfferJS()">Decline</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Popup will only appear when an application has been unsuccessful to a university -->
-  <div id="popup-unsuccess" class="popup-unsuccess">
-    <div class="popup-unsuccess-content">
+    <!-- Popup will only appear when an application has been unsuccessful to a university -->
+    <div id="popup-unsuccess" class="popup-unsuccess">
+      <div class="popup-unsuccess-content">
         <span class="close" id="closeUnsuccessPopup">&times;</span>
         <h2>Unsuccessful</h2>
         <p>You have not been offered a spot.</p>
+      </div>
     </div>
-  </div>
 
-  <img id="arrows" src="—Pngtree—blue gradient financial arrow_6489125.png" alt="Image Description">
 
+    <img id="arrows" src="—Pngtree—blue gradient financial arrow_6489125.png" alt="Image Description">
+  </section>
   <div class="modal" id="sellTileModal">
     <div class="modal-content">
     </div>
