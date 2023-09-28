@@ -37,16 +37,13 @@
     <div id="dates-container">
 
       <div class="ff-dropdown-container">
-        <!-- <button onclick="fastForwardDropdown()" id="ffDropbtn"> -->
           <i class="fa-solid fa-forward" style="color: white;"></i>
-        <!-- </button> -->
-        <!-- <div id="ff-dropdown-content" class="ff-dropdown-content"> -->
           <button type="button" class="ffbutton" onclick="fastForward(1,0,0)">week</button>
           <button type="button" class="ffbutton" onclick="fastForward(0,1,0)">month</button>
           <button type="button" class="ffbutton" onclick="fastForward(0,0,1)">year</button>
           <button type="button" class="ffbutton" onclick="fastForward(0,0,10)">decade</button>
-        <!-- </div> -->
       </div>
+
     </div>
     <div id="button-container">
       <button id="home" onclick="goToHome()">Home</button>
@@ -70,6 +67,14 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="title">Action:</div>
+      <div class="bar">
+        <select id="actionDropdown">
+          <option value="buy">Buy</option>
+          <option value="short">Short</option>
+        </select>
+      </div>
 
     </div>
     <div class="row">

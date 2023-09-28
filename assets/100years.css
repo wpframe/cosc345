@@ -236,6 +236,7 @@ button {
   cursor: pointer;
   z-index: 3;
 }
+
 /* The search field */
 #myInput {
 
@@ -298,9 +299,6 @@ button {
 .ff-dropdown-container {
   position: relative;
   display: inline-block;
-  background-color: #040568;
-  border-radius: 30px;
-  padding: 10px 20px;
 }
 
 #ffDropbtn {
@@ -322,16 +320,13 @@ button {
   padding: 6px 20px;
 }
 
-.ffbutton{
+.ff-dropdown-content button {
   border: none;
-  background: none;
+  border-radius: 5%;
+  background-color: #368af7;
   font-family: 'Evil', sans-serif;
-  color: white;
-  /* margin: 0px 3px; */
-}
-
-.ffbutton:hover {
-  cursor: pointer;
+  color: #040568;
+  margin: 0 10px;
 }
 
 .ff-dropdown-container:hover .ff-dropdown-content {
@@ -374,6 +369,26 @@ button {
   width: 100%;
   height: 60%;
   font-size: 16px;
+}
+
+.ffbutton{
+  border: none;
+  background: none;
+  font-family: 'Evil', sans-serif;
+  color: white;
+  /* margin: 0px 3px; */
+}
+
+.ffbutton:hover {
+  cursor: pointer;
+}
+
+.ff-dropdown-container {
+  position: relative;
+  display: inline-block;
+  background-color: #040568;
+  border-radius: 30px;
+  padding: 10px 20px;
 }
 
 .bar {

@@ -58,7 +58,6 @@ function updateTotalPrice() {
 }
 // Add an event listener to the quantity input element
 document.getElementById("quantity").addEventListener("input", updateTotalPrice);
-
 window.addEventListener("click", function (event) {
     var dropdown = document.getElementById("myDropdown");
     var searchInput = document.getElementById("myInput");
@@ -169,8 +168,8 @@ function commitPurchaseJS() {
 
     var quantity = document.getElementById('quantity').value;
 
-    commitPurchase(symbol, buyOrSell, quantity);
-    window.location.reload();
+    commitPurchase(symbol, buyOrSell, quantity)
+    window.location.reload()
 }
 
 function commitPurchase() { }
