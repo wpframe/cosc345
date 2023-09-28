@@ -412,7 +412,7 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
 
     std::string jscode =
-        "document.getElementById('currentPrice').innerText = 'Price per stock: $" + closePriceString + "'";
+        "document.getElementById('currentPrice').innerText = '" + closePriceString + "'";
 
     const char *str = jscode.c_str();
 
@@ -620,12 +620,12 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(acceptOfferRef);
   JSStringRelease(declineOfferRef);
 
-  caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
+  // caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
   caller->EvaluateScript("showDate('" + latestDate + "')");
   ultralight::String totalBalance = std::to_string(portfolio.getTotalBalance()).c_str();
   ultralight::String placeholder = "0";
   caller->EvaluateScript("initBalance('" + totalBalance + "')");
-  caller->EvaluateScript("addInvestmentSummary('" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "')");
+  caller->EvaluateScript("addInvestmentSummary('" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "')");
 
   std::string prefix = PathUtil::findPathFromApp();
   std::string filepath = prefix + "src/data/graph/data.csv";
@@ -636,9 +636,12 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   {
     float totalInvestment = 0.0;
     float portfolioValue = 0.0;
+    float amountBorrowed = 0.0;
+
     std::vector<Purchase> purchases = portfolio.getPurchases();
     for (const Purchase &purchase : purchases)
     {
+      float purchaseValue = 0.0;
       Stock selectedStock = purchase.getStock();
       const auto &history = selectedStock.history;
       float currentPriceFloat = selectedStock.history[TIMECOUNT].closePrice;
@@ -646,20 +649,23 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       float headlineMultiplierStr = selectedStock.history[TIMECOUNT].multiplier;
 
       float totalProfit = purchase.getProfitLoss(currentPriceFloat);
-      std::cout << "############# MyApp - totalProfit: " << totalProfit << std::endl;
       float totalProfitPercentage = purchase.getProfitLossPercentage(currentPriceFloat);
-      totalInvestment += purchase.getPurchaseValue();
-      portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
 
       std::string holdingTypeStr;
       PositionType type = purchase.getPositionType();
       if (type == PositionType::Short)
       {
         holdingTypeStr = "Short";
+        amountBorrowed += purchase.getQuantity() * purchase.getPurchasePrice();
+        portfolioValue += (purchase.getQuantity() * purchase.getPurchasePrice()) + purchase.getCurrentPurchaseValue(currentPriceFloat);
+        purchaseValue = purchase.getQuantity() * purchase.getPurchasePrice();
       }
       else
       {
         holdingTypeStr = "Long";
+        totalInvestment += purchase.getPurchaseValue();
+        portfolioValue += purchase.getCurrentPurchaseValue(currentPriceFloat);
+        purchaseValue = purchase.getPurchaseValue();
       }
 
       ultralight::String holdingType = holdingTypeStr.c_str();
@@ -671,18 +677,19 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       ultralight::String quantity = std::to_string(purchase.getQuantity()).c_str();
       ultralight::String profitLoss = std::to_string(purchase.getProfitLoss(currentPriceFloat)).c_str();
       ultralight::String profitLossPercentage = std::to_string(purchase.getProfitLossPercentage(currentPriceFloat)).c_str();
-      ultralight::String purchaseValue = std::to_string(purchase.getPurchaseValue()).c_str();
+      ultralight::String purchaseValueStr = std::to_string(purchaseValue).c_str();
       ultralight::String currentPurchaseValue = std::to_string(purchase.getCurrentPurchaseValue(currentPriceFloat)).c_str();
+      ultralight::String amountBorrowedStr = std::to_string(amountBorrowed).c_str();
       ultralight::String totalInvestmentStr = std::to_string(totalInvestment).c_str();
       ultralight::String portfolioValueStr = std::to_string(portfolioValue).c_str();
       ultralight::String totalProfitStr = std::to_string(totalProfit).c_str();
       ultralight::String totalProfitPercentageStr = std::to_string(totalProfitPercentage).c_str();
 
-      caller->EvaluateScript("addStockTile('" + holdingType + "', '" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValue + "', '" + currentPurchaseValue + "', '" + headline + "', '" + headlineMultiplier + "')");
+      caller->EvaluateScript("addStockTile('" + holdingType + "', '" + symbol + "', '" + purchasePrice + "', '" + currentPrice + "', '" + quantity + "', '" + profitLoss + "', '" + profitLossPercentage + "', '" + purchaseValueStr + "', '" + currentPurchaseValue + "', '" + headline + "', '" + headlineMultiplier + "')");
 
       caller->EvaluateScript("updateBalance('" + totalBalance + "')");
 
-      caller->EvaluateScript("updateInvestmentSummary('" + totalInvestmentStr + "', '" + portfolioValueStr + "', '" + totalProfitStr + "', '" + totalProfitPercentageStr + "')");
+      caller->EvaluateScript("updateInvestmentSummary('" + amountBorrowedStr + "', '" + totalInvestmentStr + "', '" + portfolioValueStr + "', '" + totalProfitStr + "', '" + totalProfitPercentageStr + "', '" + holdingType + "')");
     }
   }
 

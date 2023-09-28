@@ -111,13 +111,14 @@ float Purchase::getProfitLoss(float currentPrice) const
 float Purchase::getProfitLossPercentage(float currentPrice) const
 {
     float profitLossPercentage;
+
     if (holdType == PositionType::Long)
     {
-        profitLossPercentage = getProfitLoss(currentPrice) / getPurchaseValue();
+        profitLossPercentage = (currentPrice - getPurchasePrice()) / getPurchasePrice();
     }
     else
     {
-        profitLossPercentage = ((getPurchasePrice() * getQuantity()) + getProfitLoss(currentPrice)) / getQuantity() * getPurchasePrice();
+        profitLossPercentage = (getPurchasePrice() - currentPrice) / getPurchasePrice();
     }
     return profitLossPercentage * 100;
 }
