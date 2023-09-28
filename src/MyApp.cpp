@@ -412,7 +412,7 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
 
     std::string jscode =
-        "document.getElementById('currentPrice').innerText = 'Price per stock: $" + closePriceString + "'";
+        "document.getElementById('currentPrice').innerText = '" + closePriceString + "'";
 
     const char *str = jscode.c_str();
 
@@ -620,7 +620,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(acceptOfferRef);
   JSStringRelease(declineOfferRef);
 
-  caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
+  // caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
   caller->EvaluateScript("showDate('" + latestDate + "')");
   ultralight::String totalBalance = std::to_string(portfolio.getTotalBalance()).c_str();
   ultralight::String placeholder = "0";

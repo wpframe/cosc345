@@ -18,7 +18,7 @@ function goToPortfolio() {
  * @param {*} stocksAvailable 
  */
 function showStockInfo(currentPrice) {
-    document.getElementById("currentPrice").textContent = currentPrice;
+    document.getElementById("currentPrice").textContent = currentPrice.toFixed(2);
     // document.getElementById("stocksAvailable").textContent = stocksAvailable;
 }
 
@@ -44,7 +44,7 @@ function switchBuySell() {
  * @returns break out of function
  */
 function updateTotalPrice() {
-    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent.slice(18));
+    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent);
     var quantity = parseInt(document.getElementById("quantity").value, 10);
 
     var totalPrice = currentPrice * quantity;
@@ -54,7 +54,7 @@ function updateTotalPrice() {
         return;
     }
 
-    document.getElementById("totalPrice").textContent = "Total Price: $" + totalPrice.toFixed(2);
+    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
 }
 // Add an event listener to the quantity input element
 document.getElementById("quantity").addEventListener("input", updateTotalPrice);
