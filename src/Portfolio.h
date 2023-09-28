@@ -17,6 +17,7 @@ public:
     void printPortfolio() const;
     Purchase *getPurchase(const std::string &stockSymbol, PositionType holdType);
     float getTotalBalance() const;
+    void updateTotalBalance(float amountAdded);
     const std::vector<Purchase> getPurchases() const;
     void summarizePortfolio(int time) const;
     void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, const std::string &type);

@@ -158,6 +158,7 @@ button {
   bottom: 175px;
 }
 
+
 /* Dropdown Button */
 .dropbtn {
   background-color: #040568;
@@ -167,7 +168,6 @@ button {
   border: none;
   cursor: pointer;
 }
-
 /* The search field */
 #myInput {
   box-sizing: border-box;
@@ -231,6 +231,9 @@ button {
 .ff-dropdown-container {
   position: relative;
   display: inline-block;
+  background-color: #040568;
+  border-radius: 30px;
+  padding: 10px 20px;
 }
 
 #ffDropbtn {
@@ -252,13 +255,16 @@ button {
   padding: 6px 20px;
 }
 
-.ff-dropdown-content button {
+.ffbutton{
   border: none;
-  border-radius: 5%;
-  background-color: #368af7;
+  background: none;
   font-family: 'Evil', sans-serif;
-  color: #040568;
-  margin: 0 10px;
+  color: white;
+  /* margin: 0px 3px; */
+}
+
+.ffbutton:hover {
+  cursor: pointer;
 }
 
 .ff-dropdown-container:hover .ff-dropdown-content {

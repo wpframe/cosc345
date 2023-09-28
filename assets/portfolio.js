@@ -260,3 +260,184 @@ function commitSaleJS(symbol, amountToSell, stockQuantity, stockCurrentPrice) {
 }
 
 function commitSale() { }
+
+/**
+ * Toggles the dropdown display
+ */
+function toggleDropdown() {
+    var dropdown = document.getElementById("myDropdown");
+    // var dropbtn = document.getElementById("dropbtn");
+    dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    // dropbtn.style.display = (dropdown.style.display === "none") ? "none" : "block";
+}
+
+// /**
+//  * Filters a list of items based on a search input.
+//  */
+// function filterFunction() {
+//     var input, filter, div, i;
+//     input = document.getElementById("myInput");
+//     filter = input.value.toUpperCase();
+//     div = document.getElementById("myDropdown");
+//     button = div.getElementsByTagName("button");
+//     for (i = 0; i < button.length; i++) {
+//         txtValue = button[i].innerText;
+//         // txtValue = button[i].textContent || button[i].innerText;
+//         if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//             button[i].style.display = "";
+//         } else {
+//             button[i].style.display = "none";
+//         }
+//     }
+// }
+
+/**
+ * Adds a college to the dropdown menu
+ * @param {string} name - The name of the college.
+ * @param {string} rank - The rank of the college.
+ */
+function addCollegeDropdown(name, rank) {
+    var dropdown = document.getElementById("myDropdown");
+    var newButton = document.createElement("button");
+    newButton.type = "button";
+    newButton.setAttribute = ("id", name);
+
+    // Create a <span> for the name and rank
+    var nameSpan = document.createElement("span");
+    nameSpan.textContent = name;
+
+    var rankSpan = document.createElement("span");
+    rankSpan.textContent = "Rank: " + rank;
+
+    // Add the name and rank <span> elements to the button
+    newButton.appendChild(nameSpan);
+    newButton.appendChild(document.createElement("br")); // Add a line break if needed
+    newButton.appendChild(rankSpan);
+
+    newButton.onclick = function () {
+        cppSelectCollege(name);
+        selectCollege(name);
+    };
+
+    // Add the button to the dropdown
+    dropdown.appendChild(newButton);
+}
+
+const popup_success = document.getElementById("popup-success");
+const popup_unsuccess = document.getElementById("popup-unsuccess");
+/**
+ * Sets the content of the button to the stock symbol
+ * @param {string} name
+ */
+function selectCollege(name) {
+    var dropbtn = document.getElementById("dropbtn");
+    dropbtn.textContent = name;
+
+    var result = document.getElementById("result");
+    if (result.textContent == "success") {
+        popup_success.style.display = "block";
+    } else {
+        popup_unsuccess.style.display = "block";
+    }
+}
+
+/**
+ * Event listener triggers function when the window is clicked outside of the dropdown
+ */
+window.addEventListener("click", function (event) {
+    var dropdown = document.getElementById("myDropdown");
+    var searchInput = document.getElementById("myInput");
+    var dropdownButton = document.querySelector(".dropbtn");
+
+    if (
+        event.target !== dropdown && event.target !== searchInput && event.target !== dropdownButton) {
+        dropdown.style.display = "none";
+        dropdownButton.style.display = "block";
+    }
+});
+
+/**
+ * Closes success popup
+ */
+const closeSuccessPopupButton = document.getElementById("closeSuccessPopup");
+closeSuccessPopupButton.addEventListener("click", (event) => {
+    popup_success.style.display = "none";
+});
+
+/**
+ * Closes unsuccessful popup
+ */
+const closeUnsuccessPopupButton = document.getElementById("closeUnsuccessPopup");
+closeUnsuccessPopupButton.addEventListener("click", (event) => {
+    popup_unsuccess.style.display = "none";
+});
+
+// Close the pop-up if the user clicks outside of it
+window.addEventListener("click", (event) => {
+    if (event.target === popup_success) {
+        popup_success.style.display = "none";
+    }
+    else if (event.target === popup_unsuccess) {
+        popup_unsuccess.style.display = "none";
+    }
+});
+
+function acceptOfferJS() {
+    var dropbtn = document.getElementById("dropbtn");
+    var name = dropbtn.textContent;
+
+    var pop_success = document.getElementById("popup-success");
+    pop_success.style.display = "none";
+
+    var education_selection_container = document.querySelector(".education-selection-container");
+    if (education_selection_container) {
+        education_selection_container.style.display = "none";
+    }
+
+    var education_container = document.querySelector(".education-container");
+    if (education_container) {
+        education_container.style.display = "block";
+    }
+    acceptOffer(name);
+    window.location.reload();
+}
+
+
+function declineOfferJS() {
+    popup_success.style.display = "none";
+    var dropbtn = document.getElementById("dropbtn");
+    var name = dropbtn.textContent;
+
+    var declinedCollege = document.getElementById(name);
+    declinedCollege.style.display = "none";
+    declinedCollege.remove();
+    declineOffer(name);
+}
+
+
+function showCareerStage(stage) {
+    var education_selection_container = document.querySelector(".education-selection-container");
+    var education_container = document.querySelector(".education-container");
+    var job_container = document.querySelector(".job-container");
+    if (stage == 0) {
+        education_selection_container.style.display = "block";
+        education_container.style.display = "none";
+        job_container.style.display = "none";
+    } else if (stage == 1) {
+        education_selection_container.style.display = "none";
+        education_container.style.display = "block";
+        job_container.style.display = "none";
+    } else {
+        education_selection_container.style.display = "none";
+        education_container.style.display = "none";
+        job_container.style.display = "block";
+    }
+}
+
+function showTuitionDetails(collegeName, remainingTimeParam, tuitionParam) {
+    var remainingTime = document.getElementById("remainingTime");
+    remainingTime.textContent = "Time remaining at " + collegeName + ": " + remainingTimeParam;
+
+    var tuition = document.getElementById("tuition");
+    tuition.textContent = "Tuition costs per year: " + tuitionParam;
+}

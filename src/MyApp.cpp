@@ -729,7 +729,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
    **/
   if (tuitionNeedsPaid >= 1)
   {
-    TOTALBALANCE -= selectedCollege.tuition;
+    portfolio.updateTotalBalance(selectedCollege.tuition);
   }
   // caller->EvaluateScript("updateBalance('')");
 

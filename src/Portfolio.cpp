@@ -24,7 +24,7 @@ void Portfolio::addPurchase(Purchase purchase, PositionType holdType)
     {
         int newQuant = existingPurchase->getQuantity() + purchase.getQuantity();
         float firstPurchasePrice = existingPurchase->getQuantity() * existingPurchase->getPurchasePrice();
-        
+
         float firstPrice = existingPurchase->getPurchasePrice();
         float updatedPurchasePrice = purchase.getQuantity() * purchase.getPurchasePrice();
         existingPurchase->setQuantity(newQuant);
@@ -172,6 +172,14 @@ void Portfolio::printPortfolio() const
         std::cout << "------------------------------" << std::endl;
         purchase.printPurchaseDetails();
     }
+}
+
+/*!
+    @brief Updates the total balance.
+*/
+void Portfolio::updateTotalBalance(float amountAdded)
+{
+    totalBalance += amountAdded;
 }
 
 /*!
