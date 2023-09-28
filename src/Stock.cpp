@@ -280,3 +280,30 @@ void Stock::predictNextX(int numWeeks)
         }
     }
 }
+
+void writeToCSV(const std::vector<StockHistory>& histories, const std::string& filename)
+{
+    std::ofstream outFile(filename);
+
+    if (!outFile)
+    {
+        std::cerr << "Error opening file for writing history";
+        return;
+    }
+
+    // Write the header
+    outFile << "Date,Open,High,Low,Close,Volume\n";
+
+    // Write the data
+    for (const auto& history : histories)
+    {
+        outFile << history.date << ",";
+        outFile << "0,";  // Open
+        outFile << "0,";  // High
+        outFile << "0,";  // Low
+        outFile << history.closePrice << ",";
+        outFile << "0\n";  // Volume
+    }
+
+    outFile.close();
+}

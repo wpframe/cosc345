@@ -30,6 +30,7 @@ public:
     void parseHistory();
     void predictNextX(int x);
     static Stock findStockBySymbol(const std::string &symbol, const std::vector<Stock> &stocks);
+    void writeToCSV(const std::vector<StockHistory>& histories, const std::string& filename);
 };
 
 std::vector<Stock> parseCSV(const std::string &filename);

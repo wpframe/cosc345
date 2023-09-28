@@ -1,0 +1,1 @@
+g++ -o casino_test Casino.cpp CasinoTester.cpp casinotest.cpp
