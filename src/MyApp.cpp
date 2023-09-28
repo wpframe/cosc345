@@ -34,7 +34,7 @@ int careerStage;
 std::string college_name;
 int tuitionNeedsPaid = 0;
 int salaryNeedsPaid = 0;
-int lastTuitionPaidYear;
+int lastTuitionPaidYear = 0;
 int lastYearSalaryPaid;
 std::string lastPromotion = "";
 
@@ -147,7 +147,12 @@ void MyApp::OnUpdate()
   DateDifference dateDiff = calendar.calcDateDifference(latestDate.utf8().data(), studyEnd);
   if (!(dateDiff.years == 0 && dateDiff.months == 0) && careerStage == 1)
   {
-    if (currentYear > lastTuitionPaidYear)
+    if (lastTuitionPaidYear == 0)
+    {
+      tuitionNeedsPaid += 1;
+      lastTuitionPaidYear = currentYear;
+    }
+    else if (currentYear > lastTuitionPaidYear)
     {
       tuitionNeedsPaid += std::min(currentYear - lastTuitionPaidYear, 3);
       lastTuitionPaidYear = currentYear;

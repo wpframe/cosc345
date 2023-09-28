@@ -106,7 +106,7 @@ header h1 {
   max-width: 85%;
   gap: 20px;
   padding: 20px;
-  overflow-y: hidden;
+  /* overflow-y: auto; */
   display: flex;
   /* Add this to make it a flex container */
   flex-direction: column;
@@ -135,7 +135,13 @@ header h1 {
   max-width: 85%;
   gap: 20px;
   padding: 20px;
-  overflow-y: hidden;
+
+}
+
+.education-selection-container > *,
+.education-container > *,
+.job-container > * {
+  margin: 16px 0px;
 }
 
 
@@ -283,8 +289,9 @@ header h1 {
   min-width: 230px;
   border: 1px solid #ddd;
   z-index: 1;
-  max-height: 500px;
+  max-height: 300px;
   overflow-y: auto;
+  z-index: 10;
 }
 
 /* Links inside the dropdown */
