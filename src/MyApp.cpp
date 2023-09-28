@@ -632,11 +632,8 @@ JSValueRef raiseRequested(JSContextRef ctx, JSObjectRef function,
         "document.getElementById('raiseResult').innerText = 'We appreciate your request, but unfortunately, it has been denied this time.'";
 
     const char *str = jscode.c_str();
-
     JSStringRef script = JSStringCreateWithUTF8CString(str);
-
     JSEvaluateScript(ctx, script, 0, 0, 0, 0);
-
     JSStringRelease(script);
   }
   std::cout << "#############################" << std::endl;
@@ -727,6 +724,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     float totalInvestment = 0.0;
     float portfolioValue = 0.0;
     float amountBorrowed = 0.0;
+    float totalProfit;
+    float totalInvested;
 
     std::vector<Purchase> purchases = portfolio.getPurchases();
     for (const Purchase &purchase : purchases)
@@ -738,8 +737,10 @@ void MyApp::OnDOMReady(ultralight::View *caller,
       std::string headlineStr = selectedStock.history[TIMECOUNT].headline;
       float headlineMultiplierStr = selectedStock.history[TIMECOUNT].multiplier;
 
-      float totalProfit = purchase.getProfitLoss(currentPriceFloat);
-      float totalProfitPercentage = purchase.getProfitLossPercentage(currentPriceFloat);
+      totalProfit += purchase.getProfitLoss(currentPriceFloat);
+      totalInvested += purchase.calculateTotalCost();
+
+      float totalProfitPercentage = totalProfit / totalInvested * 100;
 
       std::string holdingTypeStr;
       PositionType type = purchase.getPositionType();
