@@ -109,6 +109,19 @@ button {
   padding: 20px;
   overflow-y: hidden;
 }
+.chartContainer {
+  display: flex;
+  grid-column: 2;
+  grid-row: 2;
+  background-color: #040568;
+  color: white;
+  border-radius: 10px;
+  margin: 20px;
+  margin-left: 10px;
+  gap: 20px;
+  padding: 20px;
+  overflow-y: hidden;
+}
 
 /* .right-container {
   box-sizing: border-box;
