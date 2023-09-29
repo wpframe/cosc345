@@ -122,7 +122,6 @@ function addStockDropdown(ticker) {
     var newButton = document.createElement("button");
     newButton.type = "button";
 
-
     newButton.onclick = function () {
         selectStock(ticker);
         cppSelectStock(ticker);
