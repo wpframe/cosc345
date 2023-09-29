@@ -14,8 +14,7 @@
   <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" type="text/css" rel="stylesheet">
   <style type="text/css">
     html,
-    body,
-    #container {
+    body {
       margin: 0;
       padding: 0;
     }
@@ -37,11 +36,11 @@
     <div id="dates-container">
 
       <div class="ff-dropdown-container">
-          <i class="fa-solid fa-forward" style="color: white;"></i>
-          <button type="button" class="ffbutton" onclick="fastForward(1,0,0)">week</button>
-          <button type="button" class="ffbutton" onclick="fastForward(0,1,0)">month</button>
-          <button type="button" class="ffbutton" onclick="fastForward(0,0,1)">year</button>
-          <button type="button" class="ffbutton" onclick="fastForward(0,0,10)">decade</button>
+        <i class="fa-solid fa-forward" style="color: white;"></i>
+        <button type="button" class="ffbutton" onclick="fastForward(1,0,0)">week</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,1,0)">month</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,0,1)">year</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,0,10)">decade</button>
       </div>
 
     </div>
@@ -109,10 +108,14 @@
   </div>
 
   <!-- graph -->
-  <div class="right-container">
+  <div class="right-container" id="container">
+    <p id="filepath">huh</p>
     <script>
       function getFilePath(file) {
         var filepath = file.toString();
+
+
+
 
         anychart.onDocumentReady(function () {
           // The data used in this sample can be obtained from the CDN

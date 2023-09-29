@@ -90,6 +90,9 @@ button {
   min-width: 110px;
 }
 
+#filepath {
+  display: none;
+}
 
 
 /* Container for both the background div and the graph */
@@ -106,6 +109,19 @@ button {
   padding: 20px;
   overflow-y: hidden;
 }
+
+/* .right-container {
+  box-sizing: border-box;
+  width: 62%;
+  height: 70%;
+  background-color: #f0f0f0;
+  padding: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  position: absolute;
+  top: 110px;
+  right: 40px;
+} */
 
 .left-container {
   display: grid;
@@ -147,9 +163,10 @@ button {
   /* Bar takes the second row */
 }
 
-.container {
+/* #container {
   display: flex;
-}
+  z-index: 9999999;
+} */
 
 /* Styles for the background div */
 .graphBox {
@@ -371,7 +388,7 @@ button {
   font-size: 16px;
 }
 
-.ffbutton{
+.ffbutton {
   border: none;
   background: none;
   font-family: 'Evil', sans-serif;
