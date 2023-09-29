@@ -803,7 +803,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     {
       const Stock &stock = stocks[i];
       ultralight::String symbol = stock.symbol.c_str();
-      caller->EvaluateScript("addStockDropdown('" + symbol + "')");
+      ultralight::String name = stock.name.c_str();
+      caller->EvaluateScript("addStockDropdown('" + symbol + "', '" + name + "')");
     }
   }
   else

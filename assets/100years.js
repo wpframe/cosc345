@@ -117,10 +117,11 @@ function toggleDropdown() {
  * Adds a stock to the dropdown menu
  * @param {string} ticker 
  */
-function addStockDropdown(ticker) {
+function addStockDropdown(ticker, name) {
     var dropdown = document.getElementById("myDropdown");
     var newButton = document.createElement("button");
     newButton.type = "button";
+
 
     newButton.onclick = function () {
         selectStock(ticker);
@@ -129,7 +130,10 @@ function addStockDropdown(ticker) {
 
         inputElement.value = ticker;
     };
-    newButton.textContent = ticker;
+    let combinedString = (ticker + " (" + name + ")");
+    let first40Chars = combinedString.length > 35 ? combinedString.substring(0, 35) + "..." : combinedString;
+
+    newButton.textContent = first40Chars;
 
     dropdown.appendChild(newButton);
 }
