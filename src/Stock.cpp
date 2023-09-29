@@ -225,9 +225,6 @@ void Stock::predictNextX(int numWeeks)
     double slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     double intercept = (sumY - slope * sumX) / n;
 
-    // Incorporate a damping factor for trend line.
-    double dampingFactor = 0.99;
-
     for (int i = 0; i < numWeeks; i++)
     {
         StockHistory historyPlusHeadline;
@@ -235,37 +232,21 @@ void Stock::predictNextX(int numWeeks)
         std::string nextDate = getNextDate(history.back().date);
         double predictedPrice = slope * (n + i) + intercept;
 
-        // Dampen the trend over time
-        slope *= dampingFactor;
-
-        // Simulating stock volatility using geometric Brownian motion model.
-        double volatility = 0.05; // Assume 5% volatility for illustration. You can adjust this.
-        double drift = 0.005;     // General trend (up or down). Adjust based on historical performance.
-        double randomFactor = std::exp(drift + volatility * (std::rand() % 1000 / 1000.0 - 0.5));
-
+        // Add randomness
+        double randomFactor = 1.0 + (std::rand() % 10 - 5) * 0.01; // Randomness between -5% to +5%
         predictedPrice *= randomFactor;
 
-        // Sporadically apply headline impact.
-        if (std::rand() % 10 >= 7) // 30% chance of headline impacting stock.
-        {
-            auto headlineEvent = Headline::generateHeadline(*this, n + i);
-            predictedPrice *= headlineEvent.second;
-            historyPlusHeadline.headline = headlineEvent.first;
-            historyPlusHeadline.multiplier = headlineEvent.second;
-        }
-        else
-        {
-            historyPlusHeadline.headline = "";
-            historyPlusHeadline.multiplier = 1.0;
-        }
+        // Generate headline and adjust price
+        auto headlineEvent = Headline::generateHeadline(*this, n + i);
+        predictedPrice *= headlineEvent.second;
 
         // Ensure the price doesn't go negative
         predictedPrice = std::max(predictedPrice, 0.01);
 
         historyPlusHeadline.date = nextDate;
         historyPlusHeadline.closePrice = predictedPrice;
-
-        // history.push_back({nextDate, predictedPrice});
+        historyPlusHeadline.headline = headlineEvent.first;
+        historyPlusHeadline.multiplier = headlineEvent.second;
 
         if (i + 1 < history.size())
         {
