@@ -159,8 +159,31 @@ nav button:hover {
 }
 
 .modal-content {
-  background-color: #f0f0f0;
-  border-radius: 10px;
+  background-color: #446ef8;
+  color: rgb(0, 0, 0);
+  margin: 5% auto;
   padding: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 75%;
+  height: 100%;
+  border-width: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 8px;
+  position: relative;
+  border-style: solid;
+  border-color: #041f79;
+  border-radius: 10px;
+  border-width: 5px;
+  box-sizing: border-box;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #040568;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
 }
