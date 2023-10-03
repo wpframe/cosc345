@@ -16,11 +16,23 @@
   <header>
     <h1>Millionaire Tycoon </h1>
     <div class="totalBalance">
+    </div>
+    <div id="dateTime"></div>
+    <div id="dates-container">
+
+      <div class="ff-dropdown-container">
+        <i class="fa-solid fa-forward" style="color: white;"></i>
+        <button type="button" class="ffbutton" onclick="fastForward(1,0,0)">week</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,1,0)">month</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,0,1)">year</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,0,10)">decade</button>
+      </div>
 
     </div>
     <div id="button-container">
-      <button id="home" onclick="goToHome()">Home</button>
-      <button id="hundyyears" onclick="goTo100Years()">Back</button>
+
+      <button id="hundyyears" onclick="goTo100Years()">Buy Stocks</button>
+      <button id="home" onclick="goToHome()">Main Menu</button>
     </div>
 
 
@@ -106,6 +118,7 @@
 
 
   <script src="portfolio.js"></script>
+  <script src="https://kit.fontawesome.com/0fff93c7e8.js" crossorigin="anonymous"></script>
 </body>
 
 </html>
