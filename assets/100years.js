@@ -11,6 +11,18 @@ function goToHome() {
 function goToPortfolio() {
     window.location.href = "portfolio.html";
 }
+/**
+ * 
+ * Shows the users balance
+ * @param {number} totalBalance 
+ */
+function initBalance(totalBalance) {
+    var balanceContainer = document.getElementsByClassName("totalBalance")[0];
+    var balanceParagraph = document.createElement("h");
+    balanceParagraph.id = "balance-paragraph";
+    balanceParagraph.textContent = "Total Balance: " + Number(totalBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    balanceContainer.appendChild(balanceParagraph);
+}
 
 /**
  * Displays current price of selected stock
@@ -18,7 +30,7 @@ function goToPortfolio() {
  * @param {*} stocksAvailable 
  */
 function showStockInfo(currentPrice) {
-    document.getElementById("currentPrice").textContent = currentPrice.toFixed(2);
+    document.getElementById("currentPrice").textContent = "$" + Number(currentPrice).toFixed(2);
     // document.getElementById("stocksAvailable").textContent = stocksAvailable;
 }
 
@@ -44,17 +56,28 @@ function switchBuySell() {
  * @returns break out of function
  */
 function updateTotalPrice() {
-    var currentPrice = parseFloat(document.getElementById("currentPrice").textContent);
+    var totalBalanceText = document.getElementById("balance-paragraph").textContent;
+    var totalBalance = totalBalanceText.replace("Total Balance: $", "");
+    totalBalance = parseFloat(totalBalance.replace(",", ""));
+    var currentPriceText = document.getElementById("currentPrice").textContent;
+    var currentPrice = parseFloat(currentPriceText.replace("$", ""));
     var quantity = parseInt(document.getElementById("quantity").value, 10);
 
-    var totalPrice = currentPrice * quantity;
+    var totalPrice = (currentPrice * quantity).toFixed(2);
+    var formattedNumber = Number(totalPrice).toLocaleString("en-US", { style: "currency", currency: "USD" });
 
     if (isNaN(quantity)) {
-        document.getElementById("totalPrice").textContent = "Total Price: $0.00";
-        return;
+        document.getElementById("totalPrice").textContent = "$0.00";
     }
 
-    document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
+    document.getElementById("totalPrice").textContent = formattedNumber;
+
+    if (parseFloat(totalPrice) > totalBalance) {
+        document.getElementById("totalPrice").style.color = "#ff3343";
+    } else {
+        document.getElementById("totalPrice").style.color = "";
+    }
+
 }
 // Add an event listener to the quantity input element
 document.getElementById("quantity").addEventListener("input", updateTotalPrice);
@@ -92,16 +115,6 @@ function filterFunction() {
     }
 }
 
-/**
- * Shows the users balance
- * @param {number} totalBalance 
- */
-function initBalance(totalBalance) {
-    var balanceContainer = document.getElementsByClassName("totalBalance")[0];
-    var balanceParagraph = document.createElement("h");
-    balanceParagraph.textContent = "Total Balance: " + totalBalance;
-    balanceContainer.appendChild(balanceParagraph);
-}
 
 /**
  * Toggles the dropdown display
@@ -157,22 +170,21 @@ function showDate(newDate) {
 }
 
 
-/**
- * Calls commitPurchase with parameters from the buySell box
- */
 function commitPurchaseJS() {
     var symbol = document.getElementById('myInput').textContent;
-    // var buyOrSell = document.getElementById('buySell').innerText;
-    // var buyOrSell = document.querySelector('.selected-option');
     var selectElement = document.getElementById('actionDropdown');
     var selectedOption = selectElement.options[selectElement.selectedIndex];
     var buyOrSell = selectedOption.textContent;
-    // var buyOrSell = document.getElementById('actionDropdown').textContent;
-
     var quantity = document.getElementById('quantity').value;
 
-    commitPurchase(symbol, buyOrSell, quantity)
-    window.location.reload()
+    // Check if any of the required fields is null or empty
+    if (!symbol || !buyOrSell || !quantity) {
+        alert('Please fill out all required fields before committing the purchase.');
+        return; // Prevent the purchase from being committed
+    }
+
+    commitPurchase(symbol, buyOrSell, quantity);
+    window.location.reload();
 }
 
 function commitPurchase() { }

@@ -13,10 +13,16 @@ function addStock() {
     addStockTile("extra", "100.42", "1000000");
 }
 
+/**
+ * 
+ * Shows the users balance
+ * @param {number} totalBalance 
+ */
 function initBalance(totalBalance) {
     var balanceContainer = document.getElementsByClassName("totalBalance")[0];
-    var balanceParagraph = document.createElement("p");
-    balanceParagraph.textContent = "Total Balance: " + totalBalance; // Change this to the actual stock name
+    var balanceParagraph = document.createElement("h");
+    balanceParagraph.id = "balance-paragraph";
+    balanceParagraph.textContent = "Total Balance: " + Number(totalBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
     balanceContainer.appendChild(balanceParagraph);
 }
 
@@ -31,13 +37,13 @@ function updateBalance(newBalance) {
 
     // Create a new paragraph with the updated balance
     var balanceParagraph = document.createElement("p");
-    balanceParagraph.textContent = "Total Balance: " + newBalance;
+    balanceParagraph.textContent = "Total Balance: " + Number(totalBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
     balanceContainer.appendChild(balanceParagraph);
 }
 
 
 function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, totalProfit, totalProfitPercentage) {
-    var tileContainer = document.getElementsByClassName("investment-summary")[0]; // Assuming there's only one container
+    var tileContainer = document.getElementsByClassName("investment-summary")[0];
 
     // Create the main container div
     var summaryTile = document.createElement("div");
@@ -45,25 +51,25 @@ function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, t
 
     // Display "Amount Borrowed"
     var amountBorrowedLabel = document.createElement("p");
-    amountBorrowedLabel.textContent = "Amount Borrowed: " + amountBorrowed;
+    amountBorrowedLabel.textContent = "Amount Borrowed: " + Number(amountBorrowed).toLocaleString("en-US", { style: "currency", currency: "USD" });
     summaryTile.appendChild(amountBorrowedLabel);
 
     // Display "Total Investment"
     var totalInvestmentLabel = document.createElement("p");
-    totalInvestmentLabel.textContent = "Total Investment: " + totalInvestment;
+    totalInvestmentLabel.textContent = "Total Investment: " + Number(totalInvestment).toLocaleString("en-US", { style: "currency", currency: "USD" });;
     summaryTile.appendChild(totalInvestmentLabel);
 
     var portfolioValueParagraph = document.createElement("p");
-    portfolioValueParagraph.textContent = "Current Portfolio Value: " + portfolioValue;
+    portfolioValueParagraph.textContent = "Current Portfolio Value: " + Number(portfolioValue).toLocaleString("en-US", { style: "currency", currency: "USD" });
     summaryTile.appendChild(portfolioValueParagraph);
 
     var totalProfitParagraph = document.createElement("p");
-    totalProfitParagraph.textContent = "Total Profit/Loss: " + totalProfit;
+    totalProfitParagraph.textContent = "Total Profit/Loss: " + Number(totalProfit).toLocaleString("en-US", { style: "currency", currency: "USD" });
     summaryTile.appendChild(totalProfitParagraph);
 
     var totalProfitPercentageParagraph = document.createElement("p");
     totalProfitPercentageParagraph.textContent =
-        "Total Profit/Loss Percentage: " + totalProfitPercentage + "%";
+        "Total Profit/Loss Percentage: " + Number(totalProfitPercentage).toFixed(2) + "%";
     summaryTile.appendChild(totalProfitPercentageParagraph);
 
     // Append the main container div to the tile container
@@ -81,7 +87,14 @@ function updateInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue
     addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, totalProfit, totalProfitPercentage);
 }
 
-
+/**
+ * displays the current date
+ * @param {string} newDate 
+ */
+function showDate(newDate) {
+    var dateElement = document.getElementById("dateTime");
+    dateElement.innerHTML = newDate;
+}
 
 function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     profitLoss, profitLossPercent, purchaseValue, currentPurchaseValue, headline, multiplier) {
@@ -98,13 +111,13 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     // Add data attributes to store stock information
     sellButton.setAttribute("data-type", type);
     sellButton.setAttribute("data-symbol", symbol);
-    sellButton.setAttribute("data-purchasePrice", purchasePrice);
-    sellButton.setAttribute("data-currentPrice", currentPrice);
-    sellButton.setAttribute("data-quantity", quantity);
-    sellButton.setAttribute("data-profitLoss", profitLoss);
-    sellButton.setAttribute("data-profitLossPercent", profitLossPercent);
-    sellButton.setAttribute("data-purchaseValue", purchaseValue);
-    sellButton.setAttribute("data-currentPurchaseValue", currentPurchaseValue);
+    sellButton.setAttribute("data-purchasePrice", Number(purchasePrice).toFixed(2));
+    sellButton.setAttribute("data-currentPrice", Number(currentPrice).toFixed(2));
+    sellButton.setAttribute("data-quantity", Number(quantity));
+    sellButton.setAttribute("data-profitLoss", Number(profitLoss).toFixed(2));
+    sellButton.setAttribute("data-profitLossPercent", Number(profitLossPercent).toFixed(2));
+    sellButton.setAttribute("data-purchaseValue", Number(purchaseValue).toFixed(2));
+    sellButton.setAttribute("data-currentPurchaseValue", Number(currentPurchaseValue).toFixed(2));
 
     sellButton.addEventListener('click', function () {
         // Extract data attributes when the button is clicked
@@ -134,18 +147,19 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
 
     // Create and add purchase price
     var purchasePriceParagraph = document.createElement("p");
-    purchasePriceParagraph.textContent = "Purchase Price: " + purchasePrice; // Change this to the actual price
+    purchasePriceParagraph.textContent = "Purchase Price: " + Number(purchasePrice).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
     stockTile.appendChild(purchasePriceParagraph);
 
     // Create and add current price
     var currentPriceParagraph = document.createElement("p");
-    currentPriceParagraph.textContent = "Current Price: " + currentPrice; // Change this to the actual price
+    currentPriceParagraph.id = "current-price"
+    currentPriceParagraph.textContent = "Current Price: " + Number(currentPrice).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
     stockTile.appendChild(currentPriceParagraph);
 
     var purchaseValueLabel = type === "Short" ? "Amount Borrowed" : "Amount Invested";
     var purchaseValueParagraph = document.createElement("p");
     purchaseValueParagraph.textContent =
-        purchaseValueLabel + ": " + purchaseValue; // Change this to the actual price
+        purchaseValueLabel + ": " + Number(purchaseValue).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
     stockTile.appendChild(purchaseValueParagraph);
 
     // // Create and add total amount invested
@@ -156,16 +170,16 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     // Create and add how much the investment is now
     var currentPurchaseValueParagraph = document.createElement("p");
     currentPurchaseValueParagraph.textContent =
-        "Investment Total Now: " + currentPurchaseValue; // Change this to the actual price
+        "Investment Total Now: " + Number(currentPurchaseValue).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
     stockTile.appendChild(currentPurchaseValueParagraph);
 
     var profitLossParagraph = document.createElement("p");
-    profitLossParagraph.textContent = "Profit/Loss: $" + profitLoss; // Change this to the actual price
+    profitLossParagraph.textContent = "Profit/Loss: " + Number(profitLoss).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
     stockTile.appendChild(profitLossParagraph);
 
     var profitLossPercentParagraph = document.createElement("p");
     profitLossPercentParagraph.textContent =
-        "Profit/Loss Percentage: " + profitLossPercent + "%"; // Change this to the actual price
+        "Profit/Loss Percentage: " + Number(profitLossPercent).toFixed(2) + "%"; // Change this to the actual price
     stockTile.appendChild(profitLossPercentParagraph);
 
     var headlineString = headline.toString();
@@ -211,11 +225,11 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     modalContent.appendChild(stockInfoParagraph);
 
     var purchasePriceParagraph = document.createElement("p");
-    purchasePriceParagraph.textContent = "Purchase Price: " + purchasePrice;
+    purchasePriceParagraph.textContent = "Purchase Price: " + Number(purchasePrice).toLocaleString("en-US", { style: "currency", currency: "USD" });
     modalContent.appendChild(purchasePriceParagraph);
 
     var currentPriceParagraph = document.createElement("p");
-    currentPriceParagraph.textContent = "Current Price: " + currentPrice;
+    currentPriceParagraph.textContent = "Current Price: " + Number(currentPrice).toLocaleString("en-US", { style: "currency", currency: "USD" });
     modalContent.appendChild(currentPriceParagraph);
 
     var quantityParagraph = document.createElement("p");
@@ -227,6 +241,9 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     sellAmountInput.placeholder = "Enter Amount to Sell";
     modalContent.appendChild(sellAmountInput);
 
+    var amountToReceive = document.createElement("p");
+    amountToReceive.textContent = "Amount to recieve: " + quantity * parseFloat(sellAmountInput.value);
+    modalContent.appendChild(amountToReceive);
     // Create a "Sell" button
     var sellButton = document.createElement("button");
     sellButton.type = "button";
@@ -237,6 +254,7 @@ function showSellTile(type, symbol, quantity, purchasePrice, currentPrice) {
     sellButton.setAttribute("data-symbol", symbol);
     sellButton.setAttribute("data-currentPrice", currentPrice);
     sellButton.setAttribute("data-quantity", quantity);
+    sellButton.setAttribute("data-amountToSell", sellAmountInput);
     sellButton.setAttribute("data-amountToSell", sellAmountInput);
 
     sellButton.addEventListener('click', function () {
