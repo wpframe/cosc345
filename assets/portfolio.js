@@ -64,13 +64,27 @@ function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, t
     summaryTile.appendChild(portfolioValueParagraph);
 
     var totalProfitParagraph = document.createElement("p");
-    totalProfitParagraph.textContent = "Total Profit/Loss: " + Number(totalProfit).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    var profitSpan = document.createElement("span");
+
+    if (totalProfit < 0) {
+        profitSpan.textContent = "-$" + Math.abs(totalProfit) + " (" + totalProfitPercentage + "%)";
+    } else {
+        profitSpan.textContent = "$" + totalProfit + " (" + totalProfitPercentage + "%)";
+    }
+    
+    if (totalProfit > 0) {
+        profitSpan.style.color = "green";
+    } else if (totalProfit < 0) {
+        profitSpan.style.color = "red";
+    } else {
+        profitSpan.style.color = "white";
+    }
+
+    totalProfitParagraph.textContent = "Total Profit/Loss: ";
+    totalProfitParagraph.appendChild(profitSpan);
+
     summaryTile.appendChild(totalProfitParagraph);
 
-    var totalProfitPercentageParagraph = document.createElement("p");
-    totalProfitPercentageParagraph.textContent =
-        "Total Profit/Loss Percentage: " + Number(totalProfitPercentage).toFixed(2) + "%";
-    summaryTile.appendChild(totalProfitPercentageParagraph);
 
     // Append the main container div to the tile container
     tileContainer.appendChild(summaryTile);
@@ -174,13 +188,27 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     stockTile.appendChild(currentPurchaseValueParagraph);
 
     var profitLossParagraph = document.createElement("p");
-    profitLossParagraph.textContent = "Profit/Loss: " + Number(profitLoss).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
+    var profitLossSpan = document.createElement("span");
+
+    if (profitLoss < 0) {
+        profitLossSpan.textContent = "-$" + Math.abs(profitLoss) + " (" + profitLossPercent + "%)";
+    } else {
+        profitLossSpan.textContent = "$" + profitLoss + " (" + profitLossPercent + "%)";
+    }
+    
+    if (profitLoss > 0) {
+        profitLossSpan.style.color = "green";
+    } else if (profitLoss < 0) {
+        profitLossSpan.style.color = "red";
+    } else {
+        profitLossSpan.style.color = "white";
+    }
+
+    profitLossParagraph.textContent = "Profit/Loss: ";
+    profitLossParagraph.appendChild(profitLossSpan);
+
     stockTile.appendChild(profitLossParagraph);
 
-    var profitLossPercentParagraph = document.createElement("p");
-    profitLossPercentParagraph.textContent =
-        "Profit/Loss Percentage: " + Number(profitLossPercent).toFixed(2) + "%"; // Change this to the actual price
-    stockTile.appendChild(profitLossPercentParagraph);
 
     var headlineString = headline.toString();
 
