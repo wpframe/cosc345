@@ -71,7 +71,7 @@ function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, t
     } else {
         profitSpan.textContent = "$" + totalProfit + " (" + totalProfitPercentage + "%)";
     }
-    
+
     if (totalProfit > 0) {
         profitSpan.style.color = "green";
     } else if (totalProfit < 0) {
@@ -195,7 +195,7 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     } else {
         profitLossSpan.textContent = "$" + profitLoss + " (" + profitLossPercent + "%)";
     }
-    
+
     if (profitLoss > 0) {
         profitLossSpan.style.color = "green";
     } else if (profitLoss < 0) {
@@ -511,4 +511,8 @@ function showJobDetails(collegeName, salary) {
 function raiseRequestedJS() {
     var rasieRes = document.getElementById('raiseResult');
     raiseRequested();
+}
+
+function refreshWindow() {
+    window.location.reload();
 }
