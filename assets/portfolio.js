@@ -173,14 +173,48 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
         "Investment Total Now: " + Number(currentPurchaseValue).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
     stockTile.appendChild(currentPurchaseValueParagraph);
 
-    var profitLossParagraph = document.createElement("p");
-    profitLossParagraph.textContent = "Profit/Loss: " + Number(profitLoss).toLocaleString("en-US", { style: "currency", currency: "USD" }); // Change this to the actual price
-    stockTile.appendChild(profitLossParagraph);
+    var totalProfitParagraph = document.createElement("p");
+    var profitSpan = document.createElement("span");
 
-    var profitLossPercentParagraph = document.createElement("p");
-    profitLossPercentParagraph.textContent =
-        "Profit/Loss Percentage: " + Number(profitLossPercent).toFixed(2) + "%"; // Change this to the actual price
-    stockTile.appendChild(profitLossPercentParagraph);
+    // Set the text content for the span
+    profitSpan.textContent = totalProfit;
+
+    // Conditional formatting based on the value of totalProfit
+    if (totalProfit > 0) {
+        profitSpan.style.color = "green";
+    } else if (totalProfit < 0) {
+        profitSpan.style.color = "red";
+    } else {
+        profitSpan.style.color = "white";
+    }
+
+    // Append the span to the paragraph
+    totalProfitParagraph.textContent = "Total Profit/Loss: ";
+    totalProfitParagraph.appendChild(profitSpan);
+
+    summaryTile.appendChild(totalProfitParagraph);
+
+    var totalProfitPercentageParagraph = document.createElement("p");
+    var profitPercentageSpan = document.createElement("span");
+
+    // Set the text content for the span
+    profitPercentageSpan.textContent = totalProfitPercentage + "%";
+
+    // Conditional formatting based on the value of totalProfitPercentage
+    if (totalProfitPercentage > 0) {
+        profitPercentageSpan.style.color = "green";
+    } else if (totalProfitPercentage < 0) {
+        profitPercentageSpan.style.color = "red";
+    } else {
+        profitPercentageSpan.style.color = "white";
+    }
+
+    // Append the span to the paragraph
+    totalProfitPercentageParagraph.textContent = "Total Profit/Loss Percentage: ";
+    totalProfitPercentageParagraph.appendChild(profitPercentageSpan);
+
+    summaryTile.appendChild(totalProfitPercentageParagraph);
+
 
     var headlineString = headline.toString();
 
