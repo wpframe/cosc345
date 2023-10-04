@@ -264,23 +264,23 @@ JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
 
     std::string jscode =
         "document.getElementById('dateTime').innerText = '" + date + "'";
-    std::string jscode2 =
-        "window.location.reload()";
+    // std::string jscode2 =
+    //     "window.location.reload()";
 
     const char *str = jscode.c_str();
-    const char *str2 = jscode2.c_str();
+    // const char *str2 = jscode2.c_str();
 
     // Create our string of JavaScript
     JSStringRef script = JSStringCreateWithUTF8CString(str);
-    JSStringRef script2 = JSStringCreateWithUTF8CString(str2);
+    // JSStringRef script2 = JSStringCreateWithUTF8CString(str2);
 
     // Execute it with JSEvaluateScript, ignoring other parameters for now
     JSEvaluateScript(ctx, script, 0, 0, 0, 0);
-    JSEvaluateScript(ctx, script2, 0, 0, 0, 0);
+    // JSEvaluateScript(ctx, script2, 0, 0, 0, 0);
 
     // Release our string (we only Release what we Create)
     JSStringRelease(script);
-    JSStringRelease(script2);
+    // JSStringRelease(script2);
   }
   return JSValueMakeNull(ctx);
 }
@@ -333,20 +333,11 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
       std::string balance = std::to_string(portfolio.getTotalBalance());
 
       std::string jscodeClear =
-          "clearInputs();updateBalance('" + balance + "')";
+          "updateBalance('" + balance + "');clearInputs()";
       const char *strClear = jscodeClear.c_str();
       JSStringRef scriptClear = JSStringCreateWithUTF8CString(strClear);
       JSEvaluateScript(ctx, scriptClear, 0, 0, 0, 0);
       JSStringRelease(scriptClear);
-    }
-    if (portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity < 0)
-    {
-      std::string jscode =
-          "showQuantityWarning()";
-      const char *str = jscode.c_str();
-      JSStringRef script = JSStringCreateWithUTF8CString(str);
-      JSEvaluateScript(ctx, script, 0, 0, 0, 0);
-      JSStringRelease(script);
     }
   }
   return JSValueMakeNull(ctx);

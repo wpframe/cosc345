@@ -51,6 +51,9 @@ function switchBuySell() {
 }
 
 
+// Add an event listener to the quantity input element
+document.getElementById("quantity").addEventListener("input", updateTotalPrice);
+document.getElementById("quantity").addEventListener("change", updateTotalPrice);
 /**
  * Calculates the total price of the number of shares selected
  * @returns break out of function
@@ -62,15 +65,18 @@ function updateTotalPrice() {
     var currentPriceText = document.getElementById("currentPrice").textContent;
     var currentPrice = parseFloat(currentPriceText.replace("$", ""));
     var quantity = parseInt(document.getElementById("quantity").value, 10);
-
     var totalPrice = (currentPrice * quantity).toFixed(2);
     var formattedNumber = Number(totalPrice).toLocaleString("en-US", { style: "currency", currency: "USD" });
+
+    if (!isNaN(totalPrice)) {
+        document.getElementById("totalPrice").textContent = formattedNumber;
+    } else {
+        document.getElementById("totalPrice").textContent = "$0.00";
+    }
 
     if (isNaN(quantity)) {
         document.getElementById("totalPrice").textContent = "$0.00";
     }
-
-    document.getElementById("totalPrice").textContent = formattedNumber;
 
     if (parseFloat(totalPrice) > totalBalance) {
         document.getElementById("totalPrice").style.color = "#ff3343";
@@ -79,8 +85,7 @@ function updateTotalPrice() {
     }
 
 }
-// Add an event listener to the quantity input element
-document.getElementById("quantity").addEventListener("input", updateTotalPrice);
+
 window.addEventListener("click", function (event) {
     var dropdown = document.getElementById("myDropdown");
     var searchInput = document.getElementById("myInput");
@@ -195,10 +200,13 @@ function clearInputs() {
     // Get the input element by its ID
     var searchBar = document.getElementById("myInput");
     searchBar.value = "";
+
     var quantityInput = document.getElementById("quantity");
     quantityInput.value = "";
+
     var currentPriceDiv = document.getElementById("currentPrice");
     currentPriceDiv.innerHTML = "";
+
     var totalPriceDiv = document.getElementById("totalPrice");
     totalPriceDiv.innerHTML = "";
 }
@@ -214,6 +222,7 @@ function updateBalance(newBalance) {
 
     // Create a new paragraph with the updated balance
     var balanceParagraph = document.createElement("h");
+    balanceParagraph.id = "balance-paragraph";
     balanceParagraph.textContent = "Total Balance: " + Number(newBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
     balanceContainer.appendChild(balanceParagraph);
 }
