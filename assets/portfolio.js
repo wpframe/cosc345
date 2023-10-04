@@ -66,10 +66,12 @@ function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, t
     var totalProfitParagraph = document.createElement("p");
     var profitSpan = document.createElement("span");
 
-    // Set the text content for the span
-    profitSpan.textContent = "$" + totalProfit + " (" + totalProfitPercentage + "%)";
-
-    // Conditional formatting based on the value of totalProfit
+    if (totalProfit < 0) {
+        profitSpan.textContent = "-$" + Math.abs(totalProfit) + " (" + totalProfitPercentage + "%)";
+    } else {
+        profitSpan.textContent = "$" + totalProfit + " (" + totalProfitPercentage + "%)";
+    }
+    
     if (totalProfit > 0) {
         profitSpan.style.color = "green";
     } else if (totalProfit < 0) {
@@ -78,7 +80,6 @@ function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, t
         profitSpan.style.color = "white";
     }
 
-    // Append the span to the paragraph
     totalProfitParagraph.textContent = "Total Profit/Loss: ";
     totalProfitParagraph.appendChild(profitSpan);
 
@@ -189,7 +190,12 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     var profitLossParagraph = document.createElement("p");
     var profitLossSpan = document.createElement("span");
 
-    profitLossSpan.textContent = "$" + profitLoss + " (" + profitLossPercent + "%)";
+    if (profitLoss < 0) {
+        profitLossSpan.textContent = "-$" + Math.abs(profitLoss) + " (" + profitLossPercent + "%)";
+    } else {
+        profitLossSpan.textContent = "$" + profitLoss + " (" + profitLossPercent + "%)";
+    }
+    
     if (profitLoss > 0) {
         profitLossSpan.style.color = "green";
     } else if (profitLoss < 0) {
