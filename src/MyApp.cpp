@@ -325,11 +325,29 @@ JSValueRef commitPurchase(JSContextRef ctx, JSObjectRef function,
 
     const auto &history = selectedStock.history;
 
-    if (quantity > 0 && portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity >= 0)
+    if (quantity > 0 && (portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity >= 0))
     {
       portfolio.addPurchaseToPortfolio(portfolio, selectedStock, quantity, selectedStock.history[TIMECOUNT].closePrice, calendar, buyOrSell);
+
+      ultralight::String totalBalance = std::to_string(portfolio.getTotalBalance()).c_str();
+      std::string balance = std::to_string(portfolio.getTotalBalance());
+
+      std::string jscodeClear =
+          "clearInputs();updateBalance('" + balance + "')";
+      const char *strClear = jscodeClear.c_str();
+      JSStringRef scriptClear = JSStringCreateWithUTF8CString(strClear);
+      JSEvaluateScript(ctx, scriptClear, 0, 0, 0, 0);
+      JSStringRelease(scriptClear);
     }
-    // portfolio.summarizePortfolio(TIMECOUNT);
+    if (portfolio.getTotalBalance() - selectedStock.history[TIMECOUNT].closePrice * quantity < 0)
+    {
+      std::string jscode =
+          "showQuantityWarning()";
+      const char *str = jscode.c_str();
+      JSStringRef script = JSStringCreateWithUTF8CString(str);
+      JSEvaluateScript(ctx, script, 0, 0, 0, 0);
+      JSStringRelease(script);
+    }
   }
   return JSValueMakeNull(ctx);
 }

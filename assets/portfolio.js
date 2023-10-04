@@ -30,14 +30,14 @@ function updateBalance(newBalance) {
     var balanceContainer = document.getElementsByClassName("totalBalance")[0];
 
     // Remove the existing balance paragraph (if any)
-    var existingParagraph = balanceContainer.querySelector("p");
+    var existingParagraph = balanceContainer.querySelector("h");
     if (existingParagraph) {
         balanceContainer.removeChild(existingParagraph);
     }
 
     // Create a new paragraph with the updated balance
-    var balanceParagraph = document.createElement("p");
-    balanceParagraph.textContent = "Total Balance: " + Number(totalBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    var balanceParagraph = document.createElement("h");
+    balanceParagraph.textContent = "Total Balance: " + Number(newBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
     balanceContainer.appendChild(balanceParagraph);
 }
 

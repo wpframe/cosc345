@@ -172,19 +172,48 @@ function showDate(newDate) {
 
 function commitPurchaseJS() {
     var symbol = document.getElementById('myInput').textContent;
+    // var buyOrSell = document.getElementById('buySell').innerText;
+    // var buyOrSell = document.querySelector('.selected-option');
     var selectElement = document.getElementById('actionDropdown');
     var selectedOption = selectElement.options[selectElement.selectedIndex];
     var buyOrSell = selectedOption.textContent;
+    // var buyOrSell = document.getElementById('actionDropdown').textContent;
+
     var quantity = document.getElementById('quantity').value;
 
-    // Check if any of the required fields is null or empty
-    if (!symbol || !buyOrSell || !quantity) {
-        alert('Please fill out all required fields before committing the purchase.');
-        return; // Prevent the purchase from being committed
+    if (symbol.length >= 1 && buyOrSell.length >= 1 && quantity >= 1) {
+        commitPurchase(symbol, buyOrSell, quantity)
+        // window.location.reload()
+    } else {
+        alert("Please enter a valid action and number of shares.");
     }
-
-    commitPurchase(symbol, buyOrSell, quantity);
-    window.location.reload();
 }
 
 function commitPurchase() { }
+
+function clearInputs() {
+    // Get the input element by its ID
+    var searchBar = document.getElementById("myInput");
+    searchBar.value = "";
+    var quantityInput = document.getElementById("quantity");
+    quantityInput.value = "";
+    var currentPriceDiv = document.getElementById("currentPrice");
+    currentPriceDiv.innerHTML = "";
+    var totalPriceDiv = document.getElementById("totalPrice");
+    totalPriceDiv.innerHTML = "";
+}
+
+function updateBalance(newBalance) {
+    var balanceContainer = document.getElementsByClassName("totalBalance")[0];
+
+    // Remove the existing balance paragraph (if any)
+    var existingParagraph = balanceContainer.querySelector("h");
+    if (existingParagraph) {
+        balanceContainer.removeChild(existingParagraph);
+    }
+
+    // Create a new paragraph with the updated balance
+    var balanceParagraph = document.createElement("h");
+    balanceParagraph.textContent = "Total Balance: " + Number(newBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    balanceContainer.appendChild(balanceParagraph);
+}

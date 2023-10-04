@@ -378,9 +378,9 @@ button {
   color: #040568;
 }
 
-#commitButton button:active {
+#commitButton:active {
   background: #040568;
-  color: #040568;
+  color: #446ef8;
 }
 
 #commitButton {
