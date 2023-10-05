@@ -7,6 +7,7 @@
 #include "Stock.h"
 #include "Headline.h"
 #include "PathUtil.h"
+#include "Calendar.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -33,7 +34,7 @@ Stock Stock::updateStockHistory(Stock &selectedStock)
     if (selectedStock.history.size() < 1)
     {
         selectedStock.parseHistory();
-        selectedStock.predictNextX(5252);
+        selectedStock.predictNextX(5772);
     }
 
     return selectedStock;
@@ -262,9 +263,14 @@ void Stock::predictNextX(int numWeeks)
     }
 }
 
-void writeToCSV(const std::vector<StockHistory> &histories, const std::string &filename)
+void Stock::writeToCSV(std::string symbol, const std::vector<StockHistory> &histories, std::string currentDate)
 {
-    std::ofstream outFile(filename);
+    std::string prefix = PathUtil::findPathFromApp();
+    std::string filename = prefix + "src/data/stocks/" + symbol + ".csv";
+    std::ifstream inputFile(filename);
+
+    std::string outputFilename = prefix + "assets/data/stocks/" + symbol + ".csv";
+    std::ofstream outFile(outputFilename);
 
     if (!outFile)
     {
@@ -275,9 +281,24 @@ void writeToCSV(const std::vector<StockHistory> &histories, const std::string &f
     // Write the header
     outFile << "Date,Open,High,Low,Close,Volume\n";
 
-    // Write the data
+    std::string line;
+    bool isFirstLine = true; // Flag to identify the first line
+
+    while (std::getline(inputFile, line))
+    {
+        // Check if it's the first line and if it's the header line
+        if (isFirstLine && line == "Date,Open,High,Low,Close,Volume")
+        {
+            isFirstLine = false; // Skip the first line
+            continue;
+        }
+
+        outFile << line << "\n";
+    }
+
     for (const auto &history : histories)
     {
+        // History date is in the past
         outFile << history.date << ",";
         outFile << "0,"; // Open
         outFile << "0,"; // High
@@ -286,5 +307,110 @@ void writeToCSV(const std::vector<StockHistory> &histories, const std::string &f
         outFile << "0\n"; // Volume
     }
 
+    // Close both files
+    inputFile.close();
     outFile.close();
 }
+// void Stock::writeToCSV(std::string symbol, const std::vector<StockHistory> &histories, std::string currentDate)
+// {
+//     std::cout << "marker 1" << std::endl;
+//     std::string prefix = PathUtil::findPathFromApp();
+//     std::string filename = prefix + "src/data/stocks/" + symbol + ".csv";
+//     std::ifstream inputFile(filename);
+//     std::cout << "input path: " << filename << std::endl;
+
+//     std::string outputFilename = prefix + "assets/data/stocks/" + symbol + ".csv";
+//     std::ofstream outFile(outputFilename);
+//     std::cout << "output path: " << outputFilename << std::endl;
+
+//     if (!outFile)
+//     {
+//         std::cerr << "Error opening file for writing history";
+//         return;
+//     }
+
+//     // Write the header
+//     outFile << "Date,Open,High,Low,Close,Volume\n";
+
+//     // Set the limit for how many lines you want to write
+//     int limit = 2600;
+//     int linesWritten = 0;
+
+//     std::string line;
+//     bool isFirstLine = true; // Flag to identify the first line
+
+//     while (linesWritten < limit && std::getline(inputFile, line))
+//     {
+//         // Check if it's the first line and if it's the header line
+//         if (isFirstLine && line == "Date,Open,High,Low,Close,Volume")
+//         {
+//             isFirstLine = false; // Skip the first line
+//             continue;
+//         }
+
+//         outFile << line << "\n";
+//         linesWritten++;
+//     }
+
+//     // Write the data from histories
+//     // Write the data from histories
+//     for (const auto &history : histories)
+//     {
+
+//         if (linesWritten >= limit || history.date > currentDate)
+//         {
+//             break; // Stop writing if the limit or current date is reached
+//         }
+
+//         // Split the date strings into parts
+//         std::vector<std::string> historyParts = Calendar::split(history.date, '-');
+//         std::vector<std::string> currentParts = Calendar::split(currentDate, '/');
+
+//         std::cout << "history date: " << history.date << std::endl;
+//         std::cout << "current date: " << currentDate << std::endl;
+
+//         int historyDay = std::stoi(historyParts[2]);
+//         int historyMonth = std::stoi(historyParts[1]);
+//         int historyYear = std::stoi(historyParts[0]);
+
+//         int currentDay = std::stoi(currentParts[0]);
+//         int currentMonth = std::stoi(currentParts[1]);
+//         int currentYear = std::stoi(currentParts[2]);
+
+//         // Compare years first
+//         if (historyYear < currentYear)
+//         {
+//             // History date is in the past
+//             outFile << history.date << ",";
+//             outFile << "0,"; // Open
+//             outFile << "0,"; // High
+//             outFile << "0,"; // Low
+//             outFile << history.closePrice << ",";
+//             outFile << "0\n"; // Volume
+
+//             linesWritten++;
+//         }
+//         else if (historyYear == currentYear)
+//         {
+//             // Same year, compare months
+//             if (historyMonth < currentMonth || (historyMonth == currentMonth && historyDay <= currentDay))
+//             {
+//                 // History date is in the past or today
+//                 outFile << history.date << ",";
+//                 outFile << "0,"; // Open
+//                 outFile << "0,"; // High
+//                 outFile << "0,"; // Low
+//                 outFile << history.closePrice << ",";
+//                 outFile << "0\n"; // Volume
+
+//                 linesWritten++;
+//             }
+//         }
+//     }
+
+//     std::cout << "marker - lines written: " << linesWritten << std::endl;
+
+//     // Close both files
+//     inputFile.close();
+//     outFile.close();
+// }

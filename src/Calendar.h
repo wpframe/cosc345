@@ -29,6 +29,7 @@ public:
     DateDifference calcDateDifference(const std::string &date1, const std::string &date2);
     std::string calculateStudyEnd(const std::string &date);
     void setDate(const std::string &date);
+    static std::vector<std::string> split(const std::string &s, char delimiter);
 
 private:
     bool countingStarted = false;
@@ -42,4 +43,5 @@ private:
     const int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 };
 
+extern Calendar calendar;
 #endif // CALENDAR_H

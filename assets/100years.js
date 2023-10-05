@@ -270,7 +270,6 @@ function getFilePath(ticker) {
         const lines = data.split('\n');
         let csvString = 'Date,Close\n';
         for (let i = 1; i < lines.length; i++) {
-
             const columns = lines[i].split(',');
             const date = columns[0];
             const close = columns[4];

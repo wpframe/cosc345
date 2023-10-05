@@ -105,6 +105,15 @@ MyApp::MyApp()
   std::string nasdaqPath = pathPrefix + "src/data/nasdaq.csv";
   stocks = parseCSV(nasdaqPath);
 
+  for (int i = 0; i < std::min(100, static_cast<int>(stocks.size())); ++i)
+  {
+    stocks[i] = Stock::updateStockHistory(stocks[i]);
+    const Stock &stock = stocks[i];
+    const auto &history = stock.history;
+
+    Stock::writeToCSV(stock.getSymbol(), history, latestDate.utf8().data());
+  }
+
   std::string headlinesPath = pathPrefix + "src/data/headlines.csv";
   Headline::readFromCSV(headlinesPath);
 
@@ -476,17 +485,20 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 
     Stock selectedStock = Stock::findStockBySymbol(symbol, stocks);
 
+    /* NOW DOING THIS FOR EVERY STOCK BEFORE THE GAME STARTS*/
     for (size_t i = 0; i < stocks.size(); ++i)
     {
       if (stocks[i].symbol == symbol)
       {
-        stocks[i] = Stock::updateStockHistory(stocks[i]);
+        // stocks[i] = Stock::updateStockHistory(stocks[i]);
         selectedStock = stocks[i];
         break;
       }
     }
 
     const auto &history = selectedStock.history;
+
+    Stock::writeToCSV(selectedStock.getSymbol(), history, latestDate.utf8().data());
 
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
     std::string prefix = PathUtil::findPathFromApp();

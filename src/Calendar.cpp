@@ -259,3 +259,15 @@ void Calendar::setDate(const std::string &date)
     month = newMonth;
     day = newDay;
 }
+
+std::vector<std::string> Calendar::split(const std::string &s, char delimiter)
+{
+    std::vector<std::string> tokens;
+    std::istringstream tokenStream(s);
+    std::string token;
+    while (std::getline(tokenStream, token, delimiter))
+    {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
