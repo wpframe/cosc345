@@ -66,11 +66,9 @@ function addInvestmentSummary(amountBorrowed, totalInvestment, portfolioValue, t
     var totalProfitParagraph = document.createElement("p");
     var profitSpan = document.createElement("span");
 
-    if (totalProfit < 0) {
-        profitSpan.textContent = "-$" + Math.abs(totalProfit) + " (" + totalProfitPercentage + "%)";
-    } else {
-        profitSpan.textContent = "$" + totalProfit + " (" + totalProfitPercentage + "%)";
-    }
+
+    profitSpan.textContent = Number(totalProfit).toLocaleString("en-US", { style: "currency", currency: "USD" }) + " (" + Number(totalProfitPercentage).toFixed(2) + "%)";
+
 
     if (totalProfit > 0) {
         profitSpan.style.color = "green";
@@ -190,11 +188,8 @@ function addStockTile(type, symbol, purchasePrice, currentPrice, quantity,
     var profitLossParagraph = document.createElement("p");
     var profitLossSpan = document.createElement("span");
 
-    if (profitLoss < 0) {
-        profitLossSpan.textContent = "-$" + Math.abs(profitLoss) + " (" + profitLossPercent + "%)";
-    } else {
-        profitLossSpan.textContent = "$" + profitLoss + " (" + profitLossPercent + "%)";
-    }
+    profitLossSpan.textContent = Number(profitLoss).toLocaleString("en-US", { style: "currency", currency: "USD" }) + " (" + Number(profitLossPercent).toFixed(2) + "%)";
+
 
     if (profitLoss > 0) {
         profitLossSpan.style.color = "green";
