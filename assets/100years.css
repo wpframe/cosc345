@@ -5,9 +5,11 @@ body {
 body {
   font-family: Roboto, sans-serif;
   display: grid;
-  grid-template-rows: 70px 1fr 100px;
+  grid-template-rows: 70px 1fr 70px;
   grid-template-columns: 30% 70%;
   min-height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
   margin: 0;
   padding: 0;
   background: #446ef8;
@@ -96,6 +98,7 @@ button {
 
 /* Container for both the background div and the graph */
 .right-container {
+  resize: none;
   grid-column: 2;
   grid-row: 2;
   background-color: #040568;
@@ -110,15 +113,19 @@ button {
   overflow-y: hidden;
 }
 
-/* #container {
+#container {
   max-width: 100%;
   max-height: 10%;
-} */
+}
 
 
 .left-container {
+  resize: none;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  /* Only one column for the left container */
+  grid-template-rows: repeat(5, 1fr);
+  /* Define 5 rows with equal heights */
   grid-column: 1;
   grid-row: 2;
   background-color: #040568;

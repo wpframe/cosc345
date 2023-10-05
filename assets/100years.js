@@ -267,11 +267,19 @@ function getFilePath(ticker) {
 
     anychart.data.loadCsvFile(filepath, function (data) {
         anychart.theme('darkBlue');
-        var chart = anychart.line(data, { ignoreFirstRow: true });
+        const lines = data.split('\n');
+        let csvString = 'Date,Close\n';
+        for (let i = 1; i < lines.length; i++) {
+
+            const columns = lines[i].split(',');
+            const date = columns[0];
+            const close = columns[4];
+            csvString += date + ',' + close + '\n';
+        }
+        var chart = anychart.line(csvString, { ignoreFirstRow: true });
         chart.title(ticker)
         chart.container('container');
-        chart.width("100%");
-        chart.height("60%");
+        chart.bounds(0, 0, "100%", "89%");
         chart.draw();
     });
 }
