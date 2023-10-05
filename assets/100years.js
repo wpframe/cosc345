@@ -263,6 +263,8 @@ function closeEndPopup() {
 
 function getFilePath(ticker) {
     var filepath = "data/stocks/" + ticker + ".csv";
+    document.getElementById('container').innerHTML = '';
+
     anychart.data.loadCsvFile(filepath, function (data) {
         anychart.theme('darkBlue');
         var chart = anychart.line(data, { ignoreFirstRow: true });
@@ -270,7 +272,6 @@ function getFilePath(ticker) {
         chart.container('container');
         chart.width("100%");
         chart.height("60%");
-
         chart.draw();
     });
 }
