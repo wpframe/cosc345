@@ -255,3 +255,23 @@ function closeEndPopup() {
     window.location.href = "homepage.html";
     popup.style.display = 'none';
 }
+
+/**
+ * Adds the graph to the div element "container". Currently super buggy if you look at one stock and then another. 
+ * This is called in cppSelectStock() in MyApp.
+ */
+
+function getFilePath(ticker) {
+    var filepath = "data/stocks/" + ticker + ".csv";
+    anychart.data.loadCsvFile(filepath, function (data) {
+        anychart.theme('darkBlue');
+        var chart = anychart.line(data, { ignoreFirstRow: true });
+        chart.title(ticker)
+        chart.container('container');
+        chart.width("100%");
+        chart.height("60%");
+
+        chart.draw();
+    });
+}
+

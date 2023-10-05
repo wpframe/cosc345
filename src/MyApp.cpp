@@ -22,7 +22,7 @@
 #include <algorithm>
 
 #define WINDOW_WIDTH 1400
-#define WINDOW_HEIGHT 1000
+#define WINDOW_HEIGHT 890
 Calendar calendar;
 Portfolio portfolio(250000.0);
 int TIMECOUNT;
@@ -489,21 +489,26 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
     const auto &history = selectedStock.history;
 
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
-
+    std::string prefix = PathUtil::findPathFromApp();
+    std::string ticker = selectedStock.getSymbol();
     std::string jscode =
         "document.getElementById('currentPrice').textContent = Number(" + closePriceString + ").toLocaleString('en-US', { style: 'currency', currency: 'USD' });";
+    std::string jscode2 =
+        "getFilePath('" + ticker + "')";
     // document.getElementById("currentPrice").textContent = "$" + Number(currentPrice).toFixed(2);
 
     const char *str = jscode.c_str();
+    const char *str2 = jscode2.c_str();
 
     // Create our string of JavaScript
     JSStringRef script = JSStringCreateWithUTF8CString(str);
-
+    JSStringRef script2 = JSStringCreateWithUTF8CString(str2);
     // Execute it with JSEvaluateScript, ignoring other parameters for now
     JSEvaluateScript(ctx, script, 0, 0, 0, 0);
-
+    JSEvaluateScript(ctx, script2, 0, 0, 0, 0);
     // Release our string (we only Release what we Create)
     JSStringRelease(script);
+    JSStringRelease(script2);
   }
   return JSValueMakeNull(ctx);
 }
@@ -786,11 +791,6 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   ultralight::String placeholder = "0";
   caller->EvaluateScript("initBalance('" + totalBalance + "')");
   caller->EvaluateScript("addInvestmentSummary('" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "', '" + placeholder + "')");
-
-  std::string prefix = PathUtil::findPathFromApp();
-  std::string filepath = prefix + "src/data/graph/data.csv";
-  ultralight::String filepathStr = filepath.c_str();
-  caller->EvaluateScript("getFilePath('" + filepathStr + "')");
 
   if (startLoadingPortfolio == 1)
   {

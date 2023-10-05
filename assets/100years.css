@@ -96,7 +96,6 @@ button {
 
 /* Container for both the background div and the graph */
 .right-container {
-  display: flex;
   grid-column: 2;
   grid-row: 2;
   background-color: #040568;
@@ -104,37 +103,18 @@ button {
   border-radius: 10px;
   margin: 20px;
   margin-left: 10px;
+  max-width: 100%;
+  max-height: 100%;
   gap: 20px;
   padding: 20px;
   overflow-y: hidden;
 }
 
-.chartContainer {
-  display: flex;
-  grid-column: 2;
-  grid-row: 2;
-  background-color: #040568;
-  color: white;
-  border-radius: 10px;
-  margin: 20px;
-  margin-left: 10px;
-  gap: 20px;
-  padding: 20px;
-  overflow-y: hidden;
-}
-
-/* .right-container {
-  box-sizing: border-box;
-  width: 62%;
-  height: 70%;
-  background-color: #f0f0f0;
-  padding: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  position: absolute;
-  top: 110px;
-  right: 40px;
+/* #container {
+  max-width: 100%;
+  max-height: 10%;
 } */
+
 
 .left-container {
   display: grid;
@@ -145,6 +125,8 @@ button {
   color: white;
   border-radius: 10px;
   margin: 20px;
+  max-width: 100%;
+  max-height: 100%;
   margin-right: 10px;
   padding: 20px;
   overflow-y: hidden;
@@ -174,51 +156,6 @@ button {
   /* Styling for the bar, e.g., input element */
   grid-row: 2;
   /* Bar takes the second row */
-}
-
-/* #container {
-  display: flex;
-  z-index: 9999999;
-} */
-
-/* Styles for the background div */
-.graphBox {
-  width: calc((3/5 * 100vw));
-  height: 60vh;
-  right: 30px;
-  margin-top: 30px;
-  padding: 20px;
-  position: absolute;
-  background: #f0f0f0;
-  border-radius: 10px;
-}
-
-/* Styles for the graph */
-.graph {
-  width: calc((1/2 * 100vw));
-  height: 350px;
-  margin-top: 40px;
-  padding: 0;
-  position: absolute;
-  border-left: 1px solid black;
-  border-bottom: 1px solid black;
-  right: 100px;
-}
-
-#x1,
-#y1 {
-  position: absolute;
-  font-size: larger;
-}
-
-#x1 {
-  bottom: -40px;
-  left: 330px;
-}
-
-#y1 {
-  left: -60px;
-  bottom: 175px;
 }
 
 .dropdown-and-search {
@@ -450,7 +387,7 @@ button {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   overflow: auto;
-  
+
 }
 
 .end-game-popup-content {
@@ -468,7 +405,7 @@ button {
 }
 
 #popup-message {
-  position: absolute; 
+  position: absolute;
   top: 31px;
 }
 
@@ -480,7 +417,7 @@ button {
   border-radius: 20px;
   border: none;
   padding: 7px 12px 7px 12px;
-  position: absolute; 
+  position: absolute;
   right: 30px;
 
 }
