@@ -516,3 +516,14 @@ function raiseRequestedJS() {
 function refreshWindow() {
     window.location.reload();
 }
+
+function showEducationModal() {
+    var modal = document.getElementById('educationModal');
+    modal.style.display = 'block';
+}
+
+// Function to close the education modal
+function closeEducationModal() {
+    var modal = document.getElementById('educationModal');
+    modal.style.display = 'none';
+}
