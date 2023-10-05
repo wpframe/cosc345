@@ -1,5 +1,5 @@
 function goToHome() {
-    window.location.href = "homepage.html";
+    window.location.href = "secondHomepage.html";
 }
 
 function goTo100Years() {

@@ -183,6 +183,14 @@ void Portfolio::updateTotalBalance(float amountAdded)
 }
 
 /*!
+    @brief Resets the total balance.
+*/
+void Portfolio::resetTotalBalance()
+{
+    totalBalance = 250000;
+}
+
+/*!
     @brief Gets a purchase for a specific stock from the portfolio.
     @param stockSymbol The stock symbol of the purchase to get.
     @return A pointer to the purchase if it exists, nullptr otherwise.

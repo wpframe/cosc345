@@ -2,7 +2,7 @@
  * Redirect to homepage
  */
 function goToHome() {
-    window.location.href = "homepage.html";
+    window.location.href = "secondHomepage.html";
 }
 
 /**
@@ -174,7 +174,9 @@ function showDate(newDate) {
     dateElement.innerHTML = newDate;
 }
 
-
+/**
+ * sends relative parameters to the c++ version of commitPurchase function 
+ */
 function commitPurchaseJS() {
     var symbol = document.getElementById('myInput').textContent;
     // var buyOrSell = document.getElementById('buySell').innerText;
@@ -196,6 +198,9 @@ function commitPurchaseJS() {
 
 function commitPurchase() { }
 
+/**
+ * Clears the user input fields when a purchase is made.
+ */
 function clearInputs() {
     // Get the input element by its ID
     var searchBar = document.getElementById("myInput");
@@ -211,6 +216,10 @@ function clearInputs() {
     totalPriceDiv.innerHTML = "";
 }
 
+/**
+ * updates the users total balance when a purchase is made.
+ * @param {string} newBalance 
+ */
 function updateBalance(newBalance) {
     var balanceContainer = document.getElementsByClassName("totalBalance")[0];
 
@@ -225,4 +234,24 @@ function updateBalance(newBalance) {
     balanceParagraph.id = "balance-paragraph";
     balanceParagraph.textContent = "Total Balance: " + Number(newBalance).toLocaleString("en-US", { style: "currency", currency: "USD" });
     balanceContainer.appendChild(balanceParagraph);
+}
+
+/**
+ * opens the popup indicating the end of the game.
+ * @param {string} balance 
+ */
+function openEndPopup(balance) {
+    const popup = document.getElementById('end-game-popup');
+    const popupMessage = document.getElementById('popup-message');
+    popupMessage.textContent = "Game over! You made " + Number(balance).toLocaleString("en-US", { style: "currency", currency: "USD" });
+    popup.style.display = 'block';
+}
+
+/**
+ * resets all game states. Sends the user back to homescreen
+ */
+function closeEndPopup() {
+    const popup = document.getElementById('end-game-popup');
+    window.location.href = "homepage.html";
+    popup.style.display = 'none';
 }

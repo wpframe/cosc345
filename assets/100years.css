@@ -2,7 +2,6 @@ body {
   overflow: hidden;
 }
 
-
 body {
   font-family: Roboto, sans-serif;
   display: grid;
@@ -13,7 +12,6 @@ body {
   padding: 0;
   background: #446ef8;
 }
-
 
 header {
   width: 100%;
@@ -439,5 +437,50 @@ button {
   height: 60%; */
   font-size: 16px;
   /* background: white; */
+
+}
+
+.end-game-popup {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  overflow: auto;
+  
+}
+
+.end-game-popup-content {
+  background-color: #040568;
+  border: 5px solid #446ef8;
+  color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 40%;
+  height: 6%;
+  top: 47%;
+  margin: auto;
+}
+
+#popup-message {
+  position: absolute; 
+  top: 31px;
+}
+
+/* Style for the close button */
+#end-game-popup-close {
+  margin-top: 6px;
+  background-color: #446ef8;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  padding: 7px 12px 7px 12px;
+  position: absolute; 
+  right: 30px;
 
 }

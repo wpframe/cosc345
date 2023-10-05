@@ -33,7 +33,7 @@ Stock Stock::updateStockHistory(Stock &selectedStock)
     if (selectedStock.history.size() < 1)
     {
         selectedStock.parseHistory();
-        selectedStock.predictNextX(5200);
+        selectedStock.predictNextX(5252);
     }
 
     return selectedStock;
@@ -262,7 +262,7 @@ void Stock::predictNextX(int numWeeks)
     }
 }
 
-void writeToCSV(const std::vector<StockHistory>& histories, const std::string& filename)
+void writeToCSV(const std::vector<StockHistory> &histories, const std::string &filename)
 {
     std::ofstream outFile(filename);
 
@@ -276,14 +276,14 @@ void writeToCSV(const std::vector<StockHistory>& histories, const std::string& f
     outFile << "Date,Open,High,Low,Close,Volume\n";
 
     // Write the data
-    for (const auto& history : histories)
+    for (const auto &history : histories)
     {
         outFile << history.date << ",";
-        outFile << "0,";  // Open
-        outFile << "0,";  // High
-        outFile << "0,";  // Low
+        outFile << "0,"; // Open
+        outFile << "0,"; // High
+        outFile << "0,"; // Low
         outFile << history.closePrice << ",";
-        outFile << "0\n";  // Volume
+        outFile << "0\n"; // Volume
     }
 
     outFile.close();

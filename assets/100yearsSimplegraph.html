@@ -1,161 +1,165 @@
 <html>
 
+<head>
+  <meta charset="utf-8">
+  <title>100 Years</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <head>
-    <meta charset="utf-8">
-    <title>100 Years</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-    <style type="text/css">
-      html,
-      body {
-        margin: 0;
-        padding: 0;
+  <style type="text/css">
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+
+<script type="text/javascript">
+  window.onload = function () {
+    var container = document.getElementById("container");
+    
+    // Calculate the container's dimensions
+    var containerWidth = container.clientWidth;
+    var containerHeight = container.clientHeight;
+
+    var chart = new CanvasJS.Chart("container",
+    {
+
+      title:{
+      text: "Stock Price History (weekly)"
+      },
+      width: 930,
+      height: 400,
+       data: [
+      {
+        type: "line",
+
+        dataPoints: [
+        { x: new Date(2012, 00, 1), y: 450 },
+        { x: new Date(2012, 01, 1), y: 414 },
+        { x: new Date(2012, 02, 1), y: 520 },
+        { x: new Date(2012, 03, 1), y: 460 },
+        { x: new Date(2012, 04, 1), y: 450 },
+        { x: new Date(2012, 05, 1), y: 500 },
+        { x: new Date(2012, 06, 1), y: 480 },
+        { x: new Date(2012, 07, 1), y: 480 },
+        { x: new Date(2012, 08, 1), y: 410 },
+        { x: new Date(2012, 09, 1), y: 500 },
+        { x: new Date(2012, 10, 1), y: 480 },
+        { x: new Date(2012, 11, 1), y: 510 }
+        ]
       }
-    </style>
-  
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="100years.css">
-  
+      ]
+    });
 
+    chart.render();
+  }
+  </script>
+ <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 
-    <script>
-      window.onload = function() {
-      
-      var dataPoints = [];
-      
-      var chart = new CanvasJS.Chart("chartContainer", {
-        theme: "light2",
-        title: {
-          text: "Live Data"
-        },
-        data: [{
-          type: "line",
-          dataPoints: dataPoints
-        }]
-      });
-      updateData();
-      
-      // Initial Values
-      var xValue = 0;
-      var yValue = 10;
-      var newDataCount = 6;
-      
-      function addData(data) {
-        if(newDataCount != 1) {
-          $.each(data, function(key, value) {
-            dataPoints.push({x: value[0], y: parseInt(value[1])});
-            xValue++;
-            yValue = parseInt(value[1]);
-          });
-        } else {
-          //dataPoints.shift();
-          dataPoints.push({x: data[0][0], y: parseInt(data[0][1])});
-          xValue++;
-          yValue = parseInt(data[0][1]);
-        }
-        
-        newDataCount = 1;
-        chart.render();
-        setTimeout(updateData, 1500);
-      }
-      
-      function updateData() {
-        $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart="+xValue+"&ystart="+yValue+"&length="+newDataCount+"type=json", addData);
-      }
-      
-      }
-    </script>
+  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js" charset="utf-8"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="100years.css">
 
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <header>
-      <h1>Millionaire Tycoon </h1>
-      <div class="totalBalance">
+  <header>
+    <h1>Millionaire Tycoon </h1>
+    <div class="totalBalance">
+    </div>
+    <div id="dateTime"></div>
+    <div id="dates-container">
+
+      <div class="ff-dropdown-container">
+        <i class="fa-solid fa-forward" style="color: white;"></i>
+        <button type="button" class="ffbutton" onclick="fastForward(1,0,0)">week</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,1,0)">month</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,0,1)">year</button>
+        <button type="button" class="ffbutton" onclick="fastForward(0,0,10)">decade</button>
       </div>
-      <div id="dateTime"></div>
-      <div id="dates-container">
 
-        <div class="ff-dropdown-container">
-          <i class="fa-solid fa-forward" style="color: white;"></i>
-          <button type="button" class="ffbutton" onclick="fastForward(1,0,0)">week</button>
-          <button type="button" class="ffbutton" onclick="fastForward(0,1,0)">month</button>
-          <button type="button" class="ffbutton" onclick="fastForward(0,0,1)">year</button>
-          <button type="button" class="ffbutton" onclick="fastForward(0,0,10)">decade</button>
-        </div>
+    </div>
+    <div id="button-container">
+      <button id="portfolio" onclick="goToPortfolio();loadPortfolio()">Portfolio</button>
+      <button id="home" onclick="goToHome()">Main Menu</button>
+    </div>
+  </header>
 
-      </div>
-      <div id="button-container">
-        <button id="home" onclick="goToHome()">Home</button>
-        <button id="portfolio" onclick="goToPortfolio();loadPortfolio()">Portfolio</button>
-      </div>
-    </header>
+  <div id="end-game-popup" class="end-game-popup">
+    <div class="end-game-popup-content">
+      <span id="popup-message">hello</span>
+      <button id="end-game-popup-close" onclick="closeEndPopup()">Close</button>
+    </div>
+  </div>
 
-    <!-- buy/sell -->
-    <div class="left-container">
+  
+
+  <!-- buy/sell -->
+  <div class="left-container">
 
 
-      <div class="row">
-        <div class="title">Stock Symbol:</div>
-        <div class="bar">
-          <div class="dropdown">
-            <input type="text" placeholder="Search.." id="myInput" onclick="toggleDropdown();swapPlayAndPause()"
-              onkeyup="filterFunction()">
-            <div id="myDropdown" class="dropdown-content">
-            </div>
+    <div class="row">
+      <div class="title">Stock Symbol:</div>
+      <div class="bar">
+        <div class="dropdown">
+          <input type="text" placeholder="Search.." id="myInput" onclick="toggleDropdown();swapPlayAndPause()"
+            onkeyup="filterFunction()">
+          <div id="myDropdown" class="dropdown-content">
           </div>
         </div>
       </div>
-
-      <div class="row">
-        <div class="title">Action:</div>
-        <div class="bar">
-          <select id="actionDropdown">
-            <option value="buy">Buy</option>
-            <option value="short">Short</option>
-          </select>
-        </div>
-
-      </div>
-      <div class="row">
-        <div class="title">Current Price:</div>
-        <div class="bar">
-          <div id="currentPrice"></div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="title">Quantity Needed:</div>
-        <div class="bar">
-          <input type="number" id="quantity" name="quantity" min="1">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="title">Total Price:</div>
-        <div class="bar">
-          <div id="totalPrice"></div>
-        </div>
-      </div>
-
-
-
-
-      <div id="commitTransaction">
-        <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
-      </div>
-      <img id="arrows" src="—Pngtree—blue gradient financial arrow_6489125.png" alt="Image Description">
-
     </div>
 
-    <!-- graph -->
-    <div class="right-container" id="container">
-    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <div class="row">
+      <div class="title">Action:</div>
+      <div class="bar">
+        <select id="actionDropdown">
+          <option value="buy">Buy</option>
+          <option value="short">Short</option>
+        </select>
+      </div>
 
-    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
-  </body>
+    </div>
+    <div class="row">
+      <div class="title">Current Price:</div>
+      <div class="bar">
+        <div id="currentPrice"></div>
+      </div>
+    </div>
 
-  </html>
+    <div class="row">
+      <div class="title">Quantity Needed:</div>
+      <div class="bar">
+        <input type="number" id="quantity" name="quantity" min="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="title">Total Price:</div>
+      <div class="bar">
+        <div id="totalPrice"></div>
+      </div>
+    </div>
+
+
+
+
+    <div id="commitTransaction">
+      <button onclick="commitPurchaseJS()" id="commitButton">Commit</button>
+    </div>
+    <img id="arrows" src="—Pngtree—blue gradient financial arrow_6489125.png" alt="Image Description">
+
+  </div>
+
+  <!-- graph -->
+  <div class="right-container" id="container">
+    
+  </div>
+
+  <script src="100years.js"></script>
+  <script src="https://kit.fontawesome.com/0fff93c7e8.js" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

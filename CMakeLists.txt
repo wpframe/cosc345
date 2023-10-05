@@ -18,7 +18,8 @@ set(SOURCES "src/MyApp.h"
             "src/Purchase.cpp"
             "src/Portfolio.cpp"
             "src/PathUtil.cpp"
-            "src/College.cpp")
+            "src/College.cpp"
+            "src/GameFunctions.cpp")
 
 # Create the executable target
 add_app("${SOURCES}")

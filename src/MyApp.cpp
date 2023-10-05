@@ -14,6 +14,7 @@
 #include "PathUtil.h"
 #include "Headline.h"
 #include "College.h"
+#include "GameFunctions.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -28,7 +29,8 @@ int TIMECOUNT;
 bool startLoadingPortfolio = false;
 std::vector<Stock> stocks;
 std::vector<College> colleges;
-ultralight::String latestDate = "01/01/2023";
+ultralight::String gameStartDate = "01/01/2023";
+ultralight::String latestDate = gameStartDate;
 ultralight::String studyStart;
 int careerStage;
 std::string college_name;
@@ -37,12 +39,6 @@ int salaryNeedsPaid = 0;
 int lastTuitionPaidYear = 0;
 int lastYearSalaryPaid;
 std::string lastPromotion = "";
-
-/*
-TODO:
-- refactor page navigation, using: overlay_->view()->LoadURL("file:///portfolio.html");
-- seg faults when a stock with no data is chosen from the dropdown
-**/
 
 /*!
     @brief Constructor for the MyApp class.
@@ -169,6 +165,7 @@ void MyApp::OnUpdate()
     salaryNeedsPaid++;
     lastYearSalaryPaid = currentYear;
   }
+
   // calendar.update();
 }
 
@@ -235,6 +232,38 @@ std::string JSStringToStdString(JSStringRef jsString)
 }
 
 /*!
+  @brief resetGame is a function which resets the game state when the user presses the reset button
+  @param ctx Javascript context
+  @param function Object reference
+  @param thisObject Object reference
+  @param argumentCount number of arguments which are passed in from javascript
+  @param arguments list of arguments
+  @param exception value reference
+  @param years (arguments[0]), number of years to skip
+  @param months (arguments[1]), number of months to skip
+  @param days (arguments[2]), number of days to skip
+**/
+JSValueRef resetGame(JSContextRef ctx, JSObjectRef function,
+                     JSObjectRef thisObject, size_t argumentCount,
+                     const JSValueRef arguments[], JSValueRef *exception)
+{
+
+  GameFunctions::endGame(TIMECOUNT, stocks);
+  float profit = portfolio.getTotalBalance();
+  std::string profitStr = std::to_string(profit);
+  GameFunctions::resetGame(TIMECOUNT, stocks);
+  calendar.setDate(gameStartDate.utf8().data());
+  TIMECOUNT = 0;
+  latestDate = gameStartDate;
+  careerStage = 0;
+  tuitionNeedsPaid = 0;
+  salaryNeedsPaid = 0;
+  lastTuitionPaidYear = 0;
+  lastPromotion = "";
+
+  return JSValueMakeNull(ctx);
+}
+/*!
   @brief fastForward is a function which fast forwards the in-game calendar
   @details fastForward is a function which is called from javascript, and will perform cpp operations to
   fast forward the game time by given amount of time.
@@ -262,8 +291,27 @@ JSValueRef fastForward(JSContextRef ctx, JSObjectRef function,
 
     std::string date = calendar.getDate();
 
-    std::string jscode =
+    std::string jscode;
+    jscode =
         "document.getElementById('dateTime').innerText = '" + date + "'";
+
+    if (calendar.getYear() > 2122)
+    {
+      GameFunctions::endGame(TIMECOUNT, stocks);
+      float profit = portfolio.getTotalBalance();
+      std::string profitStr = std::to_string(profit);
+      jscode = "openEndPopup('" + profitStr + "')";
+      GameFunctions::resetGame(TIMECOUNT, stocks);
+      calendar.setDate(gameStartDate.utf8().data());
+      TIMECOUNT = 0;
+      latestDate = gameStartDate;
+      careerStage = 0;
+      tuitionNeedsPaid = 0;
+      salaryNeedsPaid = 0;
+      lastTuitionPaidYear = 0;
+      lastPromotion = "";
+    }
+
     // std::string jscode2 =
     //     "window.location.reload()";
 
@@ -694,6 +742,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRef acceptOfferRef = JSStringCreateWithUTF8CString("acceptOffer");
   JSStringRef declineOfferRef = JSStringCreateWithUTF8CString("declineOffer");
   JSStringRef raiseRequestedRef = JSStringCreateWithUTF8CString("raiseRequested");
+  JSStringRef resetGameRef = JSStringCreateWithUTF8CString("resetGame");
   // Create a garbage-collected JavaScript function that is bound to our native C callback 'startTimer()'.
   JSObjectRef fastForwardFunc = JSObjectMakeFunctionWithCallback(ctx, fastForwardRef, fastForward);
   JSObjectRef commitPurchaseFunc = JSObjectMakeFunctionWithCallback(ctx, commitPurchaseRef, commitPurchase);
@@ -704,6 +753,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectRef acceptOfferFunc = JSObjectMakeFunctionWithCallback(ctx, acceptOfferRef, acceptOffer);
   JSObjectRef declineOfferFunc = JSObjectMakeFunctionWithCallback(ctx, declineOfferRef, declineOffer);
   JSObjectRef raiseRequestedFunc = JSObjectMakeFunctionWithCallback(ctx, raiseRequestedRef, raiseRequested);
+  JSObjectRef resetGameFunc = JSObjectMakeFunctionWithCallback(ctx, resetGameRef, resetGame);
 
   // Get the global JavaScript object (aka 'window')
   JSObjectRef globalObj = JSContextGetGlobalObject(ctx);
@@ -717,6 +767,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSObjectSetProperty(ctx, globalObj, acceptOfferRef, acceptOfferFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, declineOfferRef, declineOfferFunc, 0, 0);
   JSObjectSetProperty(ctx, globalObj, raiseRequestedRef, raiseRequestedFunc, 0, 0);
+  JSObjectSetProperty(ctx, globalObj, resetGameRef, resetGameFunc, 0, 0);
   // Release the JavaScript String we created earlier.
   JSStringRelease(fastForwardRef);
   JSStringRelease(commitPurchaseRef);
@@ -727,6 +778,7 @@ void MyApp::OnDOMReady(ultralight::View *caller,
   JSStringRelease(acceptOfferRef);
   JSStringRelease(declineOfferRef);
   JSStringRelease(raiseRequestedRef);
+  JSStringRelease(resetGameRef);
 
   // caller->EvaluateScript("showStockInfo('Price per stock: ', '0')");
   caller->EvaluateScript("showDate('" + latestDate + "')");

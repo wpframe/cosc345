@@ -217,11 +217,9 @@ void Purchase::printPurchaseDetails() const
     // std::cout << "Purchase Timestamp: " << purchaseTimestamp << std::endl;
 }
 
-// This can be removed
 std::string Purchase::getStockSymbol() const
 {
     return stock.getSymbol();
-    // return "aplle";
 }
 
 /*!

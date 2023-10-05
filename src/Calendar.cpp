@@ -117,20 +117,10 @@ std::string Calendar::getDate() const
     return date;
 }
 
-// int Calendar::getWeeks() const
-// {
-//     int totalDays = day + daysInMonth[month - 1] * (month - 1);
-
-//     if (month > 2 && isLeapYear(year))
-//     {
-//         totalDays++; // Add an extra day for leap years after February
-//     }
-
-//     int totalWeeks = totalDays / 7;
-//     return totalWeeks;
-// }
-
-/* New version counts weeks beyond the current year */
+/*!
+    @brief Method to get the current week count from the starting date of 01/01/2023
+    @return totalWeeks
+*/
 int Calendar::getWeeks() const
 {
     int totalDays = day + daysInMonth[month - 1] * (month - 1);
@@ -156,6 +146,12 @@ int Calendar::getWeeks() const
     return totalWeeks;
 }
 
+/*!
+    @brief Method calculate when a users' study will end
+    @details Study takes around 3 years depending on start date.
+    @param date [in] date study started
+    @return date which study will end
+*/
 std::string Calendar::calculateStudyEnd(const std::string &date)
 {
     std::istringstream iss1(date);
@@ -174,6 +170,13 @@ std::string Calendar::calculateStudyEnd(const std::string &date)
     return result;
 }
 
+/*!
+    @brief Method which calculates the time difference between two dates.
+    @details returns 0, 0 if the first date is after the second date.
+    @param date1 [in] the first date being compared
+    @param date2 [in] the second date being compared
+    @return a tuple of months and years of the date difference
+*/
 DateDifference Calendar::calcDateDifference(const std::string &date1, const std::string &date2)
 {
     DateDifference result = {0, 0};
@@ -183,18 +186,15 @@ DateDifference Calendar::calcDateDifference(const std::string &date1, const std:
     int day1, month1, year1;
     if (!(iss1 >> day1 >> delimiter1 >> month1 >> delimiter1 >> year1) || delimiter1 != '/')
     {
-        // Handle invalid date format
         result.years = -1;
         result.months = -1;
     }
 
-    // Parse date2
     std::istringstream iss2(date2);
     char delimiter2;
     int day2, month2, year2;
     if (!(iss2 >> day2 >> delimiter2 >> month2 >> delimiter2 >> year2) || delimiter2 != '/')
     {
-        // Handle invalid date format
         result.years = -1;
         result.months = -1;
     }
@@ -216,4 +216,46 @@ DateDifference Calendar::calcDateDifference(const std::string &date1, const std:
     }
 
     return result;
+}
+
+/*!
+    @brief Method sets the date
+    @param date [in] the date to be set
+*/
+void Calendar::setDate(const std::string &date)
+{
+    std::istringstream iss(date);
+    char delimiter;
+    int newDay, newMonth, newYear;
+
+    if (!(iss >> newDay >> delimiter >> newMonth >> delimiter >> newYear) || delimiter != '/')
+    {
+        std::cerr << "Invalid date format: " << date << std::endl;
+        return;
+    }
+
+    if (newYear < 2023)
+    {
+        // Handle setting a date before the starting year (2023)
+        std::cerr << "Cannot set a date before 2023." << std::endl;
+        return;
+    }
+
+    // Check if the new month is within a valid range (1-12)
+    if (newMonth < 1 || newMonth > 12)
+    {
+        std::cerr << "Invalid month: " << newMonth << std::endl;
+        return;
+    }
+
+    // Check if the new day is within a valid range for the given month
+    if (newDay < 1 || newDay > daysInMonth[newMonth - 1])
+    {
+        std::cerr << "Invalid day: " << newDay << std::endl;
+        return;
+    }
+
+    year = newYear;
+    month = newMonth;
+    day = newDay;
 }

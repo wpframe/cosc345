@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Millionaire Tycoon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="secondHomepage.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+  <header>
+    <h1>Millionaire Tycoon </h1>
+    <div id="button-container">
+      <button id="help" onclick="showHowToPlay()">How to Play</button>
+      <button id="leaderboard">Leaderboards - Currently Unavailable</button>
+    </div>
+
+
+  </header>
+
+
+  <menu>
+    <div id="stock-text">
+      <h2>Stock Market Simulator</h2>
+    </div>
+
+    <div id="start-button">
+      <button id="hundyyears" onclick="goTo100Years()">Continue Trading!</button>
+    </div>
+
+    <div id="reset-button">
+      <button id="reset" onclick="resetGame();resetGameJS()">Start New Game</button> 
+    </div>
+
+    <!-- <nav>
+      <ul> -->
+
+    <!-- <li><button id="infinite" onclick="startTimer();stopTimer();goToInfinite()">Infinite - Currently
+            Unavailable</button></li>
+        <li><button id="speedrun">Millionaire Speedrun - Currently Unavailable</button></li> -->
+
+    <!-- </ul>
+    </nav> -->
+  </menu>
+
+  <main>
+    <img id="arrows" src="—Pngtree—blue gradient financial arrow_6489125.png" alt="Image Description">
+  </main>
+
+
+
+  <div class="modal" id="howToPlayModal">
+    <div class="modal-content">
+      <button class="close" onclick="closeModal()">&times;</button>
+      <p>
+        <strong>Welcome to Millionaire Tycoon - The Stock Market Simulator Game!</strong>
+        <br><br>
+        <strong>Objective:</strong> Your goal is to generate as much money as you can over the span of 100 years. You
+        start with a $250,000, and your task is to invest wisely in stocks and get an education to grow your wealth.
+        Remember, high scores are recorded on the online leaderboard, so
+        aim to top the charts!
+        <br><br>
+        <strong>Getting Started:</strong>
+      <ul>
+        <li>Click on the "Start Trading Now!" button to begin your journey as a tycoon.</li>
+        <li>Explore the various investment opportunities available to you.</li>
+      </ul>
+      <br>
+      <strong>Investment Options:</strong>
+      <ul>
+        <li><strong>Stock Market Trading:</strong> Buy and sell stocks to make profits. Enter the stock symbol, number
+          of shares, and buy/sell order to execute transactions.</li>
+        <li><strong>Education Simulation:</strong> Choose an education and job to boost your earnings alongside
+          your investments.</li>
+      </ul>
+      <br>
+      <strong>Economic Simulation:</strong>
+      <br>
+      The game simulates a realistic economy with news headlines impacting stock prices and the overall economy. Stay
+      updated with the latest financial news!
+      <br><br>
+      <strong>Managing Your Portfolio:</strong>
+      <br>
+      Use the "Portfolio Management" feature to easily buy and sell stocks at any available quantity.
+      <br><br>
+      <strong>Tips for Success:</strong>
+      <ul>
+        <li>Diversify your investments to minimize risks.</li>
+        <li>Stay informed with news headlines and their impact on company stocks.</li>
+        <li>Manage your portfolio wisely and adapt to market changes.</li>
+      </ul>
+      <br>
+      <strong>Have Fun & Learn:</strong>
+      <br>
+      The game is designed to be engaging and educational. Enjoy learning about the stock market while having fun
+      growing your wealth!
+      <br><br>
+      <strong>Ready to become a Millionaire Tycoon?</strong> Click the "Start Trading Now!" button and let the journey
+      begin! Good
+      luck!
+      </p>
+    </div>
+  </div>
+
+  <script src="secondHomepage.js"></script>
+</body>
+
+</html>

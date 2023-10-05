@@ -28,6 +28,7 @@ public:
     std::string calculateDateDifference(const std::string &date1, const std::string &date2);
     DateDifference calcDateDifference(const std::string &date1, const std::string &date2);
     std::string calculateStudyEnd(const std::string &date);
+    void setDate(const std::string &date);
 
 private:
     bool countingStarted = false;

@@ -7,6 +7,7 @@
 
 class Portfolio
 {
+
 private:
     std::vector<Purchase> purchases;
     float totalBalance;
@@ -18,10 +19,12 @@ public:
     Purchase *getPurchase(const std::string &stockSymbol, PositionType holdType);
     float getTotalBalance() const;
     void updateTotalBalance(float amountAdded);
+    void resetTotalBalance();
     const std::vector<Purchase> getPurchases() const;
     void summarizePortfolio(int time) const;
     void addPurchaseToPortfolio(Portfolio &portfolio, const Stock &selectedStock, int quantity, float purchasePrice, const Calendar &calendar, const std::string &type);
     void sellPurchase(const Stock &selectedStock, int quantityToSell, float currentPrice, PositionType holdType);
 };
 
+extern Portfolio portfolio;
 #endif // PORTFOLIO_H
