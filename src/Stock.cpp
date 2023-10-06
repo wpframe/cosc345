@@ -29,6 +29,11 @@
 Stock::Stock(const std::string &symbol, const std::string &name, int outstanding, int ipoYear, const std::string &sector, const std::string &industry)
     : symbol(symbol), name(name), outstanding(outstanding), ipoYear(ipoYear), sector(sector), industry(industry) {}
 
+/*!
+    @brief Updates the history of a given stock
+    @param selectedStock the selected stock
+    @return The stock.
+*/
 Stock Stock::updateStockHistory(Stock &selectedStock)
 {
     if (selectedStock.history.size() < 1)
@@ -280,6 +285,12 @@ void Stock::predictNextX(int numWeeks)
     }
 }
 
+/*!
+    @brief A function used to write the histories to a csv
+    @param symbol the stock ticker
+    @param StockHistory the history for a given stock
+    @param currentDate the current in game date
+*/
 void Stock::writeToCSV(std::string symbol, const std::vector<StockHistory> &histories, std::string currentDate)
 {
     std::string prefix = PathUtil::findPathFromApp();
