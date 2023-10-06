@@ -313,8 +313,14 @@ void Stock::writeToCSV(std::string symbol, const std::vector<StockHistory> &hist
         outFile << line << "\n";
     }
 
+    std::string lastDate;
     for (const auto &history : histories)
     {
+        if (history.date == lastDate)
+        {
+            continue;
+        }
+        lastDate = history.date;
         // History date is in the past
         outFile << history.date << ",";
         outFile << "0,"; // Open

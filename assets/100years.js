@@ -270,7 +270,7 @@ function getFilePath(ticker, time) {
         const lines = data.split('\n');
         let csvString = 'Date,Close\n';
         let weekcount = time + 525;
-        for (let i = weekcount - 260; i < weekcount; i++) {
+        for (let i = weekcount - 52; i < weekcount; i++) {
             const columns = lines[i].split(',');
             const date = columns[0];
             const close = columns[4];

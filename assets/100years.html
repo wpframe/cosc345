@@ -96,12 +96,12 @@
         <div class="bar">
             <input type="number" id="quantity" name="quantity" min="1">
         </div>
-      <div class="row" style="margin-top: 10px; display: flex; justify-content: center; align-items: center;">
-        <button onclick="setQuantity(10)" style="width: 50px; margin-right: 5px;">10</button>
-        <button onclick="setQuantity(100)" style="width: 50px; margin-right: 5px;">100</button>
-        <button onclick="setQuantity(1000)" style="width: 50px;">1000</button>
       </div>
-    </div>
+      <div class="row" style="margin-top: 10px; display: flex; justify-content: center; align-items: center;">
+        <button class="quick-button" onclick="setQuantity(10)" style="width: 50px; margin-right: 5px;">10</button>
+        <button class="quick-button" onclick="setQuantity(100)" style="width: 50px; margin-right: 5px;">100</button>
+        <button class="quick-button" onclick="setQuantity(1000)" style="width: 50px;">1000</button>
+      </div>
 
     <script>
       function setQuantity(value) {

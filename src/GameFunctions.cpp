@@ -40,10 +40,10 @@ void GameFunctions::resetGame(int TIMECOUNT, std::vector<Stock> &stocks)
 {
     portfolio.resetTotalBalance();
 
-    for (auto &stock : stocks)
-    {
-        stock.history.clear();
-    }
+    // for (auto &stock : stocks)
+    // {
+    //     stock.history.clear();
+    // }
 
     // TIMECOUNT = 0;
     // latestDate = gameStartDate;

@@ -484,7 +484,6 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
 {
   if (argumentCount >= 1)
   {
-
     JSStringRef jsSymbol = JSValueToStringCopy(ctx, arguments[0], nullptr);
     std::string symbol = JSStringToStdString(jsSymbol);
 
@@ -502,14 +501,13 @@ JSValueRef cppSelectStock(JSContextRef ctx, JSObjectRef function,
         break;
       }
     }
-
     const auto &history = selectedStock.history;
 
-    Stock::writeToCSV(selectedStock.getSymbol(), history, latestDate.utf8().data());
-
+    // Stock::writeToCSV(selectedStock.getSymbol(), history, latestDate.utf8().data());
     std::string closePriceString = std::to_string(selectedStock.history[TIMECOUNT].closePrice);
     std::string prefix = PathUtil::findPathFromApp();
     std::string ticker = selectedStock.getSymbol();
+
     std::string time = std::to_string(TIMECOUNT);
     std::string jscode =
         "document.getElementById('currentPrice').textContent = Number(" + closePriceString + ").toLocaleString('en-US', { style: 'currency', currency: 'USD' });";
@@ -817,8 +815,8 @@ void MyApp::OnDOMReady(ultralight::View *caller,
     float totalInvestment = 0.0;
     float portfolioValue = 0.0;
     float amountBorrowed = 0.0;
-    float totalProfit;
-    float totalInvested;
+    float totalProfit = 0;
+    float totalInvested = 0;
 
     std::vector<Purchase> purchases = portfolio.getPurchases();
     for (const Purchase &purchase : purchases)

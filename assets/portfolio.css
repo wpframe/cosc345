@@ -73,6 +73,15 @@ header h1 {
   background-color: #0e12db;
 }
 
+#helpbtn {
+  border:none;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px;
+  position: relative;
+  left: 10px;
+}
+
 #requestRaise {
   display: block;
   width: auto;
