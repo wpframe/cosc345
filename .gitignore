@@ -2,6 +2,8 @@
 
 # Ignore build folder
 /build/
+# Ignore stock histories in assets
+/assets/data/stocks
 # Ignore VSCode configuration file
 .vscode
 # And Mac folder metadata file

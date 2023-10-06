@@ -204,6 +204,12 @@ std::string getNextDate(const std::string &date)
     @details It uses the stock's history to predict the next number of weeks of stock prices.
     @param x The number of weeks to predict.
 */
+template <typename T>
+T clamp(const T &val, const T &min, const T &max)
+{
+    return std::max(min, std::min(val, max));
+}
+
 void Stock::predictNextX(int numWeeks)
 {
     int n = history.size();
@@ -213,7 +219,7 @@ void Stock::predictNextX(int numWeeks)
         return;
     }
 
-    // Simple linear regression
+    // Simple linear regression for initial trend
     double sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
     for (int i = 0; i < n; i++)
     {
@@ -226,6 +232,8 @@ void Stock::predictNextX(int numWeeks)
     double slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     double intercept = (sumY - slope * sumX) / n;
 
+    double momentum = 1.0; // Start with neutral momentum
+
     for (int i = 0; i < numWeeks; i++)
     {
         StockHistory historyPlusHeadline;
@@ -234,8 +242,17 @@ void Stock::predictNextX(int numWeeks)
         double predictedPrice = slope * (n + i) + intercept;
 
         // Add randomness
-        double randomFactor = 1.0 + (std::rand() % 10 - 5) * 0.01; // Randomness between -5% to +5%
+        double randomFactor = 1.0 + (std::rand() % 20 - 10) * 0.01; // Randomness between -10% to +10%
         predictedPrice *= randomFactor;
+
+        // Adjust for momentum
+        if (randomFactor > 1.0)
+            momentum += 0.01; // Increase momentum if stock went up
+        else if (randomFactor < 1.0)
+            momentum -= 0.01; // Decrease momentum if stock went down
+
+        momentum = clamp(momentum, 0.95, 1.05); // Limit momentum between -5% and +5%
+        predictedPrice *= momentum;
 
         // Generate headline and adjust price
         auto headlineEvent = Headline::generateHeadline(*this, n + i);
