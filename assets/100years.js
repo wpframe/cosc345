@@ -261,7 +261,7 @@ function closeEndPopup() {
  * This is called in cppSelectStock() in MyApp.
  */
 
-function getFilePath(ticker) {
+function getFilePath(ticker, time) {
     var filepath = "data/stocks/" + ticker + ".csv";
     document.getElementById('container').innerHTML = '';
 
@@ -269,7 +269,8 @@ function getFilePath(ticker) {
         anychart.theme('darkBlue');
         const lines = data.split('\n');
         let csvString = 'Date,Close\n';
-        for (let i = 1; i < lines.length; i++) {
+        let weekcount = time + 525;
+        for (let i = weekcount - 260; i < weekcount; i++) {
             const columns = lines[i].split(',');
             const date = columns[0];
             const close = columns[4];
@@ -282,4 +283,3 @@ function getFilePath(ticker) {
         chart.draw();
     });
 }
-
