@@ -64,15 +64,9 @@ From user testing, we received and implemented the following suggestions:
 We implemented these suggestions for our final product and found the critcism and suggestions from user testing to be very valuable, especially the highlighting and shortcut ideas as we had not thought of those before.
 
 Some suggestions we didn't implement were:
-1. Display most popular/trending stocks of the week
-
-We thought this would be a cool feature if everyone's portfolios were linked to a server so we could see what our users purchased the most, but we didn't have enough time to implement this.
-2. More user documentation about how the stock market works in general
-
-We didn't implement this as there are curated resources written by professionals online, however it could be helpful to link the user to some of these resources in the help menu.
-3. Remove 100 years mode
-
-We didn't want to remove the 100 years mode as progressively around 200 years in the stock prediction can become quite erratic.
+1. Display most popular/trending stocks of the week - We thought this would be a cool feature if everyone's portfolios were linked to a server so we could see what our users purchased the most, but we didn't have enough time to implement this.
+2. More user documentation about how the stock market works in general - We didn't implement this as there are curated resources written by professionals online, however it could be helpful to link the user to some of these resources in the help menu.
+3. Remove 100 years mode - We didn't want to remove the 100 years mode as progressively around 200 years in the stock prediction can become quite erratic.
 
 In all we found that the weekly standup sessions helped a lot to keep in touch and up to date with what we were doing. Using Discord also helped a lot to be able to easily message teammates for extra information. The GitHub webhook on Discord was also helpful to see the commit history with CI/CD status/notifications.
 
